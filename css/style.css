@@ -6,7 +6,7 @@ body{font-family:'Noto Sans KR',sans-serif; color:#2b2b2b;}
 #wrap{width:100%;}
 
 /* header */
-header{position:relative; height:60px;}
+header{position:relative; height:60px; background-color: #000000;}
 header>h1{position:absolute; top:17px; left:50%; margin-left:-600px; width:271px;}
 header>h1>a{display:block; height:24px; color:#FFFF00; font-size:24px; font-weight:700; line-height:24px;}
 
