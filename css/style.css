@@ -223,3 +223,5 @@ section>.recruitment>ol:last-child{margin-bottom:0px;}
 section>.recruitment>ol>li{padding:10px 0; text-align:left; padding-left:30px; font-size:16px; letter-spacing:1px;}
 section>.recruitment>ol>li>a{display:inline-block; color:#fff; padding:3px 7px; font-size:15px; text-align:center; letter-spacing:-1px; background-color:#ff976f; border-radius:3px;}
 section>.recruitment>ol>li>a:hover{text-decoration:underline;}
+
+.rancho_text { text-align: left; }
