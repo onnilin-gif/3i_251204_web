@@ -176,19 +176,44 @@ footer>.info>.familysite>ul>li>a:hover,footer>.info>.familysite>ul>li>a:hover{co
 
 footer>.info>address{width:1200px; margin:0 auto; font-size:15px; line-height:1.5; letter-spacing:1px;}
 
-/* sub - ceo */
-section>.sub_banner{position:relative; width:100%; height:300px; background-image:url(../images/세얼간이배경화면.jpg); background-position:center center;}
-section>.sub_banner>p{position:absolute; top:70px; right:50%; margin-right:-600px; text-align:right; font-size:32px; font-weight:500; letter-spacing:1px; line-height:1.5;}
+/* sub - movie info */
+.movie-info-container {
+  display: flex;
+  align-items: flex-start;
+}
 
-section>.ceo{position:relative; height:1130px; text-align:left;}
-section>.ceo>h2{position:absolute; left:0; top:100px; margin-bottom:10px; font-size:45px; color:#ff976f;}
-section>.ceo>.ceo_img{position:absolute; left:0; top:190px;width:740px; height:650px; text-indent:-9999px; background-image:url(../images/ceo_img.jpg); background-repeat:no-repeat;}
-section>.ceo>.ceo_text{position:absolute; right:0; top:350px; width:620px; height:750px; padding:50px; background-color: #ededed;}
-section>.ceo>.ceo_text>h3{margin-bottom:20px; font-size:32px; color:#ff976f; letter-spacing:-1px; line-height:1.5;}
-section>.ceo>.ceo_text>h3:after{content:''; display:block; margin-top:5px; width:2px; height:40px; background-color:#ff976f;}
-section>.ceo>.ceo_text>p{margin-bottom:20px; font-size:16px; font-weight:400; letter-spacing:1px; line-height:1.7; text-align:justify;}
-section>.ceo>.ceo_text>p:last-of-type{font-size:18px; font-weight:500;}
-section>.ceo>.ceo_text>.ceo_sign{width:107px; height:57px; text-indent:-9999px; background-image:url(../images/ceo_sign.png);}
+.movie-poster {
+  width: 30%;
+  margin-right: 5%;
+}
+
+.movie-details {
+  width: 65%;
+}
+
+.movie-details h2 {
+  font-size: 45px;
+  color: #ff976f;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ff976f;
+  padding-bottom: 10px;
+}
+
+.movie-details ul {
+  list-style: none;
+  padding: 0;
+}
+
+.movie-details ul li {
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 10px;
+}
+
+.movie-details ul li strong {
+  font-weight: 700;
+  color: #333;
+}
 
 /* sub - ci */
 section>.ci>h2{margin-bottom:20px; font-size:45px; text-align:left; color:#ff976f;}
