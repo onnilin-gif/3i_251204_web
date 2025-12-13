@@ -9,17 +9,10 @@ $(function(){
   //var
   var $gnb = $('header>nav>.gnb>li');
   var $sub = $('header>nav>.gnb>li>.sub');
-  var $language = $('header>nav>.lnb>li>a.language');
-  var $sitemap = $('header>nav>.lnb>li>a.sitemap');
 
   var $slide = $('section>.slide-container>.slide>li');
   var $indicator = $('section>.slide-container>.slide-pagination>ol>li>a');
   var intervalKey = null;
-
-  var $fnb = $('footer>.fnb>a');
-  var $fnbList = $('footer>.fnb>ul');
-  var $btnTop = $('footer>.info>.policy>li>a.top');
-  var $btnFamily = $('footer>.info>.familysite>a.familysiteOpen');
 
   var nowIdx  = 0;
 
@@ -72,22 +65,6 @@ $(function(){
     $sub.stop().fadeOut();
   });
 
-  $language.on('click',function(event){
-    event.preventDefault();
-    alert('현재 지원하지 않는 기능입니다.');
-  });
-
-  $sitemap.on('click',function(event){
-    event.preventDefault();
-    var bottomVal = $('footer').offset().top;
-
-    $('html,body').stop().animate({
-      scrollTop : bottomVal
-    },1000,'easeInOutCubic');
-
-    $fnb.trigger("click");
-  });//end of header
-
   //section - slide banner
   $indicator.on('click',function(event){
     event.preventDefault();
@@ -97,29 +74,8 @@ $(function(){
     slideMove();
   });//end of section
 
-  //footer
-  $btnTop.on('click',function(event){
-    event.preventDefault();
-    var topVal = $('header').offset().top;
-
-    $('html,body').stop().animate({
-      scrollTop : topVal
-    },1000,'easeInOutCubic');
+  // Dark Mode Toggle
+  $('.dark-mode-toggle').on('click', function(){
+    $('body').toggleClass('dark-mode');
   });
-  
-  $fnb.on('click',function(event){
-    event.preventDefault();
-
-    $fnbList.stop().slideToggle(500);
-  });
-
-  $btnFamily.on('click',function(event){
-    event.preventDefault();
-    $(this).next('ul').stop().slideToggle(500);
-  });
-
-  $btnFamily.on('focusout',function(){
-    $(this).siblings().stop().slideUp(500);
-  });//end of footer
 });
-
