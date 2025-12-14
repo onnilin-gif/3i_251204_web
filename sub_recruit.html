@@ -4,277 +4,305 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>클리오 코스메틱스</title>
+  <title>영화 세 얼간이 - 줄거리</title>
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.jpg">
+  
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/swiper.css">
   <link rel="stylesheet" href="css/animate.css">
-  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* [폰트 설정] 웹폰트 로드 (Noto Sans KR) */
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+
+    body {
+        font-family: 'Noto Sans KR', sans-serif;
+        /* 전체 배경에 은은한 그라데이션 적용 */
+        background: linear-gradient(135deg, #fff1eb 0%, #ace0f9 100%);
+        line-height: 1.6;
+        color: #333;
+    }
+
+    /* [기존 레이아웃 유지 설정] */
+    #wrap { width: 100%; overflow: hidden; }
+    .container { width: 1200px; margin: 0 auto; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    hr { display: none; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
+
+    /* ================= 헤더 (Header) 스타일 ================= */
+    header {
+        width: 100%; height: 100px; background: rgba(255,255,255,0.95); position: relative; z-index: 100;
+        border-bottom: 1px solid #ddd; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    h1.logo { position: absolute; left: 50px; top: 50px; transform: translateY(-50%); font-size: 32px; font-weight: 900; }
+    h1.logo a { color: #ff5e00; text-decoration: none; }
+    header nav { position: absolute; right: 50px; top: 35px; }
+    header nav .gnb > li { float: left; margin-left: 40px; position: relative; }
+    header nav .gnb > li > a { font-size: 18px; font-weight: 700; color: #333; padding-bottom: 30px; display: block; transition: color 0.3s; }
+    header nav .gnb > li:hover > a { color: #ff5e00; }
+    header nav .sub {
+        position: absolute; top: 65px; left: -20px; width: 400px; background: #fff; padding: 20px;
+        border-radius: 10px; box-shadow: 5px 5px 20px rgba(0,0,0,0.1); display: none;
+    }
+    header nav .gnb > li:hover .sub { display: block; }
+    header nav .sub ol { float: left; width: 50%; }
+    header nav .sub ol li { margin-bottom: 10px; }
+    header nav .sub ol li a { font-size: 15px; color: #666; transition: color 0.3s; }
+    header nav .sub ol li a:hover { color: #ff5e00; font-weight: bold; }
+    header nav .sub .sub_img {
+        float: right; width: 45%; height: 150px; background: #ffecd2 url('images/sub_bg_01.jpg') no-repeat center/cover;
+        border-radius: 8px; position: relative; overflow: hidden;
+    }
+    header nav .sub .sub_img::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,94,0,0.2); }
+    header nav .sub .sub_img p {
+        position: absolute; bottom: 15px; left: 15px; color: #fff; font-weight: bold; font-size: 14px; z-index: 1; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+    header nav .lnb { position: absolute; top: -25px; right: 0; }
+    header nav .lnb li { float: left; margin-left: 20px; font-size: 13px; color: #888; cursor: pointer; }
+
+    /* ================= 서브 배너 (Sub Banner) ================= */
+    .sub_banner {
+        width: 100%; height: 350px; background: url('images/sub_banner_recruit.jpg') no-repeat center/cover;
+        position: relative; display: flex; justify-content: center; align-items: center;
+        text-align: center; color: #fff;
+    }
+    .sub_banner::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); }
+    .sub_banner p { font-size: 32px; font-weight: bold; position: relative; z-index: 1; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+    .sub_banner p span { display: block; font-size: 18px; margin-top: 20px; font-weight: normal; color: #ffecd2; }
+
+    /* ================= ★ 줄거리 섹션 (Plot Section) - 디자인의 핵심 ★ ================= */
+    .plot-section { padding: 100px 0; position: relative; overflow: hidden; }
+
+    /* 배경 장식용 원형 (애니메이션) */
+    .bg-circle {
+        position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; z-index: -1;
+        animation: float 10s infinite ease-in-out alternate;
+    }
+    .circle-1 { width: 400px; height: 400px; background: #ff9a44; top: 10%; left: -10%; }
+    .circle-2 { width: 300px; height: 300px; background: #fc6076; bottom: 20%; right: -5%; animation-delay: -5s; }
+    @keyframes float { from { transform: translateY(0) scale(1); } to { transform: translateY(50px) scale(1.1); } }
+
+    .plot-container { width: 1000px; margin: 0 auto; text-align: center; }
+    
+    /* 제목 스타일 */
+    .plot-title {
+        font-size: 48px; font-weight: 900; color: #222; margin-bottom: 50px;
+        display: inline-block; position: relative; letter-spacing: -1px;
+    }
+    .plot-title::before {
+        content: 'SYNOPSIS'; display: block; font-size: 16px; color: #ff5e00;
+        font-weight: 700; letter-spacing: 5px; margin-bottom: 10px;
+    }
+    .plot-title::after {
+        content: ''; display: block; width: 80px; height: 5px; background: linear-gradient(to right, #ff5e00, #ff9a44);
+        margin: 25px auto 0; border-radius: 10px;
+    }
+
+    /* 도입부 텍스트 */
+    .plot-intro { font-size: 24px; color: #444; line-height: 1.7; margin-bottom: 80px; word-break: keep-all; font-weight: 500; }
+    .plot-intro .highlight {
+        position: relative; z-index: 1; font-weight: 900; color: #222; padding: 0 5px;
+    }
+    .plot-intro .highlight::after {
+        content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 40%;
+        background: #ffecd2; z-index: -1; opacity: 0.8; transform: skewX(-10deg);
+    }
+
+    /* 카드 컨테이너 */
+    .plot-cards { display: flex; justify-content: space-between; gap: 40px; perspective: 1000px; }
+
+    /* ★ 3D 인터랙티브 카드 디자인 ★ */
+    .plot-card {
+        flex: 1; background: rgba(255, 255, 255, 0.9); border-radius: 25px;
+        padding: 50px 40px; text-align: left; position: relative;
+        box-shadow: 20px 20px 60px rgba(0,0,0,0.05), -20px -20px 60px rgba(255,255,255,0.8);
+        border: 1px solid rgba(255,255,255,0.5); backdrop-filter: blur(10px);
+        transform-style: preserve-3d; /* 3D 효과를 위한 필수 속성 */
+    }
+    
+    /* 카드 내부 요소 입체감 부여 */
+    .card-content { transform: translateZ(30px); } /* 내용이 붕 떠 보이게 설정 */
+
+    /* 카드 아이콘 */
+    .card-icon {
+        font-size: 60px; margin-bottom: 25px; color: #ff5e00;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .plot-card h3 {
+        font-size: 28px; color: #222; margin-bottom: 20px; font-weight: 800;
+    }
+    
+    .plot-card p { font-size: 17px; color: #555; line-height: 1.8; word-break: keep-all; }
+    .plot-card p strong { color: #ff5e00; font-weight: 700; }
+
+    /* 하단 메시지 */
+    .plot-footer { margin-top: 80px; font-size: 22px; color: #333; }
+    .plot-footer .final-msg {
+        display: block; font-size: 30px; font-weight: 900; color: #ff5e00;
+        margin-top: 15px; text-transform: uppercase; letter-spacing: 1px;
+        text-shadow: 2px 2px 0px #fff, 4px 4px 0px rgba(0,0,0,0.05);
+    }
+
+    /* ================= 푸터 (Footer) ================= */
+    footer { background: #2c3e50; color: #ccc; padding: 50px 0; }
+    footer .fnb { width: 1200px; margin: 0 auto; padding-bottom: 30px; border-bottom: 1px solid #34495e; }
+    footer .fnb .title { font-size: 24px; color: #fff; margin-bottom: 30px; }
+    footer .fnb ul > li { float: left; width: 16.66%; }
+    footer .fnb ul > li > a { color: #fff; font-size: 16px; font-weight: bold; margin-bottom: 15px; display: block; }
+    footer .fnb .fnb_sub li { margin-bottom: 8px; }
+    footer .fnb .fnb_sub li a { font-size: 14px; color: #aaa; transition: color 0.3s; }
+    footer .fnb .fnb_sub li a:hover { color: #ff5e00; }
+    footer .info { width: 1200px; margin: 30px auto 0; position: relative; }
+    footer .info .policy li { float: left; margin-right: 20px; }
+    footer .info .policy li a { font-size: 14px; color: #aaa; }
+    footer .info address { font-style: normal; font-size: 14px; color: #888; margin-top: 20px; }
+    footer .familysite { position: absolute; right: 0; top: 0; }
+    footer .familysiteOpen { border: 1px solid #555; color: #aaa; padding: 5px 15px; font-size: 13px; }
+  </style>
 
   <script src="js/plugin/jquery-1.12.3.js"></script>
   <script src="js/plugin/jquery.easing.min.js"></script>
   <script src="js/plugin/swiper.min.js"></script>
   <script src="js/plugin/wow.min.js"></script>
-  <script src="js/function.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+
 </head>
 <body>
   <div id="wrap">
     <header>
-      		<h1 class="logo"><a href="index.html">3 Idiots</a></h1>
-      <nav class="clearfix">
-        <ul class="gnb clearfix">
-          <li>
-등장인물
-              <ol>
-                <li><a href="sub_ceo.html">CEO인사말</a></li>
-                <li><a href="#">Vision</a></li>
-                <li><a href="#">문화경영</a></li>
-                <li><a href="#">연구개발</a></li>
-                <li><a href="sub_ci.html">CI</a></li>
-              </ol>
-
-              <div class="sub_img">
-                <p>
-                  클리오 코스메틱스는 더 나은<br>
-                  품질과 서비스를 제공하는 글로벌<br>
-                  No.1 기업으로 성장하겠습니다.
-                </p>
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <a href="#">브랜드</a>
-
-            <div class="sub clearfix">
-              <ol>
-                <li><a href="sub_rancho.html">란초</a></li>
-                <li><a href="sub_farhan.html">파르한</a></li>
-                <li><a href="sub_raju.html">라주</a></li>
-                <li><a href="sub_virus.html">비루 사하스트라부데</a></li>
-                <li><a href="sub_chatur.html">차투르 라말링감</a></li>
-                <li><a href="sub_pia.html">피아</a></li>
-              </ol>
-
-              <div class="sub_img">
-                <p>
-                  전세계 모든 고객들의 화장품 파우치에<br>
-                  클리오 제품이 담기도록 노력하겠습니다.
-                </p>
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <a href="sub_recruit.html">채용정보</a>
-
-            <div class="sub clearfix">
-              <ol>
-                <li><a href="sub_recruit.html">인재상</a></li>
-                <li><a href="sub_recruit.html">인사제도</a></li>
-                <li><a href="sub_recruit.html">채용안내</a></li>
-              </ol>
-
-              <div class="sub_img">
-                <p>
-                  더 높은 성장을 위해 인재가 중심인 기업<br>
-                  클리오와 함께 성장해나갈 인재를 모십니다.
-                </p>
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <a href="#">투자정보</a>
-
-            <div class="sub clearfix">
-              <ol>
-                <li><a href="#">경영정보</a></li>
-                <li><a href="#">재무정보</a></li>
-                <li><a href="#">공시정보</a></li>
-                <li><a href="#">법적고지</a></li>
-                <li><a href="#">IR자료</a></li>
-              </ol>
-
-              <div class="sub_img">
-                <p>
-                  혁신적인 제품, 서비스, 유통, 비즈니스 모델, 마케팅<br>
-                  활동 등을 통하여 새로운 시장을 선도하겠습니다.
-                </p>
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <a href="#">고객센터</a>
-
-            <div class="sub clearfix">
-              <ol>
-                <li><a href="#">공지사항</a></li>
-                <li><a href="#">Q&A</a></li>
-                <li class="last"><a href="#">커뮤니티</a></li>
-              </ol>
-
-              <div class="sub_img">
-                <p>
-                  화장품을 통해 새로운 변화를 즐기는<br>
-                  사람에게 자신감과 즐거움의 제공을 약속드립니다.
-                </p>
-              </div>
-            </div>
-          </li>
-        </ul>
-
-        <ul class="lnb clearfix">
-          <li><a href="#" class="language">ENGLISH</a></li>
-          <li><a href="#" class="sitemap">SITEMAP</a></li>
-        </ul>
-      </nav>
+      <div class="container clearfix">
+          <h1 class="logo"><a href="index.html">3 Idiots</a></h1>
+          <nav>
+            <ul class="gnb clearfix">
+              <li><a href="sub_ceo.html">영화소개</a>
+                <div class="sub clearfix">
+                  <ol>
+                    <li><a href="sub_ceo.html">감독인사말</a></li><li><a href="#">Vision</a></li><li><a href="#">작품배경</a></li><li><a href="#">제작노트</a></li><li><a href="sub_ci.html">로고의미</a></li>
+                  </ol>
+                  <div class="sub_img"><p>알 이즈 웰!<br>성공은 배움 뒤에 따라온다.</p></div>
+                </div>
+              </li>
+              <li><a href="#">등장인물</a>
+                <div class="sub clearfix">
+                  <ol>
+                    <li><a href="sub_rancho.html">란초</a></li><li><a href="sub_farhan.html">파르한</a></li><li><a href="sub_raju.html">라주</a></li><li><a href="sub_virus.html">비루 교수</a></li><li><a href="sub_chatur.html">차투르</a></li><li><a href="sub_pia.html">피아</a></li>
+                  </ol>
+                  <div class="sub_img"><p>전설적인 공학 천재들과<br>그들의 유쾌한 반란</p></div>
+                </div>
+              </li>
+              <li><a href="sub_recruit.html">줄거리</a>
+                <div class="sub clearfix">
+                  <ol>
+                    <li><a href="sub_recruit.html">전체 줄거리</a></li><li><a href="#">명장면</a></li><li><a href="#">명대사</a></li>
+                  </ol>
+                  <div class="sub_img"><p>웃음과 감동이 있는<br>진정한 교육 이야기</p></div>
+                </div>
+              </li>
+              <li><a href="#">하이라이트</a>
+                <div class="sub clearfix">
+                  <ol>
+                    <li><a href="#">갤러리</a></li><li><a href="#">예고편</a></li>
+                  </ol>
+                  <div class="sub_img"><p>다시 보고 싶은<br>최고의 순간들</p></div>
+                </div>
+              </li>
+              <li><a href="#">후기평</a>
+                <div class="sub clearfix">
+                  <ol>
+                    <li><a href="#">관람평</a></li><li><a href="#">Q&A</a></li><li class="last"><a href="#">커뮤니티</a></li>
+                  </ol>
+                  <div class="sub_img"><p>여러분의 감동을<br>함께 나누세요.</p></div>
+                </div>
+              </li>
+            </ul>
+            <ul class="lnb clearfix">
+              <li>ENGLISH</li><li>SITEMAP</li>
+            </ul>
+          </nav>
+      </div>
     </header>
-    <!-- end of header -->
     <hr>
 
-    <section>
-      <h2 class="sr-only">채용안내 페이지</h2>
-      <div class="sub_banner_02">
-        <p class="wow fadeIn" data-wow-delay="100ms">
-          더 높은 성장을 위해<br>
-          인재가 중심인 기업 클리오와 함께<br>
-          성장해나갈 인재를 모십니다
+    <section class="plot-section">
+      <h2 class="sr-only">줄거리 페이지</h2>
+      
+      <div class="bg-circle circle-1"></div>
+      <div class="bg-circle circle-2"></div>
+
+      <div class="sub_banner">
+        <p class="wow fadeInDown" data-wow-duration="1.5s">
+          "너의 재능을 따라가라!<br>성공은 뒤따라올 것이다"<br>
+          <span>- 영화 &lt;세 얼간이&gt; 中 -</span>
         </p>
       </div>
 
-      <article class="recruitment content wow fadeInUp" data-wow-delay="200ms">
-        <h2>채용절차</h2>
+      <div class="plot-container">
+        <h2 class="plot-title wow fadeInUp" data-wow-delay="0.3s">영화 속으로</h2>
+        
+        <div class="plot-intro wow fadeInUp" data-wow-delay="0.5s">
+            천재들만 간다는 일류 명문대 ICE.<br>
+            성적과 취업만을 강요하는 시스템을 발칵 뒤집어 놓은<br>
+            <span class="highlight">엉뚱한 천재와 친구들의 유쾌한 반란</span>이 시작된다!
+        </div>
 
-        <div class="recruitment_process">채용 과정 안내</div>
-        <ol>
-          <li>01. 서류전형 - 업무상 필요 역량 및 기본적인 지원자격 충족 여부 검토</li>
-          <li>02. 실무면접 - 자기소개서 기반의 구조화 면접 직무역량 검증</li>
-          <li>03. 인적성검사 - 직무 수행상 요구되는 기본 소양 검증</li>
-          <li>04. 임원면접 - CLIO Way, 인재상 적합도 및 인성검증</li>
-          <li>05. 최종합격 - 입사</li>
-        </ol>
+        <div class="plot-cards clearfix">
+            <div class="plot-card wow fadeInLeft" data-wow-delay="0.7s" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.3">
+                <div class="card-content">
+                    <div class="card-icon">🎓</div> <h3>PART 1. 천재와 얼간이들</h3>
+                    <p>
+                        꿈 대신 취업을 강요받는 <strong>'파르한'</strong>과 <strong>'라주'</strong> 앞에 나타난 자유로운 영혼 <strong>'란초'</strong>. 
+                        그는 주입식 교육의 상징인 총장 '바이러스'에게 기상천외한 방법으로 맞서며 학교를 발칵 뒤집어 놓습니다. 
+                        란초를 통해 친구들은 진정한 배움과 꿈의 의미를 깨닫기 시작합니다.
+                    </p>
+                </div>
+            </div>
 
-        <h2>안내사항</h2>
-        <ol>
-          <li>&middot; 제출 및 문의	cliohr@clio.co.kr</li>
-          <li>&middot; 제출서류	이력서 및 자기소개서, 경력기술서</li>
-          <li>&middot; 상품기획(BM), 디자인 및 콘텐츠 개발 포지션 지원자의 경우, 포트폴리오 제출 필수</li>
-          <li>&middot; 지원서 <a href="#" title="지원서 다운받기">지원서 다운받기</a></li>
-        </ol>
-      </article>
+            <div class="plot-card wow fadeInRight" data-wow-delay="0.9s" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.3">
+                <div class="card-content">
+                    <div class="card-icon">🔍</div> <h3>PART 2. 사라진 란초를 찾아서</h3>
+                    <p>
+                        "10년 뒤에 여기서 만나자!"는 내기만 남긴 채 연기처럼 사라져 버린 란초. 
+                        10년 후, 란초의 라이벌 '차투르'와 친구들은 그를 찾기 위한 긴 여정을 떠납니다. 
+                        그 길의 끝에서 그들은 란초가 감추고 있던 충격적인 비밀과 마주하게 되는데...
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="plot-footer wow fadeInUp" data-wow-delay="1.1s">
+            <p>과연 그들은 '진정한 성공'과 '행복'을 찾을 수 있을까요?</p>
+            <span class="final-msg">지금 바로 영화로 확인하세요! All is Well!</span>
+        </div>
+      </div>
     </section>
-    <!-- end of section -->
     <hr>
 
     <footer>
-      <div class="fnb">
-        <a href="#" class="sitemapOpen">
-          <h3 class="title">CLIO COSMETICS SITEMAP<span>펼쳐보기</span></h3>
-        </a>
-
+      <div class="fnb clearfix">
+        <h3 class="title">3 IDIOTS SITEMAP</h3>
         <ul class="clearfix">
-          <li>
-            등장인물
-
-            <ol class="fnb_sub">
-              <li><a href="sub_ceo.html">&middot; CEO인사말</a></li>
-              <li><a href="#">&middot; Vision</a></li>
-              <li><a href="#">&middot; 문화경영</a></li>
-              <li><a href="#">&middot; 연구개발</a></li>
-              <li><a href="sub_ci.html">&middot; CI</a></li>
-            </ol>
-          </li>
-
-          <li>
-            <a href="#">브랜드</a>
-
-            <ol class="fnb_sub">
-              <li><a href="sub_rancho.html">&middot; 란초</a></li>
-              <li><a href="#">&middot; CLIO</a></li>
-              <li><a href="#">&middot; peripera</a></li>
-              <li><a href="#">&middot; goodal</a></li>
-              <li><a href="#">&middot; DERMATORY</a></li>
-              <li><a href="#">&middot; Healing Bird</a></li>
-            </ol>
-          </li>
-
-          <li>
-            <a href="sub_recruit.html">채용정보</a>
-
-            <ol class="fnb_sub">
-              <li><a href="sub_recruit.html">&middot; 인재상</a></li>
-              <li><a href="sub_recruit.html">&middot; 인사제도</a></li>
-              <li><a href="sub_recruit.html">&middot; 채용안내</a></li>
-            </ol>
-          </li>
-
-          <li>
-            <a href="#">투자정보</a>
-
-            <ol class="fnb_sub">
-              <li><a href="#">&middot; 경영정보</a></li>
-              <li><a href="#">&middot; 재무정보</a></li>
-              <li><a href="#">&middot; 공시정보</a></li>
-              <li><a href="#">&middot; 법적고지</a></li>
-              <li><a href="#">&middot; IR자료</a></li>
-            </ol>
-          </li>
-
-          <li>
-            <a href="#">고객센터</a>
-
-            <ol class="fnb_sub">
-              <li><a href="#">&middot; 공지사항</a></li>
-              <li><a href="#">&middot; Q&A</a></li>
-              <li><a href="#">&middot; 커뮤니티</a></li>
-            </ol>
-          </li>
-
-          <li>
-            <a href="#">SNS</a>
-
-            <ol class="fnb_sub">
-              <li><a href="#">&middot; facebook</a></li>
-              <li><a href="#">&middot; instagram</a></li>
-              <li><a href="#">&middot; youtube</a></li>
-              <li><a href="#">&middot; blog</a></li>
-            </ol>
-          </li>
+          <li><a href="#">영화소개</a><ol class="fnb_sub"><li><a href="sub_ceo.html">감독인사말</a></li><li><a href="#">Vision</a></li><li><a href="#">작품배경</a></li><li><a href="#">제작노트</a></li><li><a href="sub_ci.html">로고의미</a></li></ol></li>
+          <li><a href="#">등장인물</a><ol class="fnb_sub"><li><a href="sub_rancho.html">란초</a></li><li><a href="sub_farhan.html">파르한</a></li><li><a href="sub_raju.html">라주</a></li><li><a href="sub_virus.html">비루 교수</a></li><li><a href="sub_chatur.html">차투르</a></li><li><a href="sub_pia.html">피아</a></li></ol></li>
+          <li><a href="sub_recruit.html">줄거리</a><ol class="fnb_sub"><li><a href="sub_recruit.html">전체 줄거리</a></li><li><a href="#">명장면</a></li><li><a href="#">명대사</a></li></ol></li>
+          <li><a href="#">하이라이트</a><ol class="fnb_sub"><li><a href="#">갤러리</a></li><li><a href="#">예고편</a></li></ol></li>
+          <li><a href="#">후기평</a><ol class="fnb_sub"><li><a href="#">관람평</a></li><li><a href="#">Q&A</a></li><li><a href="#">커뮤니티</a></li></ol></li>
+          <li><a href="#">SNS</a><ol class="fnb_sub"><li><a href="#">facebook</a></li><li><a href="#">instagram</a></li><li><a href="#">youtube</a></li></ol></li>
         </ul>
       </div>
-
-      <div class="info">
-        <ul class="policy clearfix">
-          <li><a href="#">저작권보호정책</a></li>
-          <li><a href="#">개인정보처리방침</a></li>
-          <li><a href="#">이메일무단수집거부</a></li>
-          <li><a href="#" class="top">TOP</a></li>
-        </ul>
-
-        <div class="familysite">
-          <a href="#" class="familysiteOpen">패밀리사이트<span>이동하기</span></a>
-
-          <ul>
-            <li><a href="https://www.clubclio.co.kr/" target="_blank">클럽 클리오</a></li>
-            <li><a href="http://www.cliocosmetic.com/" target="_blank">클리오</a></li>
-            <li><a href="http://www.periperacosmetic.com/" target="_blank">페리페라</a></li>
-            <li><a href="http://www.goodalcosmetic.com/" target="_blank">구달</a></li>
-            <li><a href="http://www.dermatory.com/" target="_blank">더마토리</a></li>
-            <li><a href="http://www.healingbird.co.kr/" target="_blank">힐링 버드</a></li>
-          </ul>
-        </div>
-  
-        <address>
-          고객상담실 : 080-080-1510 월~금 : 09:00 ~ 18:00, 주말/공휴일 휴무<br>
-          본 페이지는 상업적 목적이 아닌 개인 포트폴리오용으로 제작되었습니다.<br>
-          &copy; 20xx Sample. All Rights Reserved.      
-        </address>
+      <div class="info clearfix">
+        <ul class="policy clearfix"><li><a href="#">저작권보호정책</a></li><li><a href="#">개인정보처리방침</a></li><li><a href="#">이메일무단수집거부</a></li></ul>
+        <div class="familysite"><a href="#" class="familysiteOpen">관련 사이트</a></div>
+        <address>본 페이지는 상업적 목적이 아닌 개인 포트폴리오용으로 제작되었습니다.<br>&copy; 20xx Sample. All Rights Reserved.</address>
       </div>
     </footer>
   </div>
 
+  <script>
+    new WOW().init();
+  </script>
+  <script src="js/function.js"></script>
   <script src="js/initial_function.js"></script>
 </body>
 </html>
