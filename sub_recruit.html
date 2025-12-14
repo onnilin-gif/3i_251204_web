@@ -14,61 +14,75 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
 
-    /* 배경 투명화 (영상 보이기 위함) */
     html, body {
-        height: 100%; margin: 0; padding: 0;
-        background: transparent !important;
+        margin: 0; padding: 0;
+        background: #000 !important; /* 스크롤 끝부분 깔끔하게 처리 */
         font-family: 'Noto Sans KR', sans-serif;
     }
 
     #wrap {
         width: 100%; position: relative;
         background-color: transparent !important;
-        z-index: 10; overflow: hidden;
+        z-index: 10;
     }
 
-    /* 배경 영상 스타일 */
+    /* ================= 배경 영상 스타일 (고정) ================= */
     .video-background {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         z-index: -99; overflow: hidden; background: #000;
     }
 
-    .video-background iframe {
-        position: absolute; top: 50%; left: 50%;
-        width: 100vw; height: 100vh;
-        min-width: 177.77vh; min-height: 56.25vw;
+    .video-background video {
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 100%; height: 100%;
+        object-fit: cover;
         transform: translate(-50%, -50%);
-        pointer-events: none; opacity: 0.6;
+        /* 초기 상태: 선명함 */
+        filter: blur(0px) brightness(100%);
+        transition: filter 0.1s ease-out; /* 부드러운 전환 */
     }
 
+    /* 영상 위 어두운 막 (스크롤 시 진해짐) */
     .video-overlay {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.5); z-index: -98;
+        background: rgba(0, 0, 0, 0); /* 처음엔 투명 */
+        z-index: -98;
+        transition: background 0.1s ease-out;
     }
 
-    /* 헤더 스타일 */
+    /* ================= 헤더 스타일 ================= */
     header {
         width: 100%; height: 100px; 
-        background: rgba(255,255,255,0.95);
-        position: relative; border-bottom: 1px solid rgba(0,0,0,0.1);
+        /* 헤더 배경을 반투명하게 해서 영상과 어우러지게 함 */
+        background: rgba(0, 0, 0, 0.3); 
+        position: fixed; /* 헤더 고정 */
+        top: 0; left: 0; z-index: 1000;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        backdrop-filter: blur(5px);
+        transition: background 0.3s;
     }
+    
+    /* 스크롤 시 헤더가 진해지는 클래스 */
+    header.scrolled { background: rgba(0, 0, 0, 0.8); }
+
     h1.logo { position: absolute; left: 50px; top: 50px; transform: translateY(-50%); font-size: 32px; font-weight: 900; }
-    h1.logo a { color: #ff5e00; text-decoration: none; }
+    h1.logo a { color: #fff; text-decoration: none; text-shadow: 0 0 10px rgba(255, 94, 0, 0.7); }
     
     header nav { position: absolute; right: 50px; top: 35px; }
     header nav .gnb > li { float: left; margin-left: 40px; position: relative; }
-    header nav .gnb > li > a { font-size: 18px; font-weight: 700; color: #333; padding-bottom: 30px; display: block; }
+    header nav .gnb > li > a { font-size: 18px; font-weight: 700; color: #fff; padding-bottom: 30px; display: block; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
     header nav .gnb > li:hover > a { color: #ff5e00; }
     
-    /* 드롭다운 메뉴 스타일 */
+    /* 서브 메뉴 스타일 */
     header nav .sub {
         position: absolute; top: 65px; left: -20px; width: 400px; background: #fff; padding: 20px;
-        border-radius: 10px; box-shadow: 5px 5px 20px rgba(0,0,0,0.2); display: none; z-index: 100;
+        border-radius: 10px; display: none; z-index: 100;
     }
     header nav .gnb > li:hover .sub { display: block; }
     header nav .sub ol { float: left; width: 50%; }
     header nav .sub ol li { margin-bottom: 10px; }
-    header nav .sub ol li a { font-size: 15px; color: #666; }
+    header nav .sub ol li a { font-size: 15px; color: #666; text-shadow: none; }
     header nav .sub ol li a:hover { color: #ff5e00; font-weight: bold; }
     header nav .sub .sub_img {
         float: right; width: 45%; height: 150px; background: #ffecd2 url('images/sub_bg_01.jpg') no-repeat center/cover;
@@ -78,15 +92,42 @@
         position: absolute; bottom: 15px; left: 15px; color: #fff; font-weight: bold; font-size: 14px; z-index: 1; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
     }
     header nav .lnb { position: absolute; top: -25px; right: 0; }
-    header nav .lnb li { float: left; margin-left: 20px; font-size: 13px; color: #555; cursor: pointer; }
+    header nav .lnb li { float: left; margin-left: 20px; font-size: 13px; color: #ccc; cursor: pointer; }
 
-    /* 줄거리 섹션 스타일 */
+    /* ================= 스크롤 공간 확보 ================= */
+    /* 첫 화면에서는 영상만 보여야 하므로 빈 공간을 100vh(화면 높이 100%) 만큼 둠 */
+    .intro-spacer {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: flex-end; /* 아래쪽에 스크롤 유도 문구 배치 */
+        justify-content: center;
+        padding-bottom: 50px;
+        box-sizing: border-box;
+    }
+    
+    .scroll-hint {
+        color: rgba(255,255,255,0.7);
+        font-size: 14px;
+        animation: bounce 2s infinite;
+        text-align: center;
+    }
+    .scroll-hint span { display: block; font-size: 24px; margin-top: 5px; }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+        40% {transform: translateY(-10px);}
+        60% {transform: translateY(-5px);}
+    }
+
+    /* ================= 줄거리 섹션 ================= */
+    .plot-section { 
+        padding: 100px 0; 
+        min-height: 100vh; /* 섹션 자체도 화면을 꽉 채우게 */
+        position: relative;
+    }
+    
     .container { width: 1200px; margin: 0 auto; }
-    .clearfix::after { content: ''; display: block; clear: both; }
-    hr { display: none; }
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
-
-    .plot-section { padding: 100px 0; }
     .plot-container { width: 1000px; margin: 0 auto; text-align: center; }
     
     .plot-title {
@@ -99,8 +140,8 @@
     }
 
     .plot-intro { 
-        font-size: 24px; color: #f0f0f0; line-height: 1.7; margin-bottom: 80px; 
-        word-break: keep-all; font-weight: 500; text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+        font-size: 24px; color: #fff; line-height: 1.7; margin-bottom: 80px; 
+        word-break: keep-all; font-weight: 500; text-shadow: 1px 1px 5px rgba(0,0,0,1);
     }
     .plot-intro .highlight { color: #ffecd2; font-weight: 900; border-bottom: 3px solid #ff5e00; }
 
@@ -118,7 +159,6 @@
     
     .card-content { transform: translateZ(30px); }
     .card-icon { font-size: 60px; margin-bottom: 25px; }
-
     .plot-card h3 { font-size: 26px; color: #222; margin-bottom: 20px; font-weight: 800; }
     .plot-card p { font-size: 17px; color: #444; line-height: 1.8; word-break: keep-all; }
     .plot-card p strong { color: #d35400; font-weight: 700; }
@@ -129,7 +169,6 @@
         margin-top: 15px; text-transform: uppercase; letter-spacing: 1px;
     }
 
-    /* Footer */
     footer { background: #111; color: #ccc; padding: 50px 0; margin-top: 0; }
     footer .fnb { width: 1200px; margin: 0 auto; padding-bottom: 30px; border-bottom: 1px solid #333; }
     footer .fnb .title { font-size: 24px; color: #fff; margin-bottom: 30px; }
@@ -144,6 +183,10 @@
     footer .info address { font-style: normal; font-size: 14px; color: #666; margin-top: 20px; }
     footer .familysite { position: absolute; right: 0; top: 0; }
     footer .familysiteOpen { border: 1px solid #555; color: #aaa; padding: 5px 15px; font-size: 13px; }
+
+    .clearfix::after { content: ''; display: block; clear: both; }
+    hr { display: none; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
   </style>
 
   <script src="js/plugin/jquery-1.12.3.js"></script>
@@ -155,17 +198,14 @@
 <body>
   
   <div class="video-background">
-      <iframe 
-        src="https://www.youtube.com/embed/K0eDlFX9GMc?autoplay=1&mute=1&controls=0&loop=1&playlist=K0eDlFX9GMc&showinfo=0&rel=0&iv_load_policy=3&disablekb=1&modestbranding=1" 
-        frameborder="0" 
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen>
-      </iframe>
+      <video id="bgVideo" autoplay muted loop playsinline>
+          <source src="images/3idiot_preview.mp4" type="video/mp4">
+      </video>
   </div>
-  <div class="video-overlay"></div>
+  <div class="video-overlay" id="bgOverlay"></div>
 
   <div id="wrap">
-    <header>
+    <header id="mainHeader">
       <div class="container clearfix">
           <h1 class="logo"><a href="index.html">3 Idiots</a></h1>
           <nav>
@@ -178,7 +218,6 @@
                   <div class="sub_img"><p>알 이즈 웰!<br>성공은 배움 뒤에 따라온다.</p></div>
                 </div>
               </li>
-
               <li><a href="#">등장인물</a>
                 <div class="sub clearfix">
                   <ol>
@@ -187,9 +226,7 @@
                   <div class="sub_img"><p>전설적인 공학 천재들과<br>그들의 유쾌한 반란</p></div>
                 </div>
               </li>
-
               <li><a href="sub_recruit.html">줄거리</a></li>
-
               <li><a href="#">하이라이트</a>
                 <div class="sub clearfix">
                   <ol>
@@ -198,7 +235,6 @@
                   <div class="sub_img"><p>다시 보고 싶은<br>최고의 순간들</p></div>
                 </div>
               </li>
-
               <li><a href="#">후기평</a>
                 <div class="sub clearfix">
                   <ol>
@@ -214,7 +250,13 @@
           </nav>
       </div>
     </header>
-    <hr>
+
+    <div class="intro-spacer">
+        <div class="scroll-hint">
+            SCROLL DOWN
+            <span>▼</span>
+        </div>
+    </div>
 
     <section class="plot-section">
       <h2 class="sr-only">줄거리 페이지</h2>
@@ -260,7 +302,6 @@
         </div>
       </div>
     </section>
-    <hr>
 
     <footer>
       <div class="fnb clearfix">
@@ -287,5 +328,42 @@
   </script>
   <script src="js/function.js"></script>
   <script src="js/initial_function.js"></script>
+  
+  <script>
+    $(window).scroll(function() {
+        var scrollTop = $(window).scrollTop(); // 현재 스크롤 위치
+        var windowHeight = $(window).height(); // 화면 높이
+        
+        // 스크롤을 0~1000px 정도 내릴 동안 효과가 점진적으로 적용됨
+        var scrollRatio = Math.min(scrollTop / (windowHeight * 0.8), 1);
+
+        // 1. 영상 블러 처리 (최대 10px)
+        var blurValue = scrollRatio * 10;
+        
+        // 2. 영상 밝기 처리 (최소 40%까지 어두워짐)
+        var brightnessValue = 100 - (scrollRatio * 60);
+
+        // 3. 오버레이 배경색 (스크롤 내릴수록 검은색 70%까지 진해짐)
+        var overlayOpacity = scrollRatio * 0.7;
+
+        // 스타일 적용
+        $('#bgVideo').css({
+            'filter': 'blur(' + blurValue + 'px) brightness(' + brightnessValue + '%)',
+            '-webkit-filter': 'blur(' + blurValue + 'px) brightness(' + brightnessValue + '%)'
+        });
+
+        $('#bgOverlay').css({
+            'background': 'rgba(0, 0, 0, ' + overlayOpacity + ')'
+        });
+
+        // 헤더 스타일 변경 (스크롤 내리면 진해짐)
+        if (scrollTop > 50) {
+            $('#mainHeader').addClass('scrolled');
+        } else {
+            $('#mainHeader').removeClass('scrolled');
+        }
+    });
+  </script>
+
 </body>
 </html>
