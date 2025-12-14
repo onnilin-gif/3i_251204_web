@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3 Idiots - 영화 세 얼간이</title>
+  <title>영화 세 얼간이 - 3 Idiots</title>
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.jpg">
   
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/swiper.css">
   <link rel="stylesheet" href="css/animate.css">
-
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
@@ -19,169 +18,140 @@
         width: 100%; height: 100%;
         margin: 0; padding: 0;
         font-family: 'Noto Sans KR', sans-serif;
-        color: #333;
-        background: #fff;
+        background: #000; /* 영상 로딩 전 검은색 */
     }
 
-    #wrap { width: 100%; overflow: hidden; }
-    .container { width: 1200px; margin: 0 auto; position: relative; }
+    #wrap { width: 100%; height: 100%; position: relative; }
+    .container { width: 1200px; margin: 0 auto; position: relative; height: 100%; }
     .clearfix::after { content: ''; display: block; clear: both; }
 
     /* ==========================================================================
-       ★ [헤더] 서브 페이지와 100% 동일한 구조 및 디자인 (수정됨) ★
+       ★ [핵심] 보내주신 코드와 동일한 헤더 스타일 (White Background) ★
        ========================================================================== */
     header {
-        width: 100%; height: 100px; 
-        background: #fff; /* 흰색 배경 */
+        width: 100%; 
+        height: 100px; /* 기존 코드의 헤더 높이 */
+        background: #fff; /* ★ 흰색 배경 고정 ★ */
         border-bottom: 1px solid #ddd;
-        position: relative; z-index: 1000;
+        position: absolute; top: 0; left: 0; z-index: 1000;
     }
     
-    /* 로고 위치 */
+    /* 로고 */
     h1.logo { 
-        position: absolute; left: 50px; top: 50%; transform: translateY(-50%); 
+        float: left; margin-left: 50px; margin-top: 35px; /* 위치 조정 */
         font-size: 32px; font-weight: 900; 
     }
-    h1.logo a { color: #000; text-decoration: none; letter-spacing: 1px; }
+    h1.logo a { color: #000; text-decoration: none; } /* 검은색 글씨 */
     
-    /* 네비게이션바 위치 */
-    header nav { 
-        position: absolute; right: 50px; top: 0; height: 100px; 
+    /* 네비게이션 (GNB) */
+    header nav { float: right; margin-right: 50px; margin-top: 35px; }
+    
+    header nav .gnb > li { 
+        float: left; margin-left: 50px; position: relative; 
     }
-    
-    /* GNB (메인 메뉴) */
-    header nav .gnb { float: left; margin-top: 35px; /* 서브페이지와 위치 통일 */ }
-    header nav .gnb > li { float: left; margin-left: 40px; position: relative; }
     
     header nav .gnb > li > a { 
-        font-size: 18px; font-weight: 700; color: #333; /* 검은 글씨 */
-        display: block; padding-bottom: 30px;
+        font-size: 18px; font-weight: 700; color: #333; /* 검은색 글씨 */
+        display: block; padding-bottom: 30px; /* 마우스 오버 영역 확보 */
         transition: color 0.3s;
     }
-    header nav .gnb > li:hover > a { color: #ff5e00; }
+    header nav .gnb > li:hover > a { color: #ff5e00; } /* 오렌지색 호버 */
 
-    /* LNB (우측 상단 ENGLISH, SITEMAP 버튼) */
+    /* LNB (우측 상단 작은 메뉴) */
     header nav .lnb { 
-        position: absolute; top: -20px; right: 0; 
+        position: absolute; top: -25px; right: 0; 
     }
     header nav .lnb li { float: left; margin-left: 10px; }
     header nav .lnb li a {
-        display: block; font-size: 11px; color: #ff976f; border: 1px solid #ff976f;
-        padding: 2px 10px; border-radius: 20px; text-decoration: none; font-weight: 500;
-        transition: all 0.3s;
-    }
-    header nav .lnb li a:hover {
-        background: #ff976f; color: #fff;
+        font-size: 11px; color: #999; text-decoration: none;
     }
 
-    /* 드롭다운 서브메뉴 (통일된 화이트 톤) */
+    /* ★ [드롭다운 메뉴] 보내주신 구조 그대로 적용 ★ */
     header nav .sub {
-        position: absolute; top: 50px; left: -20px; 
+        position: absolute; top: 50px; left: -100px; /* 위치 조정 */
         width: 400px; background: #fff; 
-        padding: 20px; border-radius: 10px;
+        padding: 20px; border: 1px solid #eee;
         display: none; text-align: left;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: 1px solid #eee;
-        z-index: 999;
+        z-index: 999; box-shadow: 0 5px 10px rgba(0,0,0,0.1);
     }
+    
+    /* 마우스 올리면 보이기 */
     header nav .gnb > li:hover .sub { display: block; }
     
-    /* 서브메뉴 내부 리스트 */
     header nav .sub ol { float: left; width: 50%; }
     header nav .sub ol li { margin-bottom: 8px; }
     header nav .sub ol li a { 
-        color: #666; font-size: 14px; display: block; 
-        transition: all 0.2s; font-weight: 500;
+        font-size: 14px; color: #666; display: block; 
     }
     header nav .sub ol li a:hover { color: #ff5e00; font-weight: bold; }
     
-    /* 서브메뉴 우측 이미지 영역 */
+    /* 서브 메뉴 우측 설명 박스 */
     header nav .sub .sub_img { 
-        float: right; width: 45%; height: 120px; 
-        background: #ffecd2; border-radius: 5px; 
-        position: relative; overflow: hidden;
+        float: right; width: 45%; 
+        padding-top: 10px; border-top: 2px solid #ff5e00;
     }
     header nav .sub .sub_img p {
-        position: absolute; bottom: 10px; left: 10px; 
-        font-size: 12px; color: #ff5e00; font-weight: bold; line-height: 1.4;
+        font-size: 12px; color: #666; line-height: 1.5;
     }
 
-    /* ================= 메인 배너 (영상) ================= */
-    .main-banner {
-        width: 100%; height: 650px; /* 배너 높이 */
-        position: relative; overflow: hidden; background: #000;
-    }
-    
-    .main-banner video {
-        width: 100%; height: 100%; object-fit: cover;
-        opacity: 0.6; /* 글씨 잘 보이게 어둡게 */
+    /* ================= 배경 영상 (헤더 아래에 깔림) ================= */
+    .video-background {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        z-index: -99;
     }
 
-    .banner-text {
-        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-        text-align: center; color: #fff; width: 100%;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    .video-background video {
+        position: absolute; top: 50%; left: 50%; width: 100%; height: 100%;
+        object-fit: cover; transform: translate(-50%, -50%);
+        opacity: 0.7; /* 영상 밝기 조절 */
     }
-    .banner-text h2 {
-        font-family: 'Anton', sans-serif; font-size: 90px; letter-spacing: 2px;
-        margin-bottom: 20px; color: #ffecd2;
-    }
-    .banner-text p { font-size: 22px; font-weight: 300; margin-bottom: 40px; }
-    .banner-text a {
-        display: inline-block; padding: 15px 40px; border: 2px solid #fff;
-        color: #fff; font-weight: bold; border-radius: 30px; transition: 0.3s; font-size: 16px;
-    }
-    .banner-text a:hover { background: #fff; color: #000; text-decoration: none; }
 
-    /* ================= 콘텐츠 섹션 ================= */
-    .about-section { padding: 100px 0; text-align: center; background: #fff; }
-    .section-title { font-size: 40px; font-weight: 900; margin-bottom: 30px; color: #333; letter-spacing: -1px; }
-    .section-desc { font-size: 18px; color: #666; line-height: 1.8; max-width: 800px; margin: 0 auto; word-break: keep-all; }
-
-    .hr-line { border: 0; height: 1px; background: #eee; margin: 0; width: 100%; }
-
-    /* ================= 캐릭터 슬라이드 ================= */
-    .char-section { padding: 100px 0; text-align: center; background: #f9f9f9; }
-    .swiper-container {
-        width: 100%; padding: 20px 0 60px; overflow: hidden;
+    /* 메인 타이틀 (영상 위 중앙 정렬) */
+    .main-hero {
+        position: absolute; top: 55%; left: 50%; 
+        transform: translate(-50%, -50%);
+        text-align: center; width: 100%;
     }
-    .swiper-slide {
-        background: #fff; border-radius: 20px; overflow: hidden;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-        width: 280px; 
-        transition: transform 0.3s;
+    .hero-title {
+        font-family: 'Anton', sans-serif; font-size: 100px; color: #fff;
+        text-shadow: 0 5px 15px rgba(0,0,0,0.5); letter-spacing: 5px;
+        margin-bottom: 20px;
     }
-    .swiper-slide:hover { transform: translateY(-10px); }
-    
-    .char-card { padding: 40px 20px; }
-    .char-card h3 { font-size: 24px; color: #ff5e00; margin-bottom: 15px; font-weight: bold; }
-    .char-card p { font-size: 15px; color: #555; margin-bottom: 25px; line-height: 1.5; }
-    .char-card a {
-        display: inline-block; padding: 10px 25px; background: #333; color: #fff;
-        border-radius: 25px; font-size: 14px; transition: 0.3s; text-decoration: none;
+    .hero-btn {
+        display: inline-block; padding: 15px 40px; 
+        border: 2px solid #fff; color: #fff; border-radius: 50px;
+        font-size: 18px; font-weight: bold; text-decoration: none;
+        transition: 0.3s;
     }
-    .char-card a:hover { background: #ff5e00; }
+    .hero-btn:hover { background: #fff; color: #000; }
 
-    /* ================= 푸터 ================= */
-    footer { background: #222; color: #999; padding: 50px 0; text-align: center; }
-    footer address { font-style: normal; font-size: 14px; margin-top: 10px; }
-    footer .copy { margin-top: 20px; font-size: 13px; color: #666; }
-
+    /* 푸터 (화면 하단 고정) */
+    footer {
+        position: absolute; bottom: 0; left: 0; width: 100%;
+        height: 50px; background: rgba(0,0,0,0.8);
+        color: #888; text-align: center; line-height: 50px; font-size: 12px;
+    }
   </style>
 
   <script src="js/plugin/jquery-1.12.3.js"></script>
-  <script src="js/plugin/swiper.min.js"></script>
   <script src="js/plugin/wow.min.js"></script>
 </head>
 <body>
 
+  <div class="video-background">
+      <video autoplay muted loop playsinline>
+          <source src="images/3idiot_preview.mp4" type="video/mp4">
+      </video>
+  </div>
+
   <div id="wrap">
     <header>
       <h1 class="logo"><a href="index.html">3 Idiots</a></h1>
-      
+
       <nav class="clearfix">
         <ul class="gnb clearfix">
           <li>
-            <a href="sub_ceo.html">영화정보</a>
+            <a href="sub_ceo.html">영화소개</a>
             <div class="sub clearfix">
               <ol>
                 <li><a href="sub_ceo.html">감독인사말</a></li>
@@ -190,7 +160,12 @@
                 <li><a href="#">제작노트</a></li>
                 <li><a href="sub_ci.html">로고의미</a></li>
               </ol>
-              <div class="sub_img"><p>알 이즈 웰!<br>성공은 배움 뒤에 따라온다.</p></div>
+              <div class="sub_img">
+                <p>
+                  알 이즈 웰!<br>
+                  성공은 배움 뒤에 따라온다.
+                </p>
+              </div>
             </div>
           </li>
 
@@ -201,11 +176,16 @@
                 <li><a href="sub_rancho.html">란초</a></li>
                 <li><a href="sub_farhan.html">파르한</a></li>
                 <li><a href="sub_raju.html">라주</a></li>
-                <li><a href="sub_virus.html">비루 교수</a></li>
-                <li><a href="sub_chatur.html">차투르</a></li>
+                <li><a href="sub_virus.html">비루 사하스트라부데</a></li>
+                <li><a href="sub_chatur.html">차투르 라말링감</a></li>
                 <li><a href="sub_pia.html">피아</a></li>
               </ol>
-              <div class="sub_img"><p>전설적인 공학 천재들과<br>그들의 유쾌한 반란</p></div>
+              <div class="sub_img">
+                <p>
+                  전설적인 공학 천재들과<br>
+                  그들의 유쾌한 반란
+                </p>
+              </div>
             </div>
           </li>
 
@@ -217,31 +197,47 @@
                 <li><a href="#">명장면</a></li>
                 <li><a href="#">명대사</a></li>
               </ol>
-              <div class="sub_img"><p>웃음과 감동이 있는<br>진정한 교육 이야기</p></div>
+              <div class="sub_img">
+                <p>
+                  웃음과 감동이 있는<br>
+                  진정한 교육 이야기
+                </p>
+              </div>
             </div>
           </li>
 
           <li>
-            <a href="#">갤러리</a>
+            <a href="#">하이라이트</a>
             <div class="sub clearfix">
               <ol>
-                <li><a href="#">현장 스틸</a></li>
+                <li><a href="#">갤러리</a></li>
                 <li><a href="#">예고편</a></li>
                 <li><a href="#">OST</a></li>
+                <li><a href="#">제작영상</a></li>
               </ol>
-              <div class="sub_img"><p>다시 보고 싶은<br>최고의 순간들</p></div>
+              <div class="sub_img">
+                <p>
+                  다시 보고 싶은<br>
+                  최고의 순간들
+                </p>
+              </div>
             </div>
           </li>
 
           <li>
-            <a href="#">커뮤니티</a>
+            <a href="#">후기평</a>
             <div class="sub clearfix">
               <ol>
-                <li><a href="#">공지사항</a></li>
+                <li><a href="#">관람평</a></li>
                 <li><a href="#">Q&A</a></li>
-                <li class="last"><a href="#">자유게시판</a></li>
+                <li class="last"><a href="#">커뮤니티</a></li>
               </ol>
-              <div class="sub_img"><p>여러분의 감동을<br>함께 나누세요.</p></div>
+              <div class="sub_img">
+                <p>
+                  여러분의 감동을<br>
+                  함께 나누세요.
+                </p>
+              </div>
             </div>
           </li>
         </ul>
@@ -252,110 +248,18 @@
         </ul>
       </nav>
     </header>
-
-    <div class="main-banner">
-        <video autoplay muted loop playsinline>
-            <source src="images/3idiot_preview.mp4" type="video/mp4">
-        </video>
-        <div class="banner-text wow fadeInUp">
-            <h2>AAL IZZ WELL</h2>
-            <p>천재들의 유쾌한 반란이 시작된다!<br>당신을 웃고 울릴 최고의 감동 스토리</p>
-            <a href="sub_recruit.html">줄거리 확인하기</a>
-        </div>
-    </div>
-
-    <section class="about-section">
-        <div class="container">
-            <h2 class="section-title wow fadeInUp">ABOUT MOVIE</h2>
-            <p class="section-desc wow fadeInUp" data-wow-delay="0.2s">
-                "너의 재능을 따라가라! 성공은 뒤따라올 것이다"<br><br>
-                인도 역대 흥행 수익 1위! 전 세계가 감동한 화제작.<br>
-                성적과 취업만을 강요하는 세상에 던지는 유쾌한 메시지.<br>
-                세 친구의 우정과 사랑, 그리고 인생을 건 도전을 만나보세요.
-            </p>
-        </div>
-    </section>
-
-    <hr class="hr-line">
-
-    <section class="char-section">
-        <div class="container">
-            <h2 class="section-title wow fadeInUp">CHARACTERS</h2>
-            
-            <div class="swiper-container wow fadeInUp" data-wow-delay="0.3s">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="char-card">
-                            <h3>란초</h3>
-                            <p>틀을 깨는 엉뚱한 천재<br>우리의 리더</p>
-                            <a href="sub_rancho.html">자세히 보기</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="char-card">
-                            <h3>파르한</h3>
-                            <p>사진작가를 꿈꾸는<br>공학도</p>
-                            <a href="sub_farhan.html">자세히 보기</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="char-card">
-                            <h3>라주</h3>
-                            <p>가난한 집안의 희망<br>두려움 많은 청춘</p>
-                            <a href="sub_raju.html">자세히 보기</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="char-card">
-                            <h3>비루 교수</h3>
-                            <p>경쟁만이 살길이다<br>총장 바이러스</p>
-                            <a href="sub_virus.html">자세히 보기</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="char-card">
-                            <h3>차투르</h3>
-                            <p>성공지상주의 암기왕<br>소음유발자</p>
-                            <a href="sub_chatur.html">자세히 보기</a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="char-card">
-                            <h3>피아</h3>
-                            <p>란초를 사랑한<br>의사 선생님</p>
-                            <a href="sub_pia.html">자세히 보기</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <section class="main-hero">
+        <h2 class="hero-title wow fadeInUp">AAL IZZ WELL</h2>
+        <a href="sub_recruit.html" class="hero-btn wow fadeInUp" data-wow-delay="0.3s">줄거리 확인하기</a>
     </section>
 
     <footer>
-        <div class="container">
-            <h3>3 IDIOTS OFFICIAL FAN PAGE</h3>
-            <address>본 페이지는 상업적 목적이 아닌 개인 포트폴리오용으로 제작되었습니다.</address>
-            <p class="copy">&copy; 20xx Sample. All Rights Reserved.</p>
-        </div>
+        <address>&copy; 20xx 3 Idiots Fan Page. All Rights Reserved.</address>
     </footer>
   </div>
 
   <script>
     new WOW().init();
-
-    $(document).ready(function(){
-        var swiper = new Swiper('.swiper-container', {
-            slidesPerView: 3, 
-            spaceBetween: 30, 
-            loop: true,
-            autoplay: { delay: 3000, disableOnInteraction: false },
-            breakpoints: {
-                1024: { slidesPerView: 3, spaceBetween: 30 },
-                768: { slidesPerView: 2, spaceBetween: 20 },
-                320: { slidesPerView: 1, spaceBetween: 10 }
-            }
-        });
-    });
   </script>
 </body>
 </html>
