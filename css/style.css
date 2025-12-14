@@ -85,7 +85,7 @@ section>.content>a:hover,section>.content>a:focus{color:#fff; background-color:#
 }
 
 section>.brands>.swiper-container>.swiper-wrapper>.swiper-slide{position:relative; left:0; top:0; width:100%; height:auto; background-repeat:no-repeat; background-size:contain; background-position:center top;}
-section>.brands>.swiper-container>.swiper-wrapper>.brands1{background-image:url(../images/brand_1.jpg);}
+section>.brands>.swiper-container>.swiper-wrapper>.brands1{background-image:none;}
 section>.brands>.swiper-container>.swiper-wrapper>.brands2{background-image:url(../images/brand_2.jpg);}
 section>.brands>.swiper-container>.swiper-wrapper>.brands3{background-image:url(../images/brand_3.jpg);}
 section>.brands>.swiper-container>.swiper-wrapper>.brands4{background-image:url(../images/brand_4.jpg);}
