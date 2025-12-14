@@ -21,7 +21,7 @@ header>nav>.gnb>li>.sub>ol{float:left; position:absolute; left:0; top:0; width:4
 header>nav>.gnb>li>.sub>ol>li>a{display:block; padding:10px; text-indent:10px; font-size:15px; font-weight:500; letter-spacing:2px; transition:all 0.4s;}
 header>nav>.gnb>li>.sub>ol>li:hover>a,header>nav>.gnb>li>.sub>ol>li>a:focus{color:#ff976f; background-color:#dedede;}
 
-header>nav>.gnb>li>.sub>.sub_img{float:left; position:absolute; right:0; top:0; width:300px; height:250px; background-image:url(../images/mnu_bg_1.jpg); background-position:center 10px; background-repeat:no-repeat;}
+header>nav>.gnb>li>.sub>.sub_img{float:left; position:absolute; right:0; top:0; width:300px; height:250px; background-image:none; background-position:center 10px; background-repeat:no-repeat;}
 header>nav>.gnb>li:nth-child(2)>.sub>.sub_img{background-image:url(../images/mnu_bg_2.jpg);}
 header>nav>.gnb>li:nth-child(3)>.sub>.sub_img{background-image:url(../images/mnu_bg_3.jpg);}
 header>nav>.gnb>li:nth-child(4)>.sub>.sub_img{background-image:url(../images/mnu_bg_4.jpg);}
