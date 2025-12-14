@@ -13,12 +13,13 @@
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap'); /* 영화 타이틀용 폰트 */
+    @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
-    /* 기본 설정 */
+    /* ================= 페이지 기본 설정 ================= */
     html, body {
         width: 100%; height: 100%;
         margin: 0; padding: 0;
+        overflow: hidden; /* 스크롤 제거 */
         font-family: 'Noto Sans KR', sans-serif;
         background: #000;
     }
@@ -27,109 +28,100 @@
     .container { width: 1200px; margin: 0 auto; position: relative; height: 100%; }
     .clearfix::after { content: ''; display: block; clear: both; }
 
-    /* ==========================================================================
-       ★ [헤더 디자인] 영화 분위기에 맞게 리뉴얼 ★
-       ========================================================================== */
-    header {
-        position: absolute; top: 0; left: 0; width: 100%;
-        height: 100px;
-        /* 투명하지만 글씨가 잘 보이도록 상단에 검은 그라데이션 추가 */
-        background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%);
-        z-index: 1000;
-        border-bottom: 1px solid rgba(255,255,255,0.1); /* 아주 연한 하단 선 */
-    }
-
-    /* 로고 스타일 */
-    h1.logo { 
-        float: left; margin-left: 50px; margin-top: 30px;
-    }
-    h1.logo a { 
-        font-family: 'Anton', sans-serif; /* 임팩트 있는 폰트 */
-        color: #fff; 
-        font-size: 40px; 
-        letter-spacing: 2px; 
-        text-transform: uppercase;
-        text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-    }
-    /* 로고 포인트 컬러 */
-    h1.logo a span { color: #f1c40f; } /* 3 Idiots의 '3'을 노란색으로 강조 */
-
-    /* 네비게이션 (GNB) */
-    header nav { 
-        float: right; margin-right: 50px; margin-top: 35px; 
-    }
-    
-    header nav .gnb > li { 
-        float: left; margin-left: 60px; position: relative; 
-    }
-    
-    header nav .gnb > li > a { 
-        font-size: 18px; font-weight: 700; color: #fff; /* 흰색 글씨 */
-        display: block; padding-bottom: 40px; /* 마우스 영역 */
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        transition: all 0.3s;
-        position: relative;
-    }
-
-    /* 마우스 올렸을 때 밑줄 효과 */
-    header nav .gnb > li > a::after {
-        content: ''; position: absolute; bottom: 30px; left: 0;
-        width: 0%; height: 3px; background: #f1c40f; /* 옐로우 포인트 */
-        transition: width 0.3s;
-    }
-    header nav .gnb > li:hover > a { color: #f1c40f; }
-    header nav .gnb > li:hover > a::after { width: 100%; }
-
-    /* ★ [서브메뉴] 세련된 다크 글래스 디자인 ★ */
-    .sub {
-        position: absolute; top: 70px; left: 50%; transform: translateX(-50%);
-        width: 180px; 
-        background: rgba(0, 0, 0, 0.85); /* 반투명 블랙 */
-        padding: 15px 0; 
-        border-radius: 10px;
-        border: 1px solid rgba(255,255,255,0.1);
-        display: none; text-align: center;
-        z-index: 2000; 
-        backdrop-filter: blur(5px); /* 배경 흐림 효과 */
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-    
-    /* 서브메뉴 화살표 (말풍선 꼬리) */
-    .sub::before {
-        content: ''; position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
-        border-left: 6px solid transparent; border-right: 6px solid transparent;
-        border-bottom: 6px solid rgba(0,0,0,0.85);
-    }
-
-    header nav .gnb > li:hover .sub { display: block; animation: fadeInDown 0.3s; }
-
-    .sub ol li { margin-bottom: 0; }
-    .sub ol li a { 
-        font-size: 14px; color: #ccc; display: block; padding: 10px 0;
-        transition: all 0.2s; letter-spacing: 0.5px;
-    }
-    .sub ol li a:hover { 
-        color: #fff; background: rgba(255,255,255,0.1); 
-        font-weight: bold;
-    }
-    
-    .sub .sub_img { display: none; } /* 이미지 박스는 디자인상 숨김 */
-
-    /* 애니메이션 키프레임 */
-    @keyframes fadeInDown {
-        from { opacity: 0; transform: translate(-50%, -10px); }
-        to { opacity: 1; transform: translate(-50%, 0); }
-    }
-
     /* ================= 배경 영상 ================= */
     .video-background {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         z-index: -99; background: #000;
     }
+
     .video-background video {
-        position: absolute; top: 50%; left: 50%; width: 100%; height: 100%;
-        object-fit: cover; transform: translate(-50%, -50%);
-        opacity: 0.7; 
+        width: 100%; height: 100%;
+        object-fit: cover;
+        opacity: 0.8; /* 영상 밝기 조절 */
+    }
+
+    /* ================= 헤더 스타일 (줄거리 페이지 스타일 적용) ================= */
+    header {
+        position: absolute; top: 0; left: 0; width: 100%;
+        height: 100px;
+        z-index: 1000;
+        /* 흰색 배경 제거하고 투명 그라데이션 적용 */
+        background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+        border-bottom: 1px solid rgba(255,255,255,0.1); /* 얇은 흰색 선 */
+    }
+
+    /* 로고 (흰색으로 변경) */
+    h1.logo { 
+        position: absolute; left: 50px; top: 50%; transform: translateY(-50%); 
+        font-size: 32px; font-weight: 900; margin: 0;
+    }
+    h1.logo a { 
+        color: #fff; /* ★ 흰색 글씨 ★ */
+        text-decoration: none; 
+        text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+
+    /* 네비게이션 위치 */
+    header nav { position: absolute; right: 50px; top: 0; height: 100px; }
+    
+    header nav .gnb { height: 100%; float: left; margin-top: 0; }
+    header nav .gnb > li { 
+        float: left; margin-left: 40px; position: relative; 
+        height: 100%; display: flex; align-items: center; 
+    }
+    
+    /* 메뉴 링크 (흰색으로 변경) */
+    header nav .gnb > li > a { 
+        font-size: 18px; font-weight: 700; 
+        color: #fff; /* ★ 흰색 글씨 ★ */
+        display: block; padding: 0 10px; height: 100px; line-height: 100px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        transition: color 0.3s;
+    }
+    header nav .gnb > li:hover > a { color: #ff5e00; } /* 오렌지색 호버 */
+
+    /* LNB (우측 상단 메뉴 - 흰색 스타일) */
+    header nav .lnb { 
+        position: absolute; top: 20px; right: 0; /* 위치 미세 조정 */
+    }
+    header nav .lnb li { float: left; margin-left: 10px; }
+    header nav .lnb li a {
+        font-size: 11px; color: #fff; /* 흰색 */
+        border: 1px solid rgba(255,255,255,0.5); /* 테두리 */
+        padding: 2px 8px; border-radius: 10px;
+        text-decoration: none; transition: 0.3s;
+    }
+    header nav .lnb li a:hover { background: #fff; color: #000; }
+
+    /* ================= 드롭다운 서브메뉴 (하위섹션 유지) ================= */
+    header nav .sub {
+        position: absolute; 
+        top: 100px; /* 헤더 바로 아래 */
+        left: 50%; transform: translateX(-50%);
+        width: 400px; 
+        background: #fff; /* 배경은 가독성을 위해 흰색 유지 */
+        padding: 20px; border-radius: 0 0 10px 10px;
+        display: none; text-align: left;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        z-index: 2000;
+    }
+    
+    header nav .gnb > li:hover .sub { display: block; }
+    
+    header nav .sub ol { float: left; width: 50%; }
+    header nav .sub ol li { margin-bottom: 8px; }
+    header nav .sub ol li a { 
+        font-size: 14px; color: #555; display: block; line-height: normal; height: auto; padding: 5px 0;
+        text-shadow: none;
+    }
+    header nav .sub ol li a:hover { color: #ff5e00; font-weight: bold; }
+    
+    header nav .sub .sub_img { 
+        float: right; width: 45%; 
+        padding-top: 10px; border-top: 2px solid #ff5e00;
+    }
+    header nav .sub .sub_img p {
+        font-size: 12px; color: #666; line-height: 1.5; text-shadow: none;
     }
 
     /* ================= 메인 콘텐츠 ================= */
@@ -139,31 +131,27 @@
         text-align: center; width: 100%; z-index: 10;
     }
     .hero-title {
-        font-family: 'Anton', sans-serif; font-size: 100px; color: #fff;
-        text-shadow: 2px 2px 20px rgba(0,0,0,0.8); margin-bottom: 30px;
-        text-transform: uppercase; letter-spacing: 5px;
+        font-family: 'Anton', sans-serif; font-size: 80px; color: #fff;
+        text-shadow: 2px 2px 10px rgba(0,0,0,0.5); margin-bottom: 30px;
+        text-transform: uppercase; letter-spacing: 2px;
     }
-    .hero-title span { color: #f1c40f; } /* 포인트 컬러 */
-
     .hero-btn {
         display: inline-block; padding: 15px 50px;
         border: 2px solid #fff; color: #fff; border-radius: 50px;
         font-size: 18px; font-weight: bold; text-decoration: none;
-        transition: 0.3s; background: rgba(0,0,0,0.3); backdrop-filter: blur(3px);
+        transition: 0.3s;
+        background: rgba(0,0,0,0.3); backdrop-filter: blur(3px);
     }
-    .hero-btn:hover { 
-        background: #f1c40f; color: #000; border-color: #f1c40f;
-        box-shadow: 0 0 20px rgba(241, 196, 15, 0.6);
-    }
+    .hero-btn:hover { background: #fff; color: #000; }
 
     /* 푸터 */
     footer {
         position: absolute; bottom: 0; left: 0; width: 100%;
-        background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-        padding: 30px 0; border-top: none;
+        background: rgba(0,0,0,0.8); padding: 20px 0; border-top: none;
     }
-    footer address { color: #bbb; font-size: 12px; text-align: center; font-style: normal; }
+    footer address { color: #888; font-size: 13px; text-align: center; display: block; margin: 0; }
     
+    /* style.css 숨김 처리 (충돌 방지) */
     footer .fnb, footer .info { display: none; } 
   </style>
 
@@ -182,12 +170,29 @@
 
   <div id="wrap">
     <header>
-      <h1 class="logo">
-          <a href="index.html"><span>3</span> IDIOTS</a>
-      </h1>
+      <h1 class="logo"><a href="index.html">3 Idiots</a></h1>
 
       <nav class="clearfix">
         <ul class="gnb clearfix">
+          <li>
+            <a href="sub_ceo.html">영화소개</a>
+            <div class="sub clearfix">
+              <ol>
+                <li><a href="sub_ceo.html">감독인사말</a></li>
+                <li><a href="#">Vision</a></li>
+                <li><a href="#">작품배경</a></li>
+                <li><a href="#">제작노트</a></li>
+                <li><a href="sub_ci.html">로고의미</a></li>
+              </ol>
+              <div class="sub_img">
+                <p>
+                  알 이즈 웰!<br>
+                  성공은 배움 뒤에 따라온다.
+                </p>
+              </div>
+            </div>
+          </li>
+
           <li>
             <a href="#">등장인물</a>
             <div class="sub clearfix">
@@ -195,15 +200,34 @@
                 <li><a href="sub_rancho.html">란초</a></li>
                 <li><a href="sub_farhan.html">파르한</a></li>
                 <li><a href="sub_raju.html">라주</a></li>
-                <li><a href="sub_virus.html">비루 교수</a></li>
-                <li><a href="sub_chatur.html">차투르</a></li>
+                <li><a href="sub_virus.html">비루 사하스트라부데</a></li>
+                <li><a href="sub_chatur.html">차투르 라말링감</a></li>
                 <li><a href="sub_pia.html">피아</a></li>
               </ol>
+              <div class="sub_img">
+                <p>
+                  전설적인 공학 천재들과<br>
+                  그들의 유쾌한 반란
+                </p>
+              </div>
             </div>
           </li>
 
           <li>
             <a href="sub_recruit.html">줄거리</a>
+            <div class="sub clearfix">
+              <ol>
+                <li><a href="sub_recruit.html">전체 줄거리</a></li>
+                <li><a href="#">명장면</a></li>
+                <li><a href="#">명대사</a></li>
+              </ol>
+              <div class="sub_img">
+                <p>
+                  웃음과 감동이 있는<br>
+                  진정한 교육 이야기
+                </p>
+              </div>
+            </div>
           </li>
 
           <li>
@@ -214,7 +238,14 @@
                 <li><a href="#">예고편</a></li>
                 <li><a href="#">OST</a></li>
                 <li><a href="#">제작영상</a></li>
+                <li><a href="#">비하인드</a></li>
               </ol>
+              <div class="sub_img">
+                <p>
+                  다시 보고 싶은<br>
+                  최고의 순간들
+                </p>
+              </div>
             </div>
           </li>
 
@@ -226,14 +257,25 @@
                 <li><a href="sub_real_reviews.html">실관람객평</a></li>
                 <li class="last"><a href="sub_critic_reviews.html">평론가평</a></li>
               </ol>
+              <div class="sub_img">
+                <p>
+                  여러분의 감동을<br>
+                  함께 나누세요.
+                </p>
+              </div>
             </div>
           </li>
+        </ul>
+
+        <ul class="lnb clearfix">
+          <li><a href="#" class="language">ENGLISH</a></li>
+          <li><a href="#" class="sitemap">SITEMAP</a></li>
         </ul>
       </nav>
     </header>
 
     <section class="main-hero">
-        <h2 class="hero-title wow fadeInUp">AAL IZZ <span>WELL</span></h2>
+        <h2 class="hero-title wow fadeInUp">AAL IZZ WELL</h2>
         <a href="sub_recruit.html" class="hero-btn wow fadeInUp" data-wow-delay="0.3s">줄거리 확인하기</a>
     </section>
 
