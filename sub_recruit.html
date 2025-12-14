@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>영화 세 얼간이 - 줄거리</title>
-  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.jpg">
   
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/swiper.css">
@@ -14,9 +12,10 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
 
+    /* 기본 설정 */
     html, body {
         margin: 0; padding: 0;
-        background: #000 !important; /* 스크롤 끝부분 깔끔하게 처리 */
+        background: #000 !important; /* 스크롤 바닥 색상 */
         font-family: 'Noto Sans KR', sans-serif;
     }
 
@@ -26,10 +25,11 @@
         z-index: 10;
     }
 
-    /* ================= 배경 영상 스타일 (고정) ================= */
+    /* ================= 배경 영상 스타일 (핵심 수정) ================= */
     .video-background {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        z-index: -99; overflow: hidden; background: #000;
+        z-index: -99; overflow: hidden;
+        background: #000; 
     }
 
     .video-background video {
@@ -38,81 +38,69 @@
         width: 100%; height: 100%;
         object-fit: cover;
         transform: translate(-50%, -50%);
-        /* 초기 상태: 선명함 */
+        
+        /* ★ 수정됨: 초기 상태를 완전 불투명(1)하고 선명하게 설정 ★ */
+        opacity: 1; 
         filter: blur(0px) brightness(100%);
-        transition: filter 0.1s ease-out; /* 부드러운 전환 */
+        transition: filter 0.1s ease-out;
     }
 
-    /* 영상 위 어두운 막 (스크롤 시 진해짐) */
+    /* 영상 위에 덮이는 막 (처음엔 완전 투명) */
     .video-overlay {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0); /* 처음엔 투명 */
+        background: rgba(0, 0, 0, 0); /* 완전 투명 */
         z-index: -98;
+        pointer-events: none;
         transition: background 0.1s ease-out;
     }
 
-    /* ================= 헤더 스타일 ================= */
+    /* ================= 헤더 스타일 (투명하게 시작) ================= */
     header {
         width: 100%; height: 100px; 
-        /* 헤더 배경을 반투명하게 해서 영상과 어우러지게 함 */
-        background: rgba(0, 0, 0, 0.3); 
-        position: fixed; /* 헤더 고정 */
-        top: 0; left: 0; z-index: 1000;
+        background: transparent; /* ★ 처음엔 배경 없음 ★ */
+        position: fixed; top: 0; left: 0; z-index: 1000;
         border-bottom: 1px solid rgba(255,255,255,0.1);
-        backdrop-filter: blur(5px);
-        transition: background 0.3s;
+        transition: background 0.3s ease;
     }
     
-    /* 스크롤 시 헤더가 진해지는 클래스 */
-    header.scrolled { background: rgba(0, 0, 0, 0.8); }
+    /* 스크롤 내리면 헤더가 검게 변함 */
+    header.scrolled { background: rgba(0, 0, 0, 0.9); border-bottom: none; }
 
-    h1.logo { position: absolute; left: 50px; top: 50px; transform: translateY(-50%); font-size: 32px; font-weight: 900; }
-    h1.logo a { color: #fff; text-decoration: none; text-shadow: 0 0 10px rgba(255, 94, 0, 0.7); }
+    .container { width: 1200px; margin: 0 auto; position: relative; height: 100%; }
     
-    header nav { position: absolute; right: 50px; top: 35px; }
-    header nav .gnb > li { float: left; margin-left: 40px; position: relative; }
-    header nav .gnb > li > a { font-size: 18px; font-weight: 700; color: #fff; padding-bottom: 30px; display: block; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+    h1.logo { position: absolute; left: 50px; top: 50%; transform: translateY(-50%); font-size: 32px; font-weight: 900; }
+    h1.logo a { color: #fff; text-decoration: none; text-shadow: 0 0 10px rgba(0, 0, 0, 0.5); }
+    
+    header nav { position: absolute; right: 50px; top: 50%; transform: translateY(-50%); }
+    header nav .gnb > li { float: left; margin-left: 40px; }
+    header nav .gnb > li > a { 
+        font-size: 18px; font-weight: 700; color: #fff; display: block; padding: 10px 0; 
+        text-shadow: 0 2px 5px rgba(0,0,0,0.8); /* 글씨 잘 보이게 그림자 추가 */
+    }
     header nav .gnb > li:hover > a { color: #ff5e00; }
     
-    /* 서브 메뉴 스타일 */
-    header nav .sub {
-        position: absolute; top: 65px; left: -20px; width: 400px; background: #fff; padding: 20px;
-        border-radius: 10px; display: none; z-index: 100;
-    }
-    header nav .gnb > li:hover .sub { display: block; }
-    header nav .sub ol { float: left; width: 50%; }
-    header nav .sub ol li { margin-bottom: 10px; }
-    header nav .sub ol li a { font-size: 15px; color: #666; text-shadow: none; }
-    header nav .sub ol li a:hover { color: #ff5e00; font-weight: bold; }
-    header nav .sub .sub_img {
-        float: right; width: 45%; height: 150px; background: #ffecd2 url('images/sub_bg_01.jpg') no-repeat center/cover;
-        border-radius: 8px; position: relative; overflow: hidden;
-    }
-    header nav .sub .sub_img p {
-        position: absolute; bottom: 15px; left: 15px; color: #fff; font-weight: bold; font-size: 14px; z-index: 1; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-    }
-    header nav .lnb { position: absolute; top: -25px; right: 0; }
-    header nav .lnb li { float: left; margin-left: 20px; font-size: 13px; color: #ccc; cursor: pointer; }
+    header nav .lnb { display: none; } 
 
-    /* ================= 스크롤 공간 확보 ================= */
-    /* 첫 화면에서는 영상만 보여야 하므로 빈 공간을 100vh(화면 높이 100%) 만큼 둠 */
+    /* ================= 스크롤 유도 영역 ================= */
     .intro-spacer {
-        height: 100vh;
+        height: 100vh; /* 화면 전체 높이 */
         width: 100%;
         display: flex;
-        align-items: flex-end; /* 아래쪽에 스크롤 유도 문구 배치 */
+        align-items: flex-end;
         justify-content: center;
-        padding-bottom: 50px;
+        padding-bottom: 80px;
         box-sizing: border-box;
     }
     
     .scroll-hint {
-        color: rgba(255,255,255,0.7);
-        font-size: 14px;
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         animation: bounce 2s infinite;
         text-align: center;
     }
-    .scroll-hint span { display: block; font-size: 24px; margin-top: 5px; }
+    .scroll-hint span { display: block; font-size: 24px; margin-top: 10px; color: #ff5e00; }
 
     @keyframes bounce {
         0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
@@ -120,14 +108,13 @@
         60% {transform: translateY(-5px);}
     }
 
-    /* ================= 줄거리 섹션 ================= */
+    /* ================= 줄거리 카드 섹션 ================= */
     .plot-section { 
         padding: 100px 0; 
-        min-height: 100vh; /* 섹션 자체도 화면을 꽉 채우게 */
+        min-height: 100vh; 
         position: relative;
     }
     
-    .container { width: 1200px; margin: 0 auto; }
     .plot-container { width: 1000px; margin: 0 auto; text-align: center; }
     
     .plot-title {
@@ -151,9 +138,8 @@
         flex: 1; 
         background: rgba(255, 255, 255, 0.9);
         border-radius: 20px;
-        padding: 50px 40px; text-align: left; position: relative;
+        padding: 50px 40px; text-align: left; 
         box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-        border: 1px solid rgba(255,255,255,0.6); 
         transform-style: preserve-3d;
     }
     
@@ -169,21 +155,8 @@
         margin-top: 15px; text-transform: uppercase; letter-spacing: 1px;
     }
 
-    footer { background: #111; color: #ccc; padding: 50px 0; margin-top: 0; }
+    footer { background: #111; color: #ccc; padding: 50px 0; }
     footer .fnb { width: 1200px; margin: 0 auto; padding-bottom: 30px; border-bottom: 1px solid #333; }
-    footer .fnb .title { font-size: 24px; color: #fff; margin-bottom: 30px; }
-    footer .fnb ul > li { float: left; width: 16.66%; }
-    footer .fnb ul > li > a { color: #fff; font-size: 16px; font-weight: bold; margin-bottom: 15px; display: block; }
-    footer .fnb .fnb_sub li { margin-bottom: 8px; }
-    footer .fnb .fnb_sub li a { font-size: 14px; color: #888; transition: color 0.3s; }
-    footer .fnb .fnb_sub li a:hover { color: #ff5e00; }
-    footer .info { width: 1200px; margin: 30px auto 0; position: relative; }
-    footer .info .policy li { float: left; margin-right: 20px; }
-    footer .info .policy li a { font-size: 14px; color: #888; }
-    footer .info address { font-style: normal; font-size: 14px; color: #666; margin-top: 20px; }
-    footer .familysite { position: absolute; right: 0; top: 0; }
-    footer .familysiteOpen { border: 1px solid #555; color: #aaa; padding: 5px 15px; font-size: 13px; }
-
     .clearfix::after { content: ''; display: block; clear: both; }
     hr { display: none; }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
@@ -202,6 +175,7 @@
           <source src="images/3idiot_preview.mp4" type="video/mp4">
       </video>
   </div>
+  
   <div class="video-overlay" id="bgOverlay"></div>
 
   <div id="wrap">
@@ -210,42 +184,11 @@
           <h1 class="logo"><a href="index.html">3 Idiots</a></h1>
           <nav>
             <ul class="gnb clearfix">
-              <li><a href="sub_ceo.html">영화소개</a>
-                <div class="sub clearfix">
-                  <ol>
-                    <li><a href="sub_ceo.html">감독인사말</a></li><li><a href="#">Vision</a></li><li><a href="#">작품배경</a></li><li><a href="#">제작노트</a></li><li><a href="sub_ci.html">로고의미</a></li>
-                  </ol>
-                  <div class="sub_img"><p>알 이즈 웰!<br>성공은 배움 뒤에 따라온다.</p></div>
-                </div>
-              </li>
-              <li><a href="#">등장인물</a>
-                <div class="sub clearfix">
-                  <ol>
-                    <li><a href="sub_rancho.html">란초</a></li><li><a href="sub_farhan.html">파르한</a></li><li><a href="sub_raju.html">라주</a></li><li><a href="sub_virus.html">비루 교수</a></li><li><a href="sub_chatur.html">차투르</a></li><li><a href="sub_pia.html">피아</a></li>
-                  </ol>
-                  <div class="sub_img"><p>전설적인 공학 천재들과<br>그들의 유쾌한 반란</p></div>
-                </div>
-              </li>
+              <li><a href="sub_ceo.html">영화소개</a></li>
+              <li><a href="#">등장인물</a></li>
               <li><a href="sub_recruit.html">줄거리</a></li>
-              <li><a href="#">하이라이트</a>
-                <div class="sub clearfix">
-                  <ol>
-                    <li><a href="#">갤러리</a></li><li><a href="#">예고편</a></li>
-                  </ol>
-                  <div class="sub_img"><p>다시 보고 싶은<br>최고의 순간들</p></div>
-                </div>
-              </li>
-              <li><a href="#">후기평</a>
-                <div class="sub clearfix">
-                  <ol>
-                    <li><a href="#">관람평</a></li><li><a href="#">Q&A</a></li><li class="last"><a href="#">커뮤니티</a></li>
-                  </ol>
-                  <div class="sub_img"><p>여러분의 감동을<br>함께 나누세요.</p></div>
-                </div>
-              </li>
-            </ul>
-            <ul class="lnb clearfix">
-              <li>ENGLISH</li><li>SITEMAP</li>
+              <li><a href="#">하이라이트</a></li>
+              <li><a href="#">후기평</a></li>
             </ul>
           </nav>
       </div>
@@ -253,7 +196,7 @@
 
     <div class="intro-spacer">
         <div class="scroll-hint">
-            SCROLL DOWN
+            스크롤을 내려서 줄거리를 확인하세요
             <span>▼</span>
         </div>
     </div>
@@ -278,7 +221,6 @@
                     <p>
                         꿈 대신 취업을 강요받는 <strong>'파르한'</strong>과 <strong>'라주'</strong> 앞에 나타난 자유로운 영혼 <strong>'란초'</strong>. 
                         그는 주입식 교육의 상징인 총장 '바이러스'에게 기상천외한 방법으로 맞서며 학교를 발칵 뒤집어 놓습니다. 
-                        란초를 통해 친구들은 진정한 배움과 꿈의 의미를 깨닫기 시작합니다.
                     </p>
                 </div>
             </div>
@@ -289,8 +231,8 @@
                     <h3>PART 2. 사라진 란초를 찾아서</h3>
                     <p>
                         "10년 뒤에 여기서 만나자!"는 내기만 남긴 채 연기처럼 사라져 버린 란초. 
-                        10년 후, 란초의 라이벌 '차투르'와 친구들은 그를 찾기 위한 긴 여정을 떠납니다. 
-                        그 길의 끝에서 그들은 란초가 감추고 있던 충격적인 비밀과 마주하게 되는데...
+                        10년 후, 친구들은 그를 찾기 위한 긴 여정을 떠납니다. 
+                        그 길의 끝에서 충격적인 비밀과 마주하게 되는데...
                     </p>
                 </div>
             </div>
@@ -305,20 +247,9 @@
 
     <footer>
       <div class="fnb clearfix">
-        <h3 class="title">3 IDIOTS SITEMAP</h3>
-        <ul class="clearfix">
-          <li><a href="#">영화소개</a><ol class="fnb_sub"><li><a href="sub_ceo.html">감독인사말</a></li><li><a href="#">Vision</a></li><li><a href="#">작품배경</a></li><li><a href="#">제작노트</a></li><li><a href="sub_ci.html">로고의미</a></li></ol></li>
-          <li><a href="#">등장인물</a><ol class="fnb_sub"><li><a href="sub_rancho.html">란초</a></li><li><a href="sub_farhan.html">파르한</a></li><li><a href="sub_raju.html">라주</a></li><li><a href="sub_virus.html">비루 교수</a></li><li><a href="sub_chatur.html">차투르</a></li><li><a href="sub_pia.html">피아</a></li></ol></li>
-          <li><a href="sub_recruit.html">줄거리</a></li>
-          <li><a href="#">하이라이트</a><ol class="fnb_sub"><li><a href="#">갤러리</a></li><li><a href="#">예고편</a></li></ol></li>
-          <li><a href="#">후기평</a><ol class="fnb_sub"><li><a href="#">관람평</a></li><li><a href="#">Q&A</a></li><li><a href="#">커뮤니티</a></li></ol></li>
-          <li><a href="#">SNS</a><ol class="fnb_sub"><li><a href="#">facebook</a></li><li><a href="#">instagram</a></li><li><a href="#">youtube</a></li></ol></li>
-        </ul>
-      </div>
-      <div class="info clearfix">
-        <ul class="policy clearfix"><li><a href="#">저작권보호정책</a></li><li><a href="#">개인정보처리방침</a></li><li><a href="#">이메일무단수집거부</a></li></ul>
-        <div class="familysite"><a href="#" class="familysiteOpen">관련 사이트</a></div>
-        <address>본 페이지는 상업적 목적이 아닌 개인 포트폴리오용으로 제작되었습니다.<br>&copy; 20xx Sample. All Rights Reserved.</address>
+        <div class="info clearfix">
+            <address style="color:#666; text-align:center;">본 페이지는 개인 포트폴리오용입니다. &copy; 20xx Sample.</address>
+        </div>
       </div>
     </footer>
   </div>
@@ -330,38 +261,49 @@
   <script src="js/initial_function.js"></script>
   
   <script>
-    $(window).scroll(function() {
-        var scrollTop = $(window).scrollTop(); // 현재 스크롤 위치
-        var windowHeight = $(window).height(); // 화면 높이
-        
-        // 스크롤을 0~1000px 정도 내릴 동안 효과가 점진적으로 적용됨
-        var scrollRatio = Math.min(scrollTop / (windowHeight * 0.8), 1);
+    $(document).ready(function() {
+        var video = document.getElementById("bgVideo");
 
-        // 1. 영상 블러 처리 (최대 10px)
-        var blurValue = scrollRatio * 10;
-        
-        // 2. 영상 밝기 처리 (최소 40%까지 어두워짐)
-        var brightnessValue = 100 - (scrollRatio * 60);
-
-        // 3. 오버레이 배경색 (스크롤 내릴수록 검은색 70%까지 진해짐)
-        var overlayOpacity = scrollRatio * 0.7;
-
-        // 스타일 적용
-        $('#bgVideo').css({
-            'filter': 'blur(' + blurValue + 'px) brightness(' + brightnessValue + '%)',
-            '-webkit-filter': 'blur(' + blurValue + 'px) brightness(' + brightnessValue + '%)'
-        });
-
-        $('#bgOverlay').css({
-            'background': 'rgba(0, 0, 0, ' + overlayOpacity + ')'
-        });
-
-        // 헤더 스타일 변경 (스크롤 내리면 진해짐)
-        if (scrollTop > 50) {
-            $('#mainHeader').addClass('scrolled');
-        } else {
-            $('#mainHeader').removeClass('scrolled');
+        // 영상 강제 재생
+        if (video) {
+            video.muted = true;
+            video.play().catch(function(e) { console.log(e); });
         }
+
+        // 스크롤 이벤트
+        $(window).scroll(function() {
+            var scrollTop = $(window).scrollTop();
+            var windowHeight = $(window).height();
+            
+            // 효과 적용 비율 계산 (스크롤 0~80% 구간)
+            var scrollRatio = Math.min(scrollTop / (windowHeight * 0.8), 1);
+
+            // 1. 영상 효과 (스크롤 내릴수록 흐려지고 어두워짐)
+            // blur: 0px -> 15px
+            // brightness: 100% -> 40%
+            var blurValue = scrollRatio * 15;
+            var brightnessValue = 100 - (scrollRatio * 60);
+            
+            // 2. 오버레이 (검은막) 효과
+            // opacity: 0 -> 0.8
+            var overlayOpacity = scrollRatio * 0.8;
+
+            $('#bgVideo').css({
+                'filter': 'blur(' + blurValue + 'px) brightness(' + brightnessValue + '%)',
+                '-webkit-filter': 'blur(' + blurValue + 'px) brightness(' + brightnessValue + '%)'
+            });
+
+            $('#bgOverlay').css({
+                'background': 'rgba(0, 0, 0, ' + overlayOpacity + ')'
+            });
+
+            // 헤더 배경 변화
+            if (scrollTop > 50) {
+                $('#mainHeader').addClass('scrolled');
+            } else {
+                $('#mainHeader').removeClass('scrolled');
+            }
+        });
     });
   </script>
 
