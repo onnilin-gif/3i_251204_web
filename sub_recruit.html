@@ -14,66 +14,47 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
 
-    body {
+    /* 배경 투명화 (영상 보이기 위함) */
+    html, body {
+        height: 100%; margin: 0; padding: 0;
+        background: transparent !important;
         font-family: 'Noto Sans KR', sans-serif;
-        line-height: 1.6;
-        color: #333;
-        margin: 0;
-        overflow-x: hidden; /* 가로 스크롤 방지 */
-        background-color: #000; /* 영상 로딩 전 배경색 */
     }
 
-    /* ================= ★ 유튜브 배경 영상 스타일 (핵심) ★ ================= */
+    #wrap {
+        width: 100%; position: relative;
+        background-color: transparent !important;
+        z-index: 10; overflow: hidden;
+    }
+
+    /* 배경 영상 스타일 */
     .video-background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -99; /* 모든 콘텐츠 뒤로 보내기 */
-        overflow: hidden;
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        z-index: -99; overflow: hidden; background: #000;
     }
 
     .video-background iframe {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 100vw;
-        height: 100vh;
-        /* 16:9 비율 유지하며 화면 꽉 채우기 (여백 없이 자르기) */
-        min-width: 177.77vh; 
-        min-height: 56.25vw; 
+        position: absolute; top: 50%; left: 50%;
+        width: 100vw; height: 100vh;
+        min-width: 177.77vh; min-height: 56.25vw;
         transform: translate(-50%, -50%);
-        pointer-events: none; /* 영상이 마우스 클릭을 가로채지 않게 설정 */
-        opacity: 0.6; /* 영상 투명도 조절 (너무 쨍하면 글씨가 안 보임) */
+        pointer-events: none; opacity: 0.6;
     }
 
-    /* 영상 위에 어두운 막 씌우기 (글자 가독성 확보) */
     .video-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.4); /* 40% 어둡게 */
-        z-index: -98;
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.5); z-index: -98;
     }
 
-    /* ================= 기존 레이아웃 및 헤더 ================= */
-    #wrap { width: 100%; position: relative; }
-    .container { width: 1200px; margin: 0 auto; }
-    .clearfix::after { content: ''; display: block; clear: both; }
-    hr { display: none; }
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
-
+    /* 헤더 스타일 */
     header {
         width: 100%; height: 100px; 
-        background: rgba(255,255,255,0.9); /* 헤더는 잘 보이게 불투명 처리 */
-        position: relative; z-index: 100;
-        border-bottom: 1px solid rgba(255,255,255,0.3);
+        background: rgba(255,255,255,0.95);
+        position: relative; border-bottom: 1px solid rgba(0,0,0,0.1);
     }
     h1.logo { position: absolute; left: 50px; top: 50px; transform: translateY(-50%); font-size: 32px; font-weight: 900; }
     h1.logo a { color: #ff5e00; text-decoration: none; }
+    
     header nav { position: absolute; right: 50px; top: 35px; }
     header nav .gnb > li { float: left; margin-left: 40px; position: relative; }
     header nav .gnb > li > a { font-size: 18px; font-weight: 700; color: #333; padding-bottom: 30px; display: block; }
@@ -82,7 +63,7 @@
     /* 드롭다운 메뉴 스타일 */
     header nav .sub {
         position: absolute; top: 65px; left: -20px; width: 400px; background: #fff; padding: 20px;
-        border-radius: 10px; box-shadow: 5px 5px 20px rgba(0,0,0,0.2); display: none;
+        border-radius: 10px; box-shadow: 5px 5px 20px rgba(0,0,0,0.2); display: none; z-index: 100;
     }
     header nav .gnb > li:hover .sub { display: block; }
     header nav .sub ol { float: left; width: 50%; }
@@ -99,57 +80,57 @@
     header nav .lnb { position: absolute; top: -25px; right: 0; }
     header nav .lnb li { float: left; margin-left: 20px; font-size: 13px; color: #555; cursor: pointer; }
 
-    /* ================= 줄거리 섹션 스타일 ================= */
-    .plot-section { padding: 80px 0; position: relative; }
+    /* 줄거리 섹션 스타일 */
+    .container { width: 1200px; margin: 0 auto; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+    hr { display: none; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
 
+    .plot-section { padding: 100px 0; }
     .plot-container { width: 1000px; margin: 0 auto; text-align: center; }
     
     .plot-title {
         font-size: 50px; font-weight: 900; color: #fff; margin-bottom: 50px;
-        display: inline-block; position: relative; text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        display: inline-block; position: relative; text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
     }
     .plot-title::after {
         content: ''; display: block; width: 80px; height: 5px; background: #ff5e00;
-        margin: 20px auto 0; border-radius: 10px; box-shadow: 0 0 10px rgba(255,94,0,0.8);
+        margin: 20px auto 0; border-radius: 10px; box-shadow: 0 0 15px #ff5e00;
     }
 
-    /* 배경이 영상이므로 글씨가 잘 보이도록 수정 */
     .plot-intro { 
-        font-size: 24px; color: #fff; line-height: 1.7; margin-bottom: 80px; 
-        word-break: keep-all; font-weight: 500; text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+        font-size: 24px; color: #f0f0f0; line-height: 1.7; margin-bottom: 80px; 
+        word-break: keep-all; font-weight: 500; text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
     }
-    .plot-intro .highlight { color: #ffecd2; font-weight: 900; border-bottom: 2px solid #ff5e00; }
+    .plot-intro .highlight { color: #ffecd2; font-weight: 900; border-bottom: 3px solid #ff5e00; }
 
     .plot-cards { display: flex; justify-content: space-between; gap: 40px; }
 
-    /* 카드 배경을 반투명하게 처리 (Glassmorphism) */
     .plot-card {
         flex: 1; 
-        background: rgba(255, 255, 255, 0.85); /* 85% 불투명 흰색 */
+        background: rgba(255, 255, 255, 0.9);
         border-radius: 20px;
         padding: 50px 40px; text-align: left; position: relative;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        border: 1px solid rgba(255,255,255,0.4); 
-        backdrop-filter: blur(5px); /* 배경 흐림 효과 */
+        box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        border: 1px solid rgba(255,255,255,0.6); 
         transform-style: preserve-3d;
     }
     
     .card-content { transform: translateZ(30px); }
-
-    .card-icon { font-size: 60px; margin-bottom: 25px; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); }
+    .card-icon { font-size: 60px; margin-bottom: 25px; }
 
     .plot-card h3 { font-size: 26px; color: #222; margin-bottom: 20px; font-weight: 800; }
     .plot-card p { font-size: 17px; color: #444; line-height: 1.8; word-break: keep-all; }
     .plot-card p strong { color: #d35400; font-weight: 700; }
 
-    .plot-footer { margin-top: 80px; font-size: 22px; color: #fff; text-shadow: 1px 1px 4px rgba(0,0,0,0.8); }
+    .plot-footer { margin-top: 80px; font-size: 22px; color: #fff; text-shadow: 1px 1px 4px rgba(0,0,0,1); }
     .plot-footer .final-msg {
-        display: block; font-size: 32px; font-weight: 900; color: #ff9f43;
+        display: block; font-size: 36px; font-weight: 900; color: #ff9f43;
         margin-top: 15px; text-transform: uppercase; letter-spacing: 1px;
     }
 
     /* Footer */
-    footer { background: #1a1a1a; color: #ccc; padding: 50px 0; margin-top: 0; }
+    footer { background: #111; color: #ccc; padding: 50px 0; margin-top: 0; }
     footer .fnb { width: 1200px; margin: 0 auto; padding-bottom: 30px; border-bottom: 1px solid #333; }
     footer .fnb .title { font-size: 24px; color: #fff; margin-bottom: 30px; }
     footer .fnb ul > li { float: left; width: 16.66%; }
@@ -175,7 +156,7 @@
   
   <div class="video-background">
       <iframe 
-        src="https://www.youtube.com/embed/0wmjt0rDzNg?autoplay=1&mute=1&controls=0&loop=1&playlist=0wmjt0rDzNg&showinfo=0&rel=0&iv_load_policy=3&disablekb=1" 
+        src="https://www.youtube.com/embed/K0eDlFX9GMc?autoplay=1&mute=1&controls=0&loop=1&playlist=K0eDlFX9GMc&showinfo=0&rel=0&iv_load_policy=3&disablekb=1&modestbranding=1" 
         frameborder="0" 
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
         allowfullscreen>
@@ -197,6 +178,7 @@
                   <div class="sub_img"><p>알 이즈 웰!<br>성공은 배움 뒤에 따라온다.</p></div>
                 </div>
               </li>
+
               <li><a href="#">등장인물</a>
                 <div class="sub clearfix">
                   <ol>
@@ -205,14 +187,9 @@
                   <div class="sub_img"><p>전설적인 공학 천재들과<br>그들의 유쾌한 반란</p></div>
                 </div>
               </li>
-              <li><a href="sub_recruit.html">줄거리</a>
-                <div class="sub clearfix">
-                  <ol>
-                    <li><a href="sub_recruit.html">전체 줄거리</a></li><li><a href="#">명장면</a></li><li><a href="#">명대사</a></li>
-                  </ol>
-                  <div class="sub_img"><p>웃음과 감동이 있는<br>진정한 교육 이야기</p></div>
-                </div>
-              </li>
+
+              <li><a href="sub_recruit.html">줄거리</a></li>
+
               <li><a href="#">하이라이트</a>
                 <div class="sub clearfix">
                   <ol>
@@ -221,6 +198,7 @@
                   <div class="sub_img"><p>다시 보고 싶은<br>최고의 순간들</p></div>
                 </div>
               </li>
+
               <li><a href="#">후기평</a>
                 <div class="sub clearfix">
                   <ol>
@@ -251,7 +229,7 @@
         </div>
 
         <div class="plot-cards clearfix">
-            <div class="plot-card wow fadeInLeft" data-wow-delay="0.7s" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.3">
+            <div class="plot-card wow fadeInLeft" data-wow-delay="0.7s" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="card-content">
                     <div class="card-icon">🎓</div>
                     <h3>PART 1. 천재와 얼간이들</h3>
@@ -263,7 +241,7 @@
                 </div>
             </div>
 
-            <div class="plot-card wow fadeInRight" data-wow-delay="0.9s" data-tilt data-tilt-max="15" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.3">
+            <div class="plot-card wow fadeInRight" data-wow-delay="0.9s" data-tilt data-tilt-max="10" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
                 <div class="card-content">
                     <div class="card-icon">🔍</div>
                     <h3>PART 2. 사라진 란초를 찾아서</h3>
@@ -290,7 +268,7 @@
         <ul class="clearfix">
           <li><a href="#">영화소개</a><ol class="fnb_sub"><li><a href="sub_ceo.html">감독인사말</a></li><li><a href="#">Vision</a></li><li><a href="#">작품배경</a></li><li><a href="#">제작노트</a></li><li><a href="sub_ci.html">로고의미</a></li></ol></li>
           <li><a href="#">등장인물</a><ol class="fnb_sub"><li><a href="sub_rancho.html">란초</a></li><li><a href="sub_farhan.html">파르한</a></li><li><a href="sub_raju.html">라주</a></li><li><a href="sub_virus.html">비루 교수</a></li><li><a href="sub_chatur.html">차투르</a></li><li><a href="sub_pia.html">피아</a></li></ol></li>
-          <li><a href="sub_recruit.html">줄거리</a><ol class="fnb_sub"><li><a href="sub_recruit.html">전체 줄거리</a></li><li><a href="#">명장면</a></li><li><a href="#">명대사</a></li></ol></li>
+          <li><a href="sub_recruit.html">줄거리</a></li>
           <li><a href="#">하이라이트</a><ol class="fnb_sub"><li><a href="#">갤러리</a></li><li><a href="#">예고편</a></li></ol></li>
           <li><a href="#">후기평</a><ol class="fnb_sub"><li><a href="#">관람평</a></li><li><a href="#">Q&A</a></li><li><a href="#">커뮤니티</a></li></ol></li>
           <li><a href="#">SNS</a><ol class="fnb_sub"><li><a href="#">facebook</a></li><li><a href="#">instagram</a></li><li><a href="#">youtube</a></li></ol></li>
