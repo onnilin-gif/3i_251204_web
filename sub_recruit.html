@@ -8,28 +8,32 @@
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/swiper.css">
   <link rel="stylesheet" href="css/animate.css">
-
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
 
-    /* 기본 설정 */
-    html, body {
+    /* [핵심 수정 1] 모든 주요 컨테이너의 배경을 강제로 투명하게 설정 */
+    html, body, #wrap, .container, .intro-spacer, header {
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+
+    body {
         margin: 0; padding: 0;
-        background: #000 !important; /* 스크롤 바닥 색상 */
+        /* 영상이 없을 때의 기본 색상 (스크롤 끝부분 등) */
+        background-color: #000 !important; 
         font-family: 'Noto Sans KR', sans-serif;
     }
 
     #wrap {
         width: 100%; position: relative;
-        background-color: transparent !important;
         z-index: 10;
     }
 
-    /* ================= 배경 영상 스타일 (핵심 수정) ================= */
+    /* ================= 배경 영상 (가장 뒤) ================= */
     .video-background {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         z-index: -99; overflow: hidden;
-        background: #000; 
+        background: #000; /* 영상 로딩 전 검은색 */
     }
 
     .video-background video {
@@ -39,32 +43,34 @@
         object-fit: cover;
         transform: translate(-50%, -50%);
         
-        /* ★ 수정됨: 초기 상태를 완전 불투명(1)하고 선명하게 설정 ★ */
+        /* 초기 상태: 선명함 (투명도 1) */
         opacity: 1; 
         filter: blur(0px) brightness(100%);
         transition: filter 0.1s ease-out;
     }
 
-    /* 영상 위에 덮이는 막 (처음엔 완전 투명) */
+    /* 오버레이 (초기엔 투명) */
     .video-overlay {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0); /* 완전 투명 */
+        background: rgba(0, 0, 0, 0); 
         z-index: -98;
         pointer-events: none;
         transition: background 0.1s ease-out;
     }
 
-    /* ================= 헤더 스타일 (투명하게 시작) ================= */
+    /* ================= 헤더 스타일 ================= */
     header {
         width: 100%; height: 100px; 
-        background: transparent; /* ★ 처음엔 배경 없음 ★ */
         position: fixed; top: 0; left: 0; z-index: 1000;
         border-bottom: 1px solid rgba(255,255,255,0.1);
         transition: background 0.3s ease;
     }
     
-    /* 스크롤 내리면 헤더가 검게 변함 */
-    header.scrolled { background: rgba(0, 0, 0, 0.9); border-bottom: none; }
+    /* 스크롤 내렸을 때 헤더 배경 */
+    header.scrolled { 
+        background: rgba(0, 0, 0, 0.9) !important; 
+        border-bottom: none; 
+    }
 
     .container { width: 1200px; margin: 0 auto; position: relative; height: 100%; }
     
@@ -75,21 +81,22 @@
     header nav .gnb > li { float: left; margin-left: 40px; }
     header nav .gnb > li > a { 
         font-size: 18px; font-weight: 700; color: #fff; display: block; padding: 10px 0; 
-        text-shadow: 0 2px 5px rgba(0,0,0,0.8); /* 글씨 잘 보이게 그림자 추가 */
+        text-shadow: 0 2px 5px rgba(0,0,0,0.8);
     }
     header nav .gnb > li:hover > a { color: #ff5e00; }
-    
     header nav .lnb { display: none; } 
 
-    /* ================= 스크롤 유도 영역 ================= */
+    /* ================= [핵심 수정 2] 스크롤 유도 영역 ================= */
+    /* "스크롤을 내려서..." 텍스트가 있는 박스의 배경을 확실하게 없앰 */
     .intro-spacer {
-        height: 100vh; /* 화면 전체 높이 */
+        height: 100vh;
         width: 100%;
         display: flex;
         align-items: flex-end;
         justify-content: center;
         padding-bottom: 80px;
         box-sizing: border-box;
+        background: none !important; /* 배경 제거 */
     }
     
     .scroll-hint {
@@ -99,6 +106,7 @@
         text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         animation: bounce 2s infinite;
         text-align: center;
+        background: none !important; /* 배경 제거 */
     }
     .scroll-hint span { display: block; font-size: 24px; margin-top: 10px; color: #ff5e00; }
 
@@ -264,28 +272,19 @@
     $(document).ready(function() {
         var video = document.getElementById("bgVideo");
 
-        // 영상 강제 재생
         if (video) {
             video.muted = true;
             video.play().catch(function(e) { console.log(e); });
         }
 
-        // 스크롤 이벤트
         $(window).scroll(function() {
             var scrollTop = $(window).scrollTop();
             var windowHeight = $(window).height();
             
-            // 효과 적용 비율 계산 (스크롤 0~80% 구간)
             var scrollRatio = Math.min(scrollTop / (windowHeight * 0.8), 1);
 
-            // 1. 영상 효과 (스크롤 내릴수록 흐려지고 어두워짐)
-            // blur: 0px -> 15px
-            // brightness: 100% -> 40%
             var blurValue = scrollRatio * 15;
             var brightnessValue = 100 - (scrollRatio * 60);
-            
-            // 2. 오버레이 (검은막) 효과
-            // opacity: 0 -> 0.8
             var overlayOpacity = scrollRatio * 0.8;
 
             $('#bgVideo').css({
@@ -297,7 +296,6 @@
                 'background': 'rgba(0, 0, 0, ' + overlayOpacity + ')'
             });
 
-            // 헤더 배경 변화
             if (scrollTop > 50) {
                 $('#mainHeader').addClass('scrolled');
             } else {
