@@ -247,9 +247,7 @@
       padding: 10px 15px;
       font-size: 14px;
     }
-    #kakaoShareBtn { background-color: #FEE500; color: #191919; }
-    #instagramShareBtn { background: #d6249f; background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); color: white; }
-    #smsShareBtn { background-color: #4CAF50; color: white; }
+    #copyResultLinkBtn { background-color: #007bff; color: white; }
     #recommendBtn { background-color: #6c757d; color: white; }
 
     /* Confetti fanfare effect */
@@ -415,9 +413,7 @@
       <div class="modal-footer">
         <div class="share-section">
           <h4>결과 공유하기</h4>
-          <button id="kakaoShareBtn">카카오톡</button>
-          <button id="instagramShareBtn">인스타그램</button>
-          <button id="smsShareBtn">문자 메시지</button>
+          <button id="copyResultLinkBtn">결과 링크 복사</button>
         </div>
         <div class="recommend-section">
           <button id="recommendBtn">이 테스트 추천하기</button>
@@ -429,20 +425,19 @@
   <script src="js/initial_function.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Kakao SDK Init
-      // **** 중요 ****
-      // 실제 서비스를 위해서는 카카오 개발자 센터에서 발급받은 본인의 JavaScript 키를 사용해야 합니다.
-      // Kakao.init('YOUR_JAVASCRIPT_KEY');
+      // Kakao SDK Init (Not used in this version, but kept for potential future use)
       try {
         Kakao.init('d2d25b23443534523542345235423542'); // Placeholder Key
       } catch(e) {
-        console.error("Kakao SDK's aplication key is not valid");
+        console.error("Could not initialize Kakao SDK. Please check your key.");
       }
-      
+
+      // DOM Elements
       const findDestinyBtn = document.getElementById('findDestinyBtn');
       const agreePrivacy = document.getElementById('agreePrivacy');
       const phoneEntry = document.getElementById('phoneEntry');
       const submitEventBtn = document.getElementById('submitEvent');
+      const destinyForm = document.getElementById('destinyForm');
       
       // Modal elements
       const resultModal = document.getElementById('resultModal');
@@ -451,10 +446,8 @@
       const characterImage = document.getElementById('characterImage');
       const modalResultText = document.getElementById('modalResultText');
 
-      // Share and Recommend buttons
-      const kakaoShareBtn = document.getElementById('kakaoShareBtn');
-      const instagramShareBtn = document.getElementById('instagramShareBtn');
-      const smsShareBtn = document.getElementById('smsShareBtn');
+      // New/Updated Buttons
+      const copyResultLinkBtn = document.getElementById('copyResultLinkBtn');
       const recommendBtn = document.getElementById('recommendBtn');
 
       let lastFatefulCharacter = '';
@@ -470,31 +463,77 @@
       };
       const characterNames = Object.keys(characters);
 
-      findDestinyBtn.addEventListener('click', function() {
-        const nameInput = document.getElementById('name');
-        const gender = document.querySelector('input[name="gender"]:checked');
-        const mbti = document.getElementById('mbti').value;
+      // --- Main Functions ---
 
-        if (!nameInput.value || !gender || !mbti) {
-          alert('모든 정보를 입력해주세요.');
-          return;
-        }
-        userName = nameInput.value;
-
-        const randomIndex = Math.floor(Math.random() * characterNames.length);
-        lastFatefulCharacter = characterNames[randomIndex];
+      function showResult(name, character) {
+        if (!characters[character]) return; // Exit if character is invalid
         
-        characterImage.src = characters[lastFatefulCharacter].img;
-        modalResultText.innerHTML = `<strong>${userName}</strong>님의 운명의 단짝은... <strong>${lastFatefulCharacter}</strong> 입니다!`;
+        lastFatefulCharacter = character;
+        userName = name;
+
+        characterImage.src = characters[character].img;
+        modalResultText.innerHTML = `<strong>${name}</strong>님의 운명의 단짝은... <strong>${character}</strong> 입니다!`;
         
         resultModal.style.display = 'block';
         modalContent.classList.add('fanfare');
         setTimeout(() => {
           modalContent.classList.remove('fanfare');
         }, 800);
+      }
+
+      // --- Event Listeners ---
+
+      findDestinyBtn.addEventListener('click', function() {
+        const nameInput = document.getElementById('name').value;
+        const gender = document.querySelector('input[name="gender"]:checked');
+        const mbti = document.getElementById('mbti').value;
+
+        if (!nameInput || !gender || !mbti) {
+          alert('모든 정보를 입력해주세요.');
+          return;
+        }
+        
+        const randomIndex = Math.floor(Math.random() * characterNames.length);
+        const fatefulCharacter = characterNames[randomIndex];
+        
+        showResult(nameInput, fatefulCharacter);
+      });
+      
+      copyResultLinkBtn.addEventListener('click', () => {
+        const resultUrl = `${window.location.origin}${window.location.pathname}?name=${encodeURIComponent(userName)}&character=${encodeURIComponent(lastFatefulCharacter)}`;
+        navigator.clipboard.writeText(resultUrl).then(() => {
+          alert('결과 링크가 클립보드에 복사되었습니다! 원하는 곳에 붙여넣어 공유해보세요.');
+        }).catch(err => {
+          alert('링크 복사에 실패했습니다.');
+        });
       });
 
-      // Modal close logic
+      recommendBtn.addEventListener('click', () => {
+        const baseUrl = window.location.origin + window.location.pathname;
+        navigator.clipboard.writeText(baseUrl).then(() => {
+          alert('테스트 링크가 클립보드에 복사되었습니다. 친구에게 추천해주세요!');
+        }).catch(err => {
+          alert('링크 복사에 실패했습니다.');
+        });
+      });
+
+      // --- On Page Load ---
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const sharedName = urlParams.get('name');
+      const sharedCharacter = urlParams.get('character');
+
+      if (sharedName && sharedCharacter) {
+        showResult(sharedName, sharedCharacter);
+        // Optionally hide the form if showing a shared result
+        const formSection = document.querySelector('.fateful-encounter');
+        if(formSection) {
+            formSection.style.display = 'none';
+        }
+      }
+
+      // --- Other Event Listeners (Modal, Event Entry) ---
+      
       closeModalBtn.addEventListener('click', () => resultModal.style.display = 'none');
       window.addEventListener('click', (event) => {
         if (event.target == resultModal) {
@@ -502,7 +541,6 @@
         }
       });
 
-      // Event entry logic
       agreePrivacy.addEventListener('change', function() {
         phoneEntry.style.display = this.checked ? 'block' : 'none';
       });
@@ -517,56 +555,6 @@
         document.getElementById('phone').value = '';
         agreePrivacy.checked = false;
         phoneEntry.style.display = 'none';
-      });
-
-      // Sharing logic
-      kakaoShareBtn.addEventListener('click', () => {
-        if(!window.Kakao) {
-            alert("Kakao SDK is not loaded")
-            return
-        }
-        if(!Kakao.isInitialized()) {
-            alert("Kakao SDK is not initialized")
-            return
-        }
-        Kakao.Share.sendDefault({
-          objectType: 'feed',
-          content: {
-            title: '나의 운명의 단짝은?',
-            description: `${userName}님의 운명의 단짝은 ${lastFatefulCharacter} 입니다! 당신의 단짝도 찾아보세요!`,
-            imageUrl: window.location.origin + '/' + characters[lastFatefulCharacter].img,
-            link: {
-              mobileWebUrl: window.location.href,
-              webUrl: window.location.href,
-            },
-          },
-          buttons: [
-            {
-              title: '테스트 하러가기',
-              link: {
-                mobileWebUrl: window.location.href,
-                webUrl: window.location.href,
-              },
-            },
-          ],
-        });
-      });
-
-      instagramShareBtn.addEventListener('click', () => {
-        alert('결과 이미지를 캡쳐하여 인스타그램 스토리에 공유해보세요!');
-      });
-
-      smsShareBtn.addEventListener('click', () => {
-        const message = `[운명의 단짝 찾기] ${userName}님의 운명의 단짝은 ${lastFatefulCharacter}래요! 당신도 지금 확인해보세요! ${window.location.href}`;
-        window.location.href = `sms:?body=${encodeURIComponent(message)}`;
-      });
-
-      recommendBtn.addEventListener('click', () => {
-        navigator.clipboard.writeText(window.location.href).then(() => {
-          alert('테스트 링크가 클립보드에 복사되었습니다. 친구에게 추천해주세요!');
-        }).catch(err => {
-          alert('링크 복사에 실패했습니다.');
-        });
       });
     });
   </script>
