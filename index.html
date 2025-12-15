@@ -15,25 +15,25 @@
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
-    /* [핵심 수정 1] 전체 배경을 투명하게 해야 뒤에 있는 영상이 보입니다! */
+    /* 메인 페이지 전용 기본 설정 (스크롤 고정) */
     html, body {
         width: 100%; height: 100%;
         margin: 0; padding: 0;
         overflow: hidden; 
         font-family: 'Noto Sans KR', sans-serif;
-        background: transparent !important; /* 검은색 제거 -> 투명 */
+        background: #000;
     }
 
     #wrap { width: 100%; height: 100%; position: relative; }
     
+    /* sub_recruit.html과 동일한 container 설정 */
     .container { width: 1200px; margin: 0 auto; position: relative; height: 100%; }
     .clearfix::after { content: ''; display: block; clear: both; }
 
-    /* ================= 배경 영상 (맨 뒤) ================= */
+    /* ================= 배경 영상 ================= */
     .video-background {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        z-index: -99; 
-        background: #000; /* 영상 로딩 전에는 검은색 */
+        z-index: -99; background: #000;
     }
     .video-background video {
         width: 100%; height: 100%;
@@ -41,13 +41,12 @@
         opacity: 0.8; 
     }
 
-    /* ================= [핵심 수정 2] 헤더 스타일 (검은색 배경) ================= */
+    /* ================= 헤더 스타일 (sub_recruit.html 복제) ================= */
     header {
         width: 100%; height: 100px; 
         position: absolute; top: 0; left: 0; z-index: 1000;
-        
-        /* ★ 헤더만 검은색 배경으로 설정 (불투명) ★ */
-        background: #000; 
+        /* 초기 상태는 투명/그라데이션 */
+        background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
         border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
@@ -58,6 +57,7 @@
     }
     h1.logo a { 
         color: #fff; text-decoration: none; 
+        text-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
 
     /* 네비게이션 위치 */
@@ -69,6 +69,7 @@
     header nav .gnb > li > a { 
         font-size: 18px; font-weight: 700; color: #fff; 
         padding-bottom: 30px; display: block;
+        text-shadow: 0 2px 5px rgba(0,0,0,0.8);
     }
     header nav .gnb > li:hover > a { color: #ff5e00; }
 
@@ -169,7 +170,9 @@
               <li><a href="#">후기평</a>
                 <div class="sub clearfix">
                   <ol>
-                    <li><a href="#">관람평</a></li><li><a href="#">Q&A</a></li><li class="last"><a href="#">커뮤니티</a></li>
+                    <li><a href="#">네티즌 평점</a></li>
+                    <li><a href="sub_real_reviews.html">실관람객평</a></li>
+                    <li class="last"><a href="sub_critic_reviews.html">평론가평</a></li>
                   </ol>
                   <div class="sub_img"><p>여러분의 감동을<br>함께 나누세요.</p></div>
                 </div>
