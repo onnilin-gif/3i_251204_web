@@ -15,13 +15,13 @@
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
-    /* [핵심 수정] 배경을 투명하게 해서 영상이 보이게 함 */
+    /* 메인 페이지 전용 기본 설정 */
     html, body {
         width: 100%; height: 100%;
         margin: 0; padding: 0;
         overflow: hidden; 
         font-family: 'Noto Sans KR', sans-serif;
-        background: transparent !important; /* 검은색 제거 */
+        background: #000;
     }
 
     #wrap { width: 100%; height: 100%; position: relative; }
@@ -32,8 +32,7 @@
     /* ================= 배경 영상 ================= */
     .video-background {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        z-index: -1; /* body 바로 뒤 */
-        background: #000; /* 영상 로딩 전에는 검은색 */
+        z-index: -99; background: #000;
     }
     .video-background video {
         width: 100%; height: 100%;
@@ -41,12 +40,13 @@
         opacity: 0.8; 
     }
 
-    /* ================= 헤더 스타일 (sub_recruit.html 스타일) ================= */
+    /* ================= 헤더 스타일 (검은색 배경 적용) ================= */
     header {
         width: 100%; height: 100px; 
         position: absolute; top: 0; left: 0; z-index: 1000;
-        /* 투명 그라데이션 배경 */
-        background: linear-gradient(to bottom, rgba(0,0,0,0.6), transparent);
+        
+        /* ★ 배경을 완전 검은색으로 변경 ★ */
+        background: #000; 
         border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
@@ -57,7 +57,6 @@
     }
     h1.logo a { 
         color: #fff; text-decoration: none; 
-        text-shadow: 0 0 10px rgba(0,0,0,0.5);
     }
 
     /* 네비게이션 위치 */
@@ -65,15 +64,14 @@
     
     header nav .gnb > li { float: left; margin-left: 40px; position: relative; }
     
-    /* 메뉴 링크 (흰색) */
+    /* GNB 링크 스타일 (흰색) */
     header nav .gnb > li > a { 
         font-size: 18px; font-weight: 700; color: #fff; 
         padding-bottom: 30px; display: block;
-        text-shadow: 0 2px 5px rgba(0,0,0,0.8);
     }
     header nav .gnb > li:hover > a { color: #ff5e00; }
 
-    /* 드롭다운 서브메뉴 (기능 유지) */
+    /* 드롭다운 서브메뉴 */
     header nav .sub {
         position: absolute; top: 65px; left: -20px; width: 400px; 
         background: #fff; padding: 20px;
