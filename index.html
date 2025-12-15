@@ -15,13 +15,13 @@
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
-    /* 메인 페이지 전용 기본 설정 */
+    /* [핵심 수정 1] 전체 배경을 투명하게 해야 뒤에 있는 영상이 보입니다! */
     html, body {
         width: 100%; height: 100%;
         margin: 0; padding: 0;
         overflow: hidden; 
         font-family: 'Noto Sans KR', sans-serif;
-        background: #000;
+        background: transparent !important; /* 검은색 제거 -> 투명 */
     }
 
     #wrap { width: 100%; height: 100%; position: relative; }
@@ -29,10 +29,11 @@
     .container { width: 1200px; margin: 0 auto; position: relative; height: 100%; }
     .clearfix::after { content: ''; display: block; clear: both; }
 
-    /* ================= 배경 영상 ================= */
+    /* ================= 배경 영상 (맨 뒤) ================= */
     .video-background {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        z-index: -99; background: #000;
+        z-index: -99; 
+        background: #000; /* 영상 로딩 전에는 검은색 */
     }
     .video-background video {
         width: 100%; height: 100%;
@@ -40,12 +41,12 @@
         opacity: 0.8; 
     }
 
-    /* ================= 헤더 스타일 (검은색 배경 적용) ================= */
+    /* ================= [핵심 수정 2] 헤더 스타일 (검은색 배경) ================= */
     header {
         width: 100%; height: 100px; 
         position: absolute; top: 0; left: 0; z-index: 1000;
         
-        /* ★ 배경을 완전 검은색으로 변경 ★ */
+        /* ★ 헤더만 검은색 배경으로 설정 (불투명) ★ */
         background: #000; 
         border-bottom: 1px solid rgba(255,255,255,0.1);
     }
