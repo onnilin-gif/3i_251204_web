@@ -15,13 +15,13 @@
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
-    /* [핵심 수정] body 배경을 투명하게 해야 뒤에 있는 영상이 보입니다 */
+    /* [핵심] body 배경 투명 -> 영상 보임 */
     html, body {
         width: 100%; height: 100%;
         margin: 0; padding: 0;
         overflow: hidden; 
         font-family: 'Noto Sans KR', sans-serif;
-        background: transparent !important; /* 검은색 제거 -> 투명 */
+        background: transparent !important; 
     }
 
     #wrap { width: 100%; height: 100%; position: relative; }
@@ -33,7 +33,7 @@
     .video-background {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         z-index: -99; 
-        background: #000; /* 영상 로딩 전에는 검은색 */
+        background: #000; 
     }
     .video-background video {
         width: 100%; height: 100%;
@@ -46,7 +46,7 @@
         width: 100%; height: 100px; 
         position: absolute; top: 0; left: 0; z-index: 1000;
         
-        /* ★ 헤더바만 검은색으로 설정 (영상 위로 올라옴) ★ */
+        /* ★ 헤더바는 검은색 (영상 위로 올라옴) ★ */
         background: #000; 
         border-bottom: 1px solid rgba(255,255,255,0.1);
     }
@@ -149,7 +149,12 @@
               <li><a href="#">등장인물</a>
                 <div class="sub clearfix">
                   <ol>
-                    <li><a href="sub_rancho.html">란초</a></li><li><a href="sub_farhan.html">파르한</a></li><li><a href="sub_raju.html">라주</a></li><li><a href="sub_virus.html">비루 교수</a></li><li><a href="sub_chatur.html">차투르</a></li><li><a href="sub_pia.html">피아</a></li>
+                    <li><a href="sub_rancho.html">란초</a></li>
+                    <li><a href="sub_farhan.html">파르한</a></li>
+                    <li><a href="sub_raju.html">라주</a></li>
+                    <li><a href="sub_virus.html">비루 교수</a></li>
+                    <li><a href="sub_chatur.html">차투르</a></li>
+                    <li><a href="sub_pia.html">피아</a></li>
                   </ol>
                   <div class="sub_img"><p>전설적인 공학 천재들과<br>그들의 유쾌한 반란</p></div>
                 </div>
@@ -160,7 +165,11 @@
               <li><a href="#">하이라이트</a>
                 <div class="sub clearfix">
                   <ol>
-                    <li><a href="#">갤러리</a></li><li><a href="#">예고편</a></li>
+                    <li><a href="#">갤러리</a></li>
+                    <li><a href="#">예고편</a></li>
+                    <li><a href="#">OST</a></li>
+                    <li><a href="#">제작영상</a></li>
+                    <li><a href="#">비하인드</a></li>
                   </ol>
                   <div class="sub_img"><p>다시 보고 싶은<br>최고의 순간들</p></div>
                 </div>
