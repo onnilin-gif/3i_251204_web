@@ -187,6 +187,101 @@
       background-color: #218838;
     }
 
+    /* Modal styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 30px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 10px;
+      text-align: center;
+      position: relative;
+      animation: zoomIn 0.3s;
+    }
+    .close-btn {
+      color: #aaa;
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close-btn:hover,
+    .close-btn:focus {
+      color: black;
+    }
+    .modal-title {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #ff5e00;
+    }
+    #modalResultText {
+      font-size: 18px;
+    }
+    .modal-footer {
+      margin-top: 30px;
+    }
+    .share-section, .recommend-section {
+      margin-top: 20px;
+    }
+    .share-section h4, .recommend-section h4 {
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+    .share-section button, .recommend-section button {
+      margin: 0 5px;
+      padding: 10px 15px;
+      font-size: 14px;
+    }
+    #kakaoShareBtn { background-color: #FEE500; color: #191919; }
+    #instagramShareBtn { background: #d6249f; background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); color: white; }
+    #smsShareBtn { background-color: #4CAF50; color: white; }
+    #recommendBtn { background-color: #6c757d; color: white; }
+
+    /* Confetti fanfare effect */
+    .modal-content.fanfare::before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        repeating-linear-gradient(45deg, #f00, #f00 2px, transparent 2px, transparent 10px),
+        repeating-linear-gradient(-45deg, #ff0, #ff0 2px, transparent 2px, transparent 10px),
+        repeating-linear-gradient(135deg, #0f0, #0f0 2px, transparent 2px, transparent 10px),
+        repeating-linear-gradient(-135deg, #0ff, #0ff 2px, transparent 2px, transparent 10px);
+      background-size: 40px 40px;
+      opacity: 0;
+      animation: fanfare-burst 0.8s ease-out;
+      z-index: -1;
+    }
+
+    @keyframes fanfare-burst {
+      0% { transform: scale(0); opacity: 1; }
+      80% { transform: scale(1.2); opacity: 0.5; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
     /* 기존 스타일(footer 등) 유지 */
   </style>
 
@@ -195,6 +290,7 @@
   <script src="js/plugin/swiper.min.js"></script>
   <script src="js/plugin/wow.min.js"></script>
   <script src="js/function.js"></script>
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 <body>
   <div id="wrap">
@@ -288,8 +384,6 @@
           <button type="button" id="findDestinyBtn">결과 확인하기</button>
         </form>
         
-        <div id="destinyResult"></div>
-
         <div class="event-entry">
           <h4>🎉 스페셜 이벤트 자동 응모</h4>
           <div class="form-group-checkbox">
@@ -310,55 +404,169 @@
     <div class="black-band"></div>
   </div>
 
+  <div id="resultModal" class="modal-overlay">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <div class="modal-body">
+        <h3 class="modal-title">운명의 단짝!</h3>
+        <img id="characterImage" src="" alt="운명의 등장인물" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 20px;">
+        <p id="modalResultText"></p>
+      </div>
+      <div class="modal-footer">
+        <div class="share-section">
+          <h4>결과 공유하기</h4>
+          <button id="kakaoShareBtn">카카오톡</button>
+          <button id="instagramShareBtn">인스타그램</button>
+          <button id="smsShareBtn">문자 메시지</button>
+        </div>
+        <div class="recommend-section">
+          <button id="recommendBtn">이 테스트 추천하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="js/initial_function.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Kakao SDK Init
+      // **** 중요 ****
+      // 실제 서비스를 위해서는 카카오 개발자 센터에서 발급받은 본인의 JavaScript 키를 사용해야 합니다.
+      // Kakao.init('YOUR_JAVASCRIPT_KEY');
+      try {
+        Kakao.init('d2d25b23443534523542345235423542'); // Placeholder Key
+      } catch(e) {
+        console.error("Kakao SDK's aplication key is not valid");
+      }
+      
       const findDestinyBtn = document.getElementById('findDestinyBtn');
-      const destinyResult = document.getElementById('destinyResult');
-      const destinyForm = document.getElementById('destinyForm');
+      const agreePrivacy = document.getElementById('agreePrivacy');
+      const phoneEntry = document.getElementById('phoneEntry');
+      const submitEventBtn = document.getElementById('submitEvent');
+      
+      // Modal elements
+      const resultModal = document.getElementById('resultModal');
+      const modalContent = resultModal.querySelector('.modal-content');
+      const closeModalBtn = resultModal.querySelector('.close-btn');
+      const characterImage = document.getElementById('characterImage');
+      const modalResultText = document.getElementById('modalResultText');
 
-      const characters = ['란초', '파르한', '라주', '비루 교수', '차투르', '피아'];
+      // Share and Recommend buttons
+      const kakaoShareBtn = document.getElementById('kakaoShareBtn');
+      const instagramShareBtn = document.getElementById('instagramShareBtn');
+      const smsShareBtn = document.getElementById('smsShareBtn');
+      const recommendBtn = document.getElementById('recommendBtn');
+
+      let lastFatefulCharacter = '';
+      let userName = '';
+
+      const characters = {
+        '란초': { img: 'images/란초얼굴.jpg' },
+        '파르한': { img: 'images/파르한 얼굴.jpg' },
+        '라주': { img: 'images/라주얼굴.jpg' },
+        '비루 교수': { img: 'images/데비루 사하스프라부.png' },
+        '차투르': { img: 'images/차투르 얼굴.jpg' },
+        '피아': { img: 'images/피아얼굴.jpg' }
+      };
+      const characterNames = Object.keys(characters);
 
       findDestinyBtn.addEventListener('click', function() {
-        // Form validation
-        const name = document.getElementById('name').value;
+        const nameInput = document.getElementById('name');
         const gender = document.querySelector('input[name="gender"]:checked');
         const mbti = document.getElementById('mbti').value;
 
-        if (!name || !gender || !mbti) {
+        if (!nameInput.value || !gender || !mbti) {
           alert('모든 정보를 입력해주세요.');
           return;
         }
+        userName = nameInput.value;
 
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        const fatefulCharacter = characters[randomIndex];
+        const randomIndex = Math.floor(Math.random() * characterNames.length);
+        lastFatefulCharacter = characterNames[randomIndex];
         
-        destinyResult.innerHTML = `<p><strong>${name}</strong>님의 운명의 단짝은... <strong>${fatefulCharacter}</strong> 입니다!</p>`;
+        characterImage.src = characters[lastFatefulCharacter].img;
+        modalResultText.innerHTML = `<strong>${userName}</strong>님의 운명의 단짝은... <strong>${lastFatefulCharacter}</strong> 입니다!`;
+        
+        resultModal.style.display = 'block';
+        modalContent.classList.add('fanfare');
+        setTimeout(() => {
+          modalContent.classList.remove('fanfare');
+        }, 800);
       });
 
-      const agreePrivacy = document.getElementById('agreePrivacy');
-      const phoneEntry = document.getElementById('phoneEntry');
-
-      agreePrivacy.addEventListener('change', function() {
-        if (this.checked) {
-          phoneEntry.style.display = 'block';
-        } else {
-          phoneEntry.style.display = 'none';
+      // Modal close logic
+      closeModalBtn.addEventListener('click', () => resultModal.style.display = 'none');
+      window.addEventListener('click', (event) => {
+        if (event.target == resultModal) {
+          resultModal.style.display = 'none';
         }
       });
 
-      const submitEventBtn = document.getElementById('submitEvent');
+      // Event entry logic
+      agreePrivacy.addEventListener('change', function() {
+        phoneEntry.style.display = this.checked ? 'block' : 'none';
+      });
+
       submitEventBtn.addEventListener('click', function() {
         const phone = document.getElementById('phone').value;
         if (phone.trim() === '') {
           alert('전화번호를 입력해주세요.');
           return;
         }
-        // Here you would typically send the data to a server
         alert('이벤트에 성공적으로 응모되었습니다!');
         document.getElementById('phone').value = '';
         agreePrivacy.checked = false;
         phoneEntry.style.display = 'none';
+      });
+
+      // Sharing logic
+      kakaoShareBtn.addEventListener('click', () => {
+        if(!window.Kakao) {
+            alert("Kakao SDK is not loaded")
+            return
+        }
+        if(!Kakao.isInitialized()) {
+            alert("Kakao SDK is not initialized")
+            return
+        }
+        Kakao.Share.sendDefault({
+          objectType: 'feed',
+          content: {
+            title: '나의 운명의 단짝은?',
+            description: `${userName}님의 운명의 단짝은 ${lastFatefulCharacter} 입니다! 당신의 단짝도 찾아보세요!`,
+            imageUrl: window.location.origin + '/' + characters[lastFatefulCharacter].img,
+            link: {
+              mobileWebUrl: window.location.href,
+              webUrl: window.location.href,
+            },
+          },
+          buttons: [
+            {
+              title: '테스트 하러가기',
+              link: {
+                mobileWebUrl: window.location.href,
+                webUrl: window.location.href,
+              },
+            },
+          ],
+        });
+      });
+
+      instagramShareBtn.addEventListener('click', () => {
+        alert('결과 이미지를 캡쳐하여 인스타그램 스토리에 공유해보세요!');
+      });
+
+      smsShareBtn.addEventListener('click', () => {
+        const message = `[운명의 단짝 찾기] ${userName}님의 운명의 단짝은 ${lastFatefulCharacter}래요! 당신도 지금 확인해보세요! ${window.location.href}`;
+        window.location.href = `sms:?body=${encodeURIComponent(message)}`;
+      });
+
+      recommendBtn.addEventListener('click', () => {
+        navigator.clipboard.writeText(window.location.href).then(() => {
+          alert('테스트 링크가 클립보드에 복사되었습니다. 친구에게 추천해주세요!');
+        }).catch(err => {
+          alert('링크 복사에 실패했습니다.');
+        });
       });
     });
   </script>
