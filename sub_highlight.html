@@ -109,6 +109,84 @@
         background-color: #e0044d;
     }
 
+    /* 운명 찾기 섹션 */
+    .fateful-encounter {
+      max-width: 800px;
+      margin: 50px auto 0;
+      padding: 40px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .fateful-encounter h3 {
+      font-size: 28px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .fateful-encounter .section-desc {
+      color: #666;
+      margin-bottom: 30px;
+    }
+    .fateful-encounter .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .fateful-encounter label {
+      font-weight: 500;
+      margin-right: 15px;
+    }
+    .fateful-encounter .gender-label {
+      display: inline-block;
+      width: 50px;
+    }
+    .fateful-encounter input[type="text"],
+    .fateful-encounter input[type="tel"] {
+      width: calc(100% - 70px);
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .fateful-encounter button {
+      padding: 12px 30px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .fateful-encounter button:hover {
+      background-color: #0056b3;
+    }
+    #destinyResult {
+      margin-top: 30px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #ff5e00;
+    }
+    .event-entry {
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 1px solid #eee;
+    }
+    .event-entry h4 {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+    .form-group-checkbox {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    #phoneEntry button {
+      background-color: #28a745;
+    }
+    #phoneEntry button:hover {
+      background-color: #218838;
+    }
+
     /* 기존 스타일(footer 등) 유지 */
   </style>
 
@@ -187,10 +265,102 @@
           </p>
         </div>
       </article>
+
+      <section class="fateful-encounter wow fadeInUp" data-wow-delay="300ms">
+        <h3>나와 운명인 등장인물은?</h3>
+        <p class="section-desc">간단한 정보를 입력하고 <세 얼간이> 등장인물 중 당신의 운명의 단짝을 찾아보세요!</p>
+        
+        <form id="destinyForm">
+          <div class="form-group">
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <span class="gender-label">성별</span>
+            <label><input type="radio" name="gender" value="male" required> 남성</label>
+            <label><input type="radio" name="gender" value="female"> 여성</label>
+          </div>
+          <div class="form-group">
+            <label for="mbti">MBTI</label>
+            <input type="text" id="mbti" name="mbti" maxlength="4" required>
+          </div>
+          
+          <button type="button" id="findDestinyBtn">결과 확인하기</button>
+        </form>
+        
+        <div id="destinyResult"></div>
+
+        <div class="event-entry">
+          <h4>🎉 스페셜 이벤트 자동 응모</h4>
+          <div class="form-group-checkbox">
+            <input type="checkbox" id="agreePrivacy">
+            <label for="agreePrivacy">개인정보 수집 및 이용에 동의합니다.</label>
+          </div>
+          <div id="phoneEntry" style="display: none;">
+            <div class="form-group">
+              <label for="phone">전화번호</label>
+              <input type="tel" id="phone" name="phone" placeholder="'-' 없이 숫자만 입력">
+            </div>
+            <button type="button" id="submitEvent">응모하기</button>
+          </div>
+        </div>
+      </section>
+
     </section>
     <div class="black-band"></div>
   </div>
 
   <script src="js/initial_function.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const findDestinyBtn = document.getElementById('findDestinyBtn');
+      const destinyResult = document.getElementById('destinyResult');
+      const destinyForm = document.getElementById('destinyForm');
+
+      const characters = ['란초', '파르한', '라주', '비루 교수', '차투르', '피아'];
+
+      findDestinyBtn.addEventListener('click', function() {
+        // Form validation
+        const name = document.getElementById('name').value;
+        const gender = document.querySelector('input[name="gender"]:checked');
+        const mbti = document.getElementById('mbti').value;
+
+        if (!name || !gender || !mbti) {
+          alert('모든 정보를 입력해주세요.');
+          return;
+        }
+
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        const fatefulCharacter = characters[randomIndex];
+        
+        destinyResult.innerHTML = `<p><strong>${name}</strong>님의 운명의 단짝은... <strong>${fatefulCharacter}</strong> 입니다!</p>`;
+      });
+
+      const agreePrivacy = document.getElementById('agreePrivacy');
+      const phoneEntry = document.getElementById('phoneEntry');
+
+      agreePrivacy.addEventListener('change', function() {
+        if (this.checked) {
+          phoneEntry.style.display = 'block';
+        } else {
+          phoneEntry.style.display = 'none';
+        }
+      });
+
+      const submitEventBtn = document.getElementById('submitEvent');
+      submitEventBtn.addEventListener('click', function() {
+        const phone = document.getElementById('phone').value;
+        if (phone.trim() === '') {
+          alert('전화번호를 입력해주세요.');
+          return;
+        }
+        // Here you would typically send the data to a server
+        alert('이벤트에 성공적으로 응모되었습니다!');
+        document.getElementById('phone').value = '';
+        agreePrivacy.checked = false;
+        phoneEntry.style.display = 'none';
+      });
+    });
+  </script>
 </body>
 </html>
