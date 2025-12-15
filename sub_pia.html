@@ -4,12 +4,107 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>클리오 코스메틱스</title>
+  <title>영화 세 얼간이 - 캐릭터 소개</title>
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.jpg">
+  
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/swiper.css">
   <link rel="stylesheet" href="css/animate.css">
   <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+    /* ==========================================================================
+       ★ [헤더 스타일] index.html과 100% 동일 (Black Theme) ★
+       ========================================================================== */
+    header {
+        width: 100%; height: 100px; 
+        background: #000; /* 검은색 배경 */
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        position: relative; /* 서브페이지 상단 고정 */
+        z-index: 1000;
+    }
+
+    .container { width: 1200px; margin: 0 auto; position: relative; height: 100%; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    /* 로고 */
+    h1.logo { 
+        position: absolute; left: 0; top: 50%; transform: translateY(-50%); 
+        font-size: 32px; font-weight: 900; margin: 0;
+    }
+    h1.logo a { 
+        color: #fff; text-decoration: none; font-family: 'Anton', sans-serif; letter-spacing: 1px;
+    }
+
+    /* 네비게이션 위치 */
+    header nav { position: absolute; right: 0; top: 35px; } 
+    header nav .gnb > li { float: left; margin-left: 40px; position: relative; }
+    
+    /* GNB 링크 스타일 */
+    header nav .gnb > li > a { 
+        font-size: 18px; font-weight: 700; color: #fff; 
+        padding-bottom: 30px; display: block; text-decoration: none;
+    }
+    header nav .gnb > li:hover > a { color: #ff5e00; }
+
+    /* 드롭다운 서브메뉴 */
+    header nav .sub {
+        position: absolute; top: 65px; left: -20px; width: 400px; 
+        background: #fff; padding: 20px;
+        border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
+        display: none; z-index: 100; text-align: left;
+    }
+    
+    /* 끊김 방지용 투명 다리 */
+    header nav .sub::before {
+        content: ''; position: absolute; top: -20px; left: 0; width: 100%; height: 20px;
+    }
+
+    header nav .gnb > li:hover .sub { display: block; }
+    
+    header nav .sub ol { float: left; width: 50%; }
+    header nav .sub ol li { margin-bottom: 10px; }
+    header nav .sub ol li a { font-size: 15px; color: #666; display: block; padding: 2px 0; }
+    header nav .sub ol li a:hover { color: #ff5e00; font-weight: bold; }
+    
+    header nav .sub .sub_img {
+        float: right; width: 45%; height: 150px; 
+        background: #ffecd2 url('images/sub_bg_01.jpg') no-repeat center/cover;
+        border-radius: 8px; position: relative; overflow: hidden;
+    }
+    header nav .sub .sub_img p {
+        position: absolute; bottom: 15px; left: 15px; color: #fff; 
+        font-weight: bold; font-size: 14px; z-index: 1; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+
+    /* LNB 숨김 */
+    header nav .lnb { display: none; }
+
+
+    /* ================= 서브 페이지 전용 콘텐츠 스타일 ================= */
+    .sub_banner { height: 50px; } 
+    
+    article.content { width: 1200px; margin: 50px auto; }
+    article.content h2 { 
+        font-size: 40px; font-weight: 900; margin-bottom: 30px; color: #333; 
+        border-bottom: 3px solid #000; padding-bottom: 15px; 
+    }
+    
+    .rancho_text { margin-top: 40px; line-height: 1.8; color: #333; }
+    .rancho_text h3 { font-size: 24px; color: #ff5e00; margin-bottom: 15px; font-weight: bold; }
+    .rancho_text h4 { font-size: 20px; color: #222; margin-top: 30px; margin-bottom: 10px; font-weight: bold; }
+    .rancho_text ul li { position: relative; padding-left: 15px; margin-bottom: 8px; }
+    .rancho_text ul li::before { content: '-'; position: absolute; left: 0; top: 0; font-weight: bold; }
+    .rancho_text p { color: #555; }
+    
+    /* 푸터 */
+    footer { background: #222; color: #999; padding: 50px 0; margin-top: 100px; text-align: center; }
+    footer address { font-style: normal; font-size: 13px; }
+    .fnb, .info { display: none; } 
+  </style>
 
   <script src="js/plugin/jquery-1.12.3.js"></script>
   <script src="js/plugin/jquery.easing.min.js"></script>
@@ -19,121 +114,57 @@
 </head>
 <body>
   <div id="wrap">
+    
     <header>
-      <h1 class="logo"><a href="index.html">CLIO COSMETICS</a></h1>
-
-      <nav class="clearfix">
-        <ul class="gnb clearfix">
-          <li>
-            <a href="sub_ceo.html">영화소개</a>
-            <div class="sub clearfix">
-              <ol>
-                <li><a href="sub_ceo.html">CEO인사말</a></li>
-                <li><a href="#">Vision</a></li>
-                <li><a href="#">문화경영</a></li>
-                <li><a href="#">연구개발</a></li>
-                <li><a href="sub_ci.html">CI</a></li>
-              </ol>
-              <div class="sub_img">
-                <p>
-                  클리오 코스메틱스는 더 나은<br>
-                  품질과 서비스를 제공하는 글로벌<br>
-                  No.1 기업으로 성장하겠습니다.
-                </p>
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <a href="#">등장인물</a>
-            <div class="sub clearfix">
-              <ol>
-                <li><a href="sub_rancho.html">란초</a></li>
-                <li><a href="sub_farhan.html">파르한</a></li>
-                <li><a href="sub_raju.html">라주</a></li>
-                <li><a href="sub_virus.html">비루 사하스트라부데</a></li>
-                <li><a href="sub_chatur.html">차투르 라말링감</a></li>
-                <li><a href="sub_pia.html">피아</a></li>
-              </ol>
-              <div class="sub_img">
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <a href="sub_recruit.html">줄거리</a>
-            <div class="sub clearfix">
-              <ol>
-                <li><a href="sub_recruit.html">인재상</a></li>
-                <li><a href="sub_recruit.html">인사제도</a></li>
-                <li><a href="sub_recruit.html">채용안내</a></li>
-              </ol>
-              <div class="sub_img">
-                <p>
-                  더 높은 성장을 위해 인재가 중심인 기업<br>
-                  클리오와 함께 성장해나갈 인재를 모십니다.
-                </p>
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <a href="#">하이라이트</a>
-            <div class="sub clearfix">
-              <ol>
-                <li><a href="#">경영정보</a></li>
-                <li><a href="#">재무정보</a></li>
-                <li><a href="#">공시정보</a></li>
-                <li><a href="#">법적고지</a></li>
-                <li><a href="#">IR자료</a></li>
-              </ol>
-              <div class="sub_img">
-                <p>
-                  혁신적인 제품, 서비스, 유통, 비즈니스 모델, 마케팅<br>
-                  활동 등을 통하여 새로운 시장을 선도하겠습니다.
-                </p>
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <a href="#">후기평</a>
-            <div class="sub clearfix">
-              <ol>
-                <li><a href="#">공지사항</a></li>
-                <li><a href="#">Q&A</a></li>
-                <li class="last"><a href="#">커뮤니티</a></li>
-              </ol>
-              <div class="sub_img">
-                <p>
-                  화장품을 통해 새로운 변화를 즐기는<br>
-                  사람에게 자신감과 즐거움의 제공을 약속드립니다.
-                </p>
-              </div>
-            </div>
-          </li>
-        </ul>
-
-        <ul class="lnb clearfix">
-          <li><a href="#" class="language">ENGLISH</a></li>
-          <li><a href="#" class="sitemap">SITEMAP</a></li>
-        </ul>
-      </nav>
+      <div class="container clearfix">
+          <h1 class="logo"><a href="index.html">3 Idiots</a></h1>
+          <nav>
+            <ul class="gnb clearfix">
+              <li><a href="#">등장인물</a>
+                <div class="sub clearfix">
+                  <ol>
+                    <li><a href="sub_rancho.html">란초</a></li><li><a href="sub_farhan.html">파르한</a></li><li><a href="sub_raju.html">라주</a></li><li><a href="sub_virus.html">비루 교수</a></li><li><a href="sub_chatur.html">차투르</a></li><li><a href="sub_pia.html">피아</a></li>
+                  </ol>
+                  <div class="sub_img"><p>전설적인 공학 천재들과<br>그들의 유쾌한 반란</p></div>
+                </div>
+              </li>
+              
+              <li><a href="sub_recruit.html">줄거리</a></li>
+              
+              <li><a href="#">하이라이트</a>
+                <div class="sub clearfix">
+                  <ol>
+                    <li><a href="#">갤러리</a></li><li><a href="#">예고편</a></li><li><a href="#">OST</a></li><li><a href="#">제작영상</a></li><li><a href="#">비하인드</a></li>
+                  </ol>
+                  <div class="sub_img"><p>다시 보고 싶은<br>최고의 순간들</p></div>
+                </div>
+              </li>
+              
+              <li><a href="#">후기평</a>
+                <div class="sub clearfix">
+                  <ol>
+                    <li><a href="#">네티즌 평점</a></li>
+                    <li><a href="sub_real_reviews.html">실관람객평</a></li>
+                    <li class="last"><a href="sub_critic_reviews.html">평론가평</a></li>
+                  </ol>
+                  <div class="sub_img"><p>여러분의 감동을<br>함께 나누세요.</p></div>
+                </div>
+              </li>
+            </ul>
+            
+            <ul class="lnb clearfix">
+              <li>ENGLISH</li><li>SITEMAP</li>
+            </ul>
+          </nav>
+      </div>
     </header>
-    <!-- end of header -->
-    <hr>
-
     <section>
       <h2 class="sr-only">피아 페이지</h2>
-      <div class="sub_banner">
-        <p class="wow fadeIn" data-wow-delay="100ms">
-          
-        </p>
-      </div>
+      <div class="sub_banner"></div>
 
       <article class="rancho content wow fadeInUp" data-wow-delay="200ms">
         <h2>피아</h2>
-        <img src="images/피아얼굴.jpg" alt="피아얼굴" style="display: block; margin: 0; width: 25%;">
+        <img src="images/피아얼굴.jpg" alt="피아얼굴" style="display: block; margin: 0; width: 300px;">
 
         <div class="rancho_text">
           <h3>캐릭터 요약: "자유로운 영혼의 란초를 사랑하는 의사"</h3>
@@ -153,116 +184,20 @@
         </div>
       </article>
     </section>
-    <!-- end of section -->
-    <hr>
-
+    
     <footer>
-      <div class="fnb">
-        <a href="#" class="sitemapOpen">
-          <h3 class="title">CLIO COSMETICS SITEMAP<span>펼쳐보기</span></h3>
-        </a>
-
-        <ul class="clearfix">
-          <li>
-            <a href="sub_ceo.html">영화소개</a>
-
-            <ol class="fnb_sub">
-              <li><a href="sub_ceo.html">&middot; CEO인사말</a></li>
-              <li><a href="#">&middot; Vision</a></li>
-              <li><a href="#">&middot; 문화경영</a></li>
-              <li><a href="#">&middot; 연구개발</a></li>
-              <li><a href="sub_ci.html">&middot; CI</a></li>
-            </ol>
-          </li>
-
-          <li>
-            <a href="#">등장인물</a>
-
-            <ol class="fnb_sub">
-              <li><a href="sub_rancho.html">&middot; 란초</a></li>
-              <li><a href="sub_farhan.html">&middot; 파르한</a></li>
-              <li><a href="sub_raju.html">&middot; 라주</a></li>
-              <li><a href="sub_virus.html">&middot; 비루 사하스트라부데</a></li>
-              <li><a href="sub_chatur.html">&middot; 차투르 라말링감</a></li>
-              <li><a href="sub_pia.html">&middot; 피아</a></li>
-            </ol>
-          </li>
-
-          <li>
-            <a href="sub_recruit.html">줄거리</a>
-
-            <ol class="fnb_sub">
-              <li><a href="sub_recruit.html">&middot; 인재상</a></li>
-              <li><a href="sub_recruit.html">&middot; 인사제도</a></li>
-              <li><a href="sub_recruit.html">&middot; 채용안내</a></li>
-            </ol>
-          </li>
-
-          <li>
-            <a href="#">하이라이트</a>
-
-            <ol class="fnb_sub">
-              <li><a href="#">&middot; 경영정보</a></li>
-              <li><a href="#">&middot; 재무정보</a></li>
-              <li><a href="#">&middot; 공시정보</a></li>
-              <li><a href="#">&middot; 법적고지</a></li>
-              <li><a href="#">&middot; IR자료</a></li>
-            </ol>
-          </li>
-
-          <li>
-            <a href="#">후기평</a>
-
-            <ol class="fnb_sub">
-              <li><a href="#">&middot; 공지사항</a></li>
-              <li><a href="#">&middot; Q&A</a></li>
-              <li><a href="#">&middot; 커뮤니티</a></li>
-            </ol>
-          </li>
-
-          <li>
-            <a href="#">SNS</a>
-
-            <ol class="fnb_sub">
-              <li><a href="#">&middot; facebook</a></li>
-              <li><a href="#">&middot; instagram</a></li>
-              <li><a href="#">&middot; youtube</a></li>
-              <li><a href="#">&middot; blog</a></li>
-            </ol>
-          </li>
-        </ul>
-      </div>
-
       <div class="info">
-        <ul class="policy clearfix">
-          <li><a href="#">저작권보호정책</a></li>
-          <li><a href="#">개인정보처리방침</a></li>
-          <li><a href="#">이메일무단수집거부</a></li>
-          <li><a href="#" class="top">TOP</a></li>
-        </ul>
-
-        <div class="familysite">
-          <a href="#" class="familysiteOpen">패밀리사이트<span>이동하기</span></a>
-
-          <ul>
-            <li><a href="https://www.clubclio.co.kr/" target="_blank">클럽 클리오</a></li>
-            <li><a href="http://www.cliocosmetic.com/" target="_blank">클리오</a></li>
-            <li><a href="http://www.periperacosmetic.com/" target="_blank">페리페라</a></li>
-            <li><a href="http://www.goodalcosmetic.com/" target="_blank">구달</a></li>
-            <li><a href="http://www.dermatory.com/" target="_blank">더마토리</a></li>
-            <li><a href="http://www.healingbird.co.kr/" target="_blank">힐링 버드</a></li>
-          </ul>
-        </div>
-  
         <address>
-          고객상담실 : 080-080-1510 월~금 : 09:00 ~ 18:00, 주말/공휴일 휴무<br>
-          본 페이지는 상업적 목적이 아닌 개인 포트폴리오용으로 제작되었습니다.<br>
-          &copy; 20xx Sample. All Rights Reserved.       
+          본 페이지는 개인 포트폴리오용으로 제작되었습니다.<br>
+          &copy; 20xx Sample. All Rights Reserved.        
         </address>
       </div>
     </footer>
   </div>
 
   <script src="js/initial_function.js"></script>
+  <script>
+      new WOW().init();
+  </script>
 </body>
 </html>
