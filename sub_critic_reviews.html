@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>평론가평</title>
+  <title>영화 세 얼간이 - 평론가평</title>
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.jpg">
   
   <link rel="stylesheet" href="css/reset.css">
@@ -17,18 +17,19 @@
     @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
     /* ==========================================================================
-       ★ [헤더 스타일] index.html과 100% 동일한 CSS (검은색 배경) ★
+       ★ [헤더 스타일] index.html과 100% 동일 (Black Theme) ★
        ========================================================================== */
     header {
         width: 100%; height: 100px; 
-        background: #000; /* 검은색 배경 고정 */
+        background: #000; /* 검은색 배경 */
         border-bottom: 1px solid rgba(255,255,255,0.1);
-        position: relative; /* 서브페이지 배치 */
+        position: relative; /* 서브페이지 상단 고정 */
         z-index: 1000;
     }
 
     .container { width: 1200px; margin: 0 auto; position: relative; height: 100%; }
-    
+    .clearfix::after { content: ''; display: block; clear: both; }
+
     /* 로고 */
     h1.logo { 
         position: absolute; left: 0; top: 50%; transform: translateY(-50%); 
@@ -81,8 +82,7 @@
 
     /* LNB 숨김 */
     header nav .lnb { display: none; }
-    
-    .clearfix::after { content: ''; display: block; clear: both; }
+
 
     /* ================= 서브 페이지 전용 콘텐츠 스타일 ================= */
     .sub_banner { height: 50px; } 
@@ -169,7 +169,7 @@
         <p style="margin-top: 20px; font-size: 18px; color: #666;">
             전문가들의 깊이 있는 분석과 비평을 만나보세요.
         </p>
-        </article>
+      </article>
     </section>
     
     <footer>
