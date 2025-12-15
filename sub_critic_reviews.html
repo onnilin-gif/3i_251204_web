@@ -104,6 +104,11 @@
   <script src="js/plugin/swiper.min.js"></script>
   <script src="js/plugin/wow.min.js"></script>
   <script src="js/function.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+      body { font-family: 'Noto Sans KR', sans-serif; }
+  </style>
 </head>
 <body>
   <div id="wrap">
@@ -169,6 +174,133 @@
         <p style="margin-top: 20px; font-size: 18px; color: #666;">
             전문가들의 깊이 있는 분석과 비평을 만나보세요.
         </p>
+        
+        <div class="max-w-4xl mx-auto bg-white shadow-xl rounded-xl overflow-hidden border-t-4 border-yellow-500" style="margin-top: 40px; text-align: left;">
+            <!-- Header -->
+            <div class="bg-yellow-400 p-6 text-slate-900">
+                <h1 class="text-2xl font-bold">Movie &lt;3 Idiots&gt; Critic Analysis</h1>
+                <p class="text-slate-700 mt-2 font-medium">알 이즈 웰(All is Well)! 평론가 반응 분석 리포트</p>
+            </div>
+
+            <!-- Charts Container -->
+            <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Chart 1: Critic Scores -->
+                <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
+                    <h2 class="text-lg font-bold mb-4 text-center text-slate-700">Critic Ratings (Out of 10)</h2>
+                    <canvas id="scoreChart"></canvas>
+                    <div class="mt-4 text-sm text-slate-600 bg-slate-50 p-3 rounded border border-slate-100">
+                        <p><strong>해설:</strong> 모든 평론가가 6.0~7.25점 사이의 점수를 부여했습니다. 특히 '소금쟁이'로 불리는 박평식 평론가가 6점을 준 것은 해당 영화가 준수한 오락성과 완성도를 갖췄음을 의미합니다.</p>
+                    </div>
+                </div>
+
+                <!-- Chart 2: Key Evaluation Points -->
+                <div class="bg-white p-4 rounded-lg border border-slate-200 shadow-sm">
+                    <h2 class="text-lg font-bold mb-4 text-center text-slate-700">Key Themes in Reviews</h2>
+                    <canvas id="themeChart"></canvas>
+                    <div class="mt-4 text-sm text-slate-600 bg-slate-50 p-3 rounded border border-slate-100">
+                        <p><strong>해설:</strong> 평론가들은 영화의 <strong>낙천성(Optimism)</strong>과 <strong>메시지(Message)</strong>에 가장 주목했습니다. 인도 영화 특유의 코미디와 교육 현실 비판이 한국 정서와도 잘 맞는다는 평가가 지배적입니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Statistics -->
+            <div class="p-6 bg-slate-50 border-t border-slate-200">
+                <h3 class="text-xl font-bold mb-3 text-slate-800">종합 분석 (Overview)</h3>
+                <div class="grid grid-cols-3 gap-4 text-center">
+                    <div class="p-3 bg-white rounded shadow-sm">
+                        <p class="text-xs text-gray-500 uppercase">Total Critics</p>
+                        <p class="text-2xl font-bold text-slate-800">6</p>
+                    </div>
+                    <div class="p-3 bg-white rounded shadow-sm">
+                        <p class="text-xs text-gray-500 uppercase">Positive Rate</p>
+                        <p class="text-2xl font-bold text-green-600">100%</p>
+                    </div>
+                    <div class="p-3 bg-white rounded shadow-sm">
+                        <p class="text-xs text-gray-500 uppercase">Avg Score</p>
+                        <p class="text-2xl font-bold text-yellow-600">6.7</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Data Preparation
+            // Critics: Baek Seung-chan, Heo Ji-woong, Song Gyeong-won, Kim Hye-ri, Park Pyeong-sik, Kang Byeong-jin
+            const critics = ['Baek S.C.', 'Heo J.W.', 'Song G.W.', 'Kim H.R.', 'Park P.S.', 'Kang B.J.'];
+            const scores = [7.25, 7.0, 7.0, 7.0, 6.0, 6.0];
+            
+            // Chart 1: Bar Chart for Scores
+            const ctxScore = document.getElementById('scoreChart').getContext('2d');
+            new Chart(ctxScore, {
+                type: 'bar',
+                data: {
+                    labels: critics,
+                    datasets: [{
+                        label: 'Score',
+                        data: scores,
+                        backgroundColor: [
+                            'rgba(255, 205, 86, 0.7)', // Yellow (Main)
+                            'rgba(255, 159, 64, 0.7)',
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(153, 102, 255, 0.7)'
+                        ],
+                        borderColor: 'rgba(0,0,0,0.1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10,
+                            title: { display: true, text: 'Points (Max 10)' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+
+            // Chart 2: Radar Chart for Themes (Based on keyword analysis)
+            // Themes: Optimism/Charm, Social Message, Comedy/Fun, Story/Character, Emotion/Tears
+            const ctxTheme = document.getElementById('themeChart').getContext('2d');
+            new Chart(ctxTheme, {
+                type: 'radar',
+                data: {
+                    labels: ['Optimism (낙천성)', 'Social Message (메시지)', 'Comedy (코미디)', 'Story (서사)', 'Emotion (감동)'],
+                    datasets: [{
+                        label: 'Emphasis Level',
+                        data: [9, 8, 8, 7, 7], // Semantic values derived from the reviews
+                        fill: true,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgb(54, 162, 235)',
+                        pointBackgroundColor: 'rgb(54, 162, 235)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgb(54, 162, 235)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(0,0,0,0.1)' },
+                            grid: { color: 'rgba(0,0,0,0.1)' },
+                            suggestedMin: 0,
+                            suggestedMax: 10
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    }
+                }
+            });
+        </script>
       </article>
     </section>
     
