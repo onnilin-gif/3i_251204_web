@@ -1,10 +1,10 @@
 🎥 영화 <세 얼간이> 소개 웹페이지 (3 Idiots Introduction Webpage)
 
-
 📌 개요
 2025년 12월 4일 웹 개발 과정에서 진행된 프로젝트로, 인도의 명작 영화 <세 얼간이(3 Idiots)>를 주제로 제작된 웹사이트입니다. 영화의 감동적인 메시지와 핵심 정보를 효과적으로 전달하는 데 중점을 두었습니다.
 
 배포 URL: https://onnilin-gif.github.io/3i_251204_web/GitHub 
+
 저장소: https://github.com/onnilin-gif/3i_251204_web
 
 ✨ 주요 기능 및 내용이 웹사이트는 영화 <세 얼간이>를 소개하는 데 필요한 핵심 구성 요소로 이루어져 있습니다.
