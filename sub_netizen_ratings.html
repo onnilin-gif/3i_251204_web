@@ -16,116 +16,138 @@
   <script src="js/plugin/swiper.min.js"></script>
   <script src="js/plugin/wow.min.js"></script>
   <script src="js/function.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+    /* ==========================================================================
+       ★ [헤더 스타일] index.html과 100% 동일하게 교체 (Black Theme) ★
+       ========================================================================== */
+    header {
+        width: 100%; height: 100px; 
+        background: #000; /* 검은색 배경 */
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        position: relative; /* 서브페이지 배치 */
+        z-index: 1000;
+    }
+
+    .container { width: 1200px; margin: 0 auto; position: relative; height: 100%; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    /* 로고 */
+    h1.logo { 
+        position: absolute; left: 0; top: 50%; transform: translateY(-50%); 
+        font-size: 32px; font-weight: 900; margin: 0;
+    }
+    h1.logo a { 
+        color: #fff; text-decoration: none; font-family: 'Anton', sans-serif; letter-spacing: 1px;
+    }
+
+    /* 네비게이션 위치 */
+    header nav { position: absolute; right: 0; top: 35px; } 
+    header nav .gnb > li { float: left; margin-left: 40px; position: relative; }
+    
+    /* GNB 링크 스타일 */
+    header nav .gnb > li > a { 
+        font-size: 18px; font-weight: 700; color: #fff; 
+        padding-bottom: 30px; display: block; text-decoration: none;
+    }
+    header nav .gnb > li:hover > a { color: #ff5e00; }
+
+    /* 드롭다운 서브메뉴 */
+    header nav .sub {
+        position: absolute; top: 65px; left: -20px; width: 400px; 
+        background: #fff; padding: 20px;
+        border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
+        display: none; z-index: 100; text-align: left;
+    }
+    
+    /* 끊김 방지용 투명 다리 */
+    header nav .sub::before {
+        content: ''; position: absolute; top: -20px; left: 0; width: 100%; height: 20px;
+    }
+
+    header nav .gnb > li:hover .sub { display: block; }
+    
+    header nav .sub ol { float: left; width: 50%; }
+    header nav .sub ol li { margin-bottom: 10px; }
+    header nav .sub ol li a { font-size: 15px; color: #666; display: block; padding: 2px 0; }
+    header nav .sub ol li a:hover { color: #ff5e00; font-weight: bold; }
+    
+    header nav .sub .sub_img {
+        float: right; width: 45%; height: 150px; 
+        background: #ffecd2 url('images/sub_bg_01.jpg') no-repeat center/cover;
+        border-radius: 8px; position: relative; overflow: hidden;
+    }
+    header nav .sub .sub_img p {
+        position: absolute; bottom: 15px; left: 15px; color: #fff; 
+        font-weight: bold; font-size: 14px; z-index: 1; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+
+    /* LNB 숨김 */
+    header nav .lnb { display: none; }
+
+    /* 기존 서브페이지 콘텐츠 스타일 유지 */
+    .sub_banner { height: 50px; } 
+    article.content { width: 1200px; margin: 50px auto; min-height: 400px; text-align: center; }
+    article.content h2 { 
+        font-size: 40px; font-weight: 900; margin-bottom: 30px; color: #333; 
+        border-bottom: 3px solid #000; padding-bottom: 15px; display: inline-block;
+    }
+    
+    /* 기존 푸터 스타일 유지 */
+    footer { background: #222; color: #999; padding: 50px 0; margin-top: 100px; text-align: center; }
+    footer address { font-style: normal; font-size: 13px; }
+    .fnb, .info { display: none; } 
+  </style>
 </head>
 <body>
   <div id="wrap">
+    
     <header>
-      <h1 class="logo"><a href="index.html">3 Idiots</a></h1>
-
-      <nav class="clearfix">
-        <ul class="gnb clearfix">
-          <li>
-            <a href="sub_ceo.html">영화소개</a>
-            <div class="sub clearfix">
-              <ol>
-                <li><a href="sub_ceo.html">감독인사말</a></li>
-                <li><a href="#">Vision</a></li>
-                <li><a href="#">작품배경</a></li>
-                <li><a href="#">제작노트</a></li>
-                <li><a href="sub_ci.html">로고의미</a></li>
-              </ol>
-              <div class="sub_img">
-                <p>
-                  알 이즈 웰!<br>
-                  성공은 배움 뒤에 따라온다.
-                </p>
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <a href="#">등장인물</a>
-            <div class="sub clearfix">
-              <ol>
-                <li><a href="sub_rancho.html">란초</a></li>
-                <li><a href="sub_farhan.html">파르한</a></li>
-                <li><a href="sub_raju.html">라주</a></li>
-                <li><a href="sub_virus.html">비루 사하스트라부데</a></li>
-                <li><a href="sub_chatur.html">차투르 라말링감</a></li>
-                <li><a href="sub_pia.html">피아</a></li>
-              </ol>
-              <div class="sub_img">
-                <p>
-                  전설적인 공학 천재들과<br>
-                  그들의 유쾌한 반란
-                </p>
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <a href="sub_recruit.html">줄거리</a>
-            <div class="sub clearfix">
-              <ol>
-                <li><a href="sub_recruit.html">전체 줄거리</a></li>
-                <li><a href="#">명장면</a></li>
-                <li><a href="#">명대사</a></li>
-              </ol>
-              <div class="sub_img">
-                <p>
-                  웃음과 감동이 있는<br>
-                  진정한 교육 이야기
-                </p>
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <a href="#">하이라이트</a>
-            <div class="sub clearfix">
-              <ol>
-                <li><a href="#">갤러리</a></li>
-                <li><a href="#">예고편</a></li>
-                <li><a href="#">OST</a></li>
-                <li><a href="#">제작영상</a></li>
-                <li><a href="#">비하인드</a></li>
-              </ol>
-              <div class="sub_img">
-                <p>
-                  다시 보고 싶은<br>
-                  최고의 순간들
-                </p>
-              </div>
-            </div>
-          </li>
-
-          <li>
-            <a href="#">후기평</a>
-            <div class="sub clearfix">
-              <ol>
-                <li><a href="sub_netizen_ratings.html">네티즌 평점</a></li>
-                <li><a href="sub_real_reviews.html">실관람객평</a></li>
-                <li class="last"><a href="sub_critic_reviews.html">평론가평</a></li>
-              </ol>
-              <div class="sub_img">
-                <p>
-                  여러분의 감동을<br>
-                  함께 나누세요.
-                </p>
-              </div>
-            </div>
-          </li>
-        </ul>
-
-        <ul class="lnb clearfix">
-          <li><a href="#" class="language">ENGLISH</a></li>
-          <li><a href="#" class="sitemap">SITEMAP</a></li>
-        </ul>
-      </nav>
+      <div class="container clearfix">
+          <h1 class="logo"><a href="index.html">3 Idiots</a></h1>
+          <nav>
+            <ul class="gnb clearfix">
+              <li><a href="#">등장인물</a>
+                <div class="sub clearfix">
+                  <ol>
+                    <li><a href="sub_rancho.html">란초</a></li><li><a href="sub_farhan.html">파르한</a></li><li><a href="sub_raju.html">라주</a></li><li><a href="sub_virus.html">비루 교수</a></li><li><a href="sub_chatur.html">차투르</a></li><li><a href="sub_pia.html">피아</a></li>
+                  </ol>
+                  <div class="sub_img"><p>전설적인 공학 천재들과<br>그들의 유쾌한 반란</p></div>
+                </div>
+              </li>
+              
+              <li><a href="sub_recruit.html">줄거리</a></li>
+              
+              <li><a href="#">하이라이트</a>
+                <div class="sub clearfix">
+                  <ol>
+                    <li><a href="#">갤러리</a></li><li><a href="#">예고편</a></li><li><a href="#">OST</a></li><li><a href="#">제작영상</a></li><li><a href="#">비하인드</a></li>
+                  </ol>
+                  <div class="sub_img"><p>다시 보고 싶은<br>최고의 순간들</p></div>
+                </div>
+              </li>
+              
+              <li><a href="#">후기평</a>
+                <div class="sub clearfix">
+                  <ol>
+                    <li><a href="sub_netizen_ratings.html">네티즌 평점</a></li>
+                    <li><a href="sub_real_reviews.html">실관람객평</a></li>
+                    <li class="last"><a href="sub_critic_reviews.html">평론가평</a></li>
+                  </ol>
+                  <div class="sub_img"><p>여러분의 감동을<br>함께 나누세요.</p></div>
+                </div>
+              </li>
+            </ul>
+            
+            <ul class="lnb clearfix">
+              <li>ENGLISH</li><li>SITEMAP</li>
+            </ul>
+          </nav>
+      </div>
     </header>
-    <!-- end of header -->
-    <hr>
-
     <section>
       <h2 class="sr-only">네티즌 평점 페이지</h2>
       <div class="sub_banner">
@@ -161,9 +183,7 @@
         </div>
       </article>
     </section>
-    <!-- end of section -->
-    <hr>
-
+    
     <footer>
       <div class="fnb">
         <a href="#" class="sitemapOpen">
@@ -172,8 +192,7 @@
 
         <ul class="clearfix">
           <li>
-            등장인물
-
+            <a href="sub_ceo.html">영화소개</a>
             <ol class="fnb_sub">
               <li><a href="sub_ceo.html">&middot; CEO인사말</a></li>
               <li><a href="#">&middot; Vision</a></li>
@@ -184,53 +203,48 @@
           </li>
 
           <li>
-            <a href="#">브랜드</a>
-
+            <a href="#">등장인물</a>
             <ol class="fnb_sub">
               <li><a href="sub_rancho.html">&middot; 란초</a></li>
-              <li><a href="#">&middot; CLIO</a></li>
-              <li><a href="#">&middot; peripera</a></li>
-              <li><a href="#">&middot; goodal</a></li>
-              <li><a href="#">&middot; DERMATORY</a></li>
-              <li><a href="#">&middot; Healing Bird</a></li>
+              <li><a href="sub_farhan.html">&middot; 파르한</a></li>
+              <li><a href="sub_raju.html">&middot; 라주</a></li>
+              <li><a href="sub_virus.html">&middot; 비루 사하스트라부데</a></li>
+              <li><a href="sub_chatur.html">&middot; 차투르 라말링감</a></li>
+              <li><a href="sub_pia.html">&middot; 피아</a></li>
             </ol>
           </li>
 
           <li>
-            <a href="sub_recruit.html">채용정보</a>
-
+            <a href="sub_recruit.html">줄거리</a>
             <ol class="fnb_sub">
-              <li><a href="sub_recruit.html">&middot; 인재상</a></li>
-              <li><a href="sub_recruit.html">&middot; 인사제도</a></li>
-              <li><a href="sub_recruit.html">&middot; 채용안내</a></li>
+              <li><a href="sub_recruit.html">&middot; 전체 줄거리</a></li>
+              <li><a href="#">&middot; 명장면</a></li>
+              <li><a href="#">&middot; 명대사</a></li>
             </ol>
           </li>
 
           <li>
-            <a href="#">투자정보</a>
-
+            <a href="#">하이라이트</a>
             <ol class="fnb_sub">
-              <li><a href="#">&middot; 경영정보</a></li>
-              <li><a href="#">&middot; 재무정보</a></li>
-              <li><a href="#">&middot; 공시정보</a></li>
-              <li><a href="#">&middot; 법적고지</a></li>
-              <li><a href="#">&middot; IR자료</a></li>
+              <li><a href="#">&middot; 갤러리</a></li>
+              <li><a href="#">&middot; 예고편</a></li>
+              <li><a href="#">&middot; OST</a></li>
+              <li><a href="#">&middot; 제작영상</a></li>
+              <li><a href="#">&middot; 비하인드</a></li>
             </ol>
           </li>
 
           <li>
-            <a href="#">고객센터</a>
-
+            <a href="#">후기평</a>
             <ol class="fnb_sub">
-              <li><a href="#">&middot; 공지사항</a></li>
-              <li><a href="#">&middot; Q&A</a></li>
-              <li><a href="#">&middot; 커뮤니티</a></li>
+              <li><a href="#">&middot; 네티즌 평점</a></li>
+              <li><a href="sub_real_reviews.html">&middot; 실관람객평</a></li>
+              <li><a href="sub_critic_reviews.html">&middot; 평론가평</a></li>
             </ol>
           </li>
 
           <li>
             <a href="#">SNS</a>
-
             <ol class="fnb_sub">
               <li><a href="#">&middot; facebook</a></li>
               <li><a href="#">&middot; instagram</a></li>
@@ -251,7 +265,6 @@
 
         <div class="familysite">
           <a href="#" class="familysiteOpen">패밀리사이트<span>이동하기</span></a>
-
           <ul>
             <li><a href="https://www.clubclio.co.kr/" target="_blank">클럽 클리오</a></li>
             <li><a href="http://www.cliocosmetic.com/" target="_blank">클리오</a></li>
@@ -265,7 +278,7 @@
         <address>
           고객상담실 : 080-080-1510 월~금 : 09:00 ~ 18:00, 주말/공휴일 휴무<br>
           본 페이지는 상업적 목적이 아닌 개인 포트폴리오용으로 제작되었습니다.<br>
-          &copy; 20xx Sample. All Rights Reserved.       
+          &copy; 20xx Sample. All Rights Reserved.        
         </address>
       </div>
     </footer>
