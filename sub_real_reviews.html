@@ -3,26 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>영화 세 얼간이 - 줄거리</title>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>실관람객평</title>
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.jpg">
-  
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/swiper.css">
   <link rel="stylesheet" href="css/animate.css">
   <link rel="stylesheet" href="css/style.css">
+
+  <script src="js/plugin/jquery-1.12.3.js"></script>
+  <script src="js/plugin/jquery.easing.min.js"></script>
+  <script src="js/plugin/swiper.min.js"></script>
+  <script src="js/plugin/wow.min.js"></script>
+  <script src="js/function.js"></script>
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
     /* ==========================================================================
-       ★ [헤더 스타일] index.html과 100% 동일 (Black Theme) ★
+       ★ [헤더 스타일] index.html과 100% 동일하게 교체 (Black Theme) ★
        ========================================================================== */
     header {
         width: 100%; height: 100px; 
         background: #000; /* 검은색 배경 */
         border-bottom: 1px solid rgba(255,255,255,0.1);
-        position: relative; /* 서브페이지 상단 고정 */
+        position: relative; /* 서브페이지 배치 */
         z-index: 1000;
     }
 
@@ -82,27 +88,19 @@
     /* LNB 숨김 */
     header nav .lnb { display: none; }
 
-
-    /* ================= 서브 페이지 전용 콘텐츠 스타일 ================= */
+    /* 기존 서브페이지 콘텐츠 스타일 유지 */
     .sub_banner { height: 50px; } 
-    
     article.content { width: 1200px; margin: 50px auto; min-height: 400px; text-align: center; }
     article.content h2 { 
         font-size: 40px; font-weight: 900; margin-bottom: 30px; color: #333; 
         border-bottom: 3px solid #000; padding-bottom: 15px; display: inline-block;
     }
     
-    /* 푸터 */
+    /* 기존 푸터 스타일 유지 */
     footer { background: #222; color: #999; padding: 50px 0; margin-top: 100px; text-align: center; }
     footer address { font-style: normal; font-size: 13px; }
     .fnb, .info { display: none; } 
   </style>
-
-  <script src="js/plugin/jquery-1.12.3.js"></script>
-  <script src="js/plugin/jquery.easing.min.js"></script>
-  <script src="js/plugin/swiper.min.js"></script>
-  <script src="js/plugin/wow.min.js"></script>
-  <script src="js/function.js"></script>
 </head>
 <body>
   <div id="wrap">
@@ -150,25 +148,117 @@
           </nav>
       </div>
     </header>
-    <section>
-      <h2 class="sr-only">줄거리 페이지</h2>
-      <div class="sub_banner"></div>
+    <hr>
 
-      <article class="content wow fadeInUp" data-wow-delay="200ms">
-        <h2>전체 줄거리</h2>
-        <p style="margin-top: 20px; font-size: 18px; color: #666; line-height: 1.6;">
-            천재들만 간다는 일류 명문대 ICE, 성적과 취업만을 강요하는 학교를 발칵 뒤집어 놓은 대단한 녀석 란초!<br>
-            아버지가 정해준 꿈, `공학자`가 되기 위해 정작 본인이 좋아하는 일은 포기하고 공부만 하는 파르한!<br>
-            찢어지게 가난한 집, 병든 아버지와 식구들을 책임지기 위해 무조건 대기업에 취직해야만 하는 라주!<br><br>
-            친구의 이름으로 뭉친 `세 얼간이`! 삐딱한 천재들의 진정한 꿈을 찾기 위한 세상 뒤집기 한판이 시작된다!
+    <section>
+      <h2 class="sr-only">실관람객평 페이지</h2>
+      <div class="sub_banner">
+        <p class="wow fadeIn" data-wow-delay="100ms">
+          
         </p>
+      </div>
+
+      <article class="content wow fadeInUp" data-wow-delay="200ms" style="padding: 100px 0; text-align: center; min-height: 400px;">
+        <h2>실관람객평</h2>
+        <p style="margin-top: 20px; font-size: 18px; color: #666;">실관람객들의 생생한 후기를 확인하세요.</p>
       </article>
     </section>
-    
+    <hr>
+
     <footer>
+      <div class="fnb">
+        <a href="#" class="sitemapOpen">
+          <h3 class="title">CLIO COSMETICS SITEMAP<span>펼쳐보기</span></h3>
+        </a>
+
+        <ul class="clearfix">
+          <li>
+            <a href="sub_ceo.html">영화소개</a>
+            <ol class="fnb_sub">
+              <li><a href="sub_ceo.html">&middot; CEO인사말</a></li>
+              <li><a href="#">&middot; Vision</a></li>
+              <li><a href="#">&middot; 문화경영</a></li>
+              <li><a href="#">&middot; 연구개발</a></li>
+              <li><a href="sub_ci.html">&middot; CI</a></li>
+            </ol>
+          </li>
+
+          <li>
+            <a href="#">등장인물</a>
+            <ol class="fnb_sub">
+              <li><a href="sub_rancho.html">&middot; 란초</a></li>
+              <li><a href="sub_farhan.html">&middot; 파르한</a></li>
+              <li><a href="sub_raju.html">&middot; 라주</a></li>
+              <li><a href="sub_virus.html">&middot; 비루 사하스트라부데</a></li>
+              <li><a href="sub_chatur.html">&middot; 차투르 라말링감</a></li>
+              <li><a href="sub_pia.html">&middot; 피아</a></li>
+            </ol>
+          </li>
+
+          <li>
+            <a href="sub_recruit.html">줄거리</a>
+            <ol class="fnb_sub">
+              <li><a href="sub_recruit.html">&middot; 전체 줄거리</a></li>
+              <li><a href="#">&middot; 명장면</a></li>
+              <li><a href="#">&middot; 명대사</a></li>
+            </ol>
+          </li>
+
+          <li>
+            <a href="#">하이라이트</a>
+            <ol class="fnb_sub">
+              <li><a href="#">&middot; 갤러리</a></li>
+              <li><a href="#">&middot; 예고편</a></li>
+              <li><a href="#">&middot; OST</a></li>
+              <li><a href="#">&middot; 제작영상</a></li>
+              <li><a href="#">&middot; 비하인드</a></li>
+            </ol>
+          </li>
+
+          <li>
+            <a href="#">후기평</a>
+            <ol class="fnb_sub">
+              <li><a href="#">&middot; 네티즌 평점</a></li>
+              <li><a href="sub_real_reviews.html">&middot; 실관람객평</a></li>
+              <li><a href="sub_critic_reviews.html">&middot; 평론가평</a></li>
+            </ol>
+          </li>
+
+          <li>
+            <a href="#">SNS</a>
+            <ol class="fnb_sub">
+              <li><a href="#">&middot; facebook</a></li>
+              <li><a href="#">&middot; instagram</a></li>
+              <li><a href="#">&middot; youtube</a></li>
+              <li><a href="#">&middot; blog</a></li>
+            </ol>
+          </li>
+        </ul>
+      </div>
+
       <div class="info">
+        <ul class="policy clearfix">
+          <li><a href="#">저작권보호정책</a></li>
+          <li><a href="#">개인정보처리방침</a></li>
+          <li><a href="#">이메일무단수집거부</a></li>
+          <li><a href="#" class="top">TOP</a></li>
+        </ul>
+
+        <div class="familysite">
+          <a href="#" class="familysiteOpen">패밀리사이트<span>이동하기</span></a>
+          <ul>
+            <li><a href="https://www.clubclio.co.kr/" target="_blank">클럽 클리오</a></li>
+            <li><a href="http://www.cliocosmetic.com/" target="_blank">클리오</a></li>
+            <li><a href="http://www.periperacosmetic.com/" target="_blank">페리페라</a></li>
+            <li><a href="http://www.goodalcosmetic.com/" target="_blank">구달</a></li>
+            <li><a href="http://www.dermatory.com/" target="_blank">더마토리</a></li>
+            <li><a href="http://www.healingbird.co.kr/" target="_blank">힐링 버드</a></li>
+          </ul>
+        </div>
+  
         <address>
-          본 페이지는 개인 포트폴리오용으로 제작되었습니다.<br>
+          고객상담실 : 080-080-1510 월~금 : 09:00 ~ 18:00, 주말/공휴일 휴무<br>
+          본 페이지는 상업적 목적이 아닌 개인 포트폴리오용으로 제작되었습니다.<br>
           &copy; 20xx Sample. All Rights Reserved.        
         </address>
       </div>
@@ -176,8 +266,5 @@
   </div>
 
   <script src="js/initial_function.js"></script>
-  <script>
-      new WOW().init();
-  </script>
 </body>
 </html>
