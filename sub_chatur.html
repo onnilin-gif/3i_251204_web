@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>영화 세 얼간이 - 캐릭터 소개</title>
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.jpg">
   
@@ -17,47 +16,50 @@
     @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
     /* ==========================================================================
-       ★ [헤더 스타일] index.html과 동일하게 설정 (Black Theme) ★
+       ★ [헤더 스타일] Main Page와 100% 동일한 CSS (복사본) ★
        ========================================================================== */
     header {
         width: 100%; height: 100px; 
-        background: #000; /* 검은색 배경 */
+        /* 메인과 동일하게 검은색 배경 */
+        background: #000; 
         border-bottom: 1px solid rgba(255,255,255,0.1);
-        position: relative; /* 서브 페이지에서는 relative로 배치하여 콘텐츠를 밀어냄 */
+        position: relative; /* 서브페이지는 상단에 고정 배치 */
         z-index: 1000;
     }
 
     .container { width: 1200px; margin: 0 auto; position: relative; height: 100%; }
-    
+    .clearfix::after { content: ''; display: block; clear: both; }
+
     /* 로고 */
     h1.logo { 
-        position: absolute; left: 0; top: 50%; transform: translateY(-50%); 
+        position: absolute; left: 50px; top: 50%; transform: translateY(-50%); 
         font-size: 32px; font-weight: 900; margin: 0;
     }
     h1.logo a { 
-        color: #fff; text-decoration: none; font-family: 'Anton', sans-serif; letter-spacing: 1px;
+        color: #fff; text-decoration: none; 
     }
 
-    /* 네비게이션 */
-    header nav { position: absolute; right: 0; top: 35px; } 
+    /* 네비게이션 위치 */
+    header nav { position: absolute; right: 50px; top: 35px; } 
+    
     header nav .gnb > li { float: left; margin-left: 40px; position: relative; }
     
-    /* 메뉴 링크 */
+    /* GNB 링크 스타일 (흰색) */
     header nav .gnb > li > a { 
         font-size: 18px; font-weight: 700; color: #fff; 
-        padding-bottom: 30px; display: block; text-decoration: none;
+        padding-bottom: 30px; display: block;
     }
     header nav .gnb > li:hover > a { color: #ff5e00; }
 
-    /* 드롭다운 서브메뉴 */
+    /* 드롭다운 서브메뉴 (메인과 동일) */
     header nav .sub {
         position: absolute; top: 65px; left: -20px; width: 400px; 
         background: #fff; padding: 20px;
-        border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
+        border-radius: 10px; box-shadow: 5px 5px 20px rgba(0,0,0,0.2); 
         display: none; z-index: 100; text-align: left;
     }
     
-    /* 투명 다리 (마우스 끊김 방지) */
+    /* 끊김 방지용 가상 영역 */
     header nav .sub::before {
         content: ''; position: absolute; top: -20px; left: 0; width: 100%; height: 20px;
     }
@@ -66,7 +68,7 @@
     
     header nav .sub ol { float: left; width: 50%; }
     header nav .sub ol li { margin-bottom: 10px; }
-    header nav .sub ol li a { font-size: 15px; color: #666; display: block; padding: 2px 0; }
+    header nav .sub ol li a { font-size: 15px; color: #666; text-shadow: none; display: inline; padding: 0; }
     header nav .sub ol li a:hover { color: #ff5e00; font-weight: bold; }
     
     header nav .sub .sub_img {
@@ -79,25 +81,29 @@
         font-weight: bold; font-size: 14px; z-index: 1; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
     }
 
+    /* LNB 숨김 */
     header nav .lnb { display: none; }
-    
-    .clearfix::after { content: ''; display: block; clear: both; }
 
-    /* ================= 서브 페이지 콘텐츠 스타일 ================= */
-    .sub_banner { height: 50px; } /* 간격 조정 */
+
+    /* ================= 서브 페이지 전용 콘텐츠 스타일 ================= */
+    .sub_banner { height: 50px; } 
     
     article.content { width: 1200px; margin: 50px auto; }
-    article.content h2 { font-size: 40px; font-weight: 900; margin-bottom: 30px; color: #333; border-bottom: 2px solid #000; padding-bottom: 10px; }
+    article.content h2 { 
+        font-size: 40px; font-weight: 900; margin-bottom: 30px; color: #333; 
+        border-bottom: 3px solid #000; padding-bottom: 15px; 
+    }
     
-    .rancho_text { margin-top: 40px; line-height: 1.8; }
+    .rancho_text { margin-top: 40px; line-height: 1.8; color: #333; }
     .rancho_text h3 { font-size: 24px; color: #ff5e00; margin-bottom: 15px; font-weight: bold; }
-    .rancho_text h4 { font-size: 20px; color: #333; margin-top: 30px; margin-bottom: 10px; font-weight: bold; }
-    .rancho_text ul li { position: relative; padding-left: 15px; margin-bottom: 5px; color: #555; }
-    .rancho_text ul li::before { content: '-'; position: absolute; left: 0; top: 0; }
-    .rancho_text p { color: #555; }
+    .rancho_text h4 { font-size: 20px; color: #222; margin-top: 30px; margin-bottom: 10px; font-weight: bold; }
+    .rancho_text ul li { position: relative; padding-left: 15px; margin-bottom: 8px; }
+    .rancho_text ul li::before { content: '-'; position: absolute; left: 0; top: 0; font-weight: bold; }
     
-    footer { background: #333; color: #fff; padding: 50px 0; margin-top: 100px; }
-    .fnb, .info { width: 1200px; margin: 0 auto; text-align: center; }
+    /* 푸터 */
+    footer { background: #222; color: #999; padding: 50px 0; margin-top: 100px; text-align: center; }
+    footer address { font-style: normal; font-size: 13px; }
+    .fnb, .info { display: none; } /* 기존 템플릿 숨김 */
   </style>
 
   <script src="js/plugin/jquery-1.12.3.js"></script>
@@ -117,12 +123,7 @@
               <li><a href="#">등장인물</a>
                 <div class="sub clearfix">
                   <ol>
-                    <li><a href="sub_rancho.html">란초</a></li>
-                    <li><a href="sub_farhan.html">파르한</a></li>
-                    <li><a href="sub_raju.html">라주</a></li>
-                    <li><a href="sub_virus.html">비루 교수</a></li>
-                    <li><a href="sub_chatur.html">차투르</a></li>
-                    <li><a href="sub_pia.html">피아</a></li>
+                    <li><a href="sub_rancho.html">란초</a></li><li><a href="sub_farhan.html">파르한</a></li><li><a href="sub_raju.html">라주</a></li><li><a href="sub_virus.html">비루 교수</a></li><li><a href="sub_chatur.html">차투르</a></li><li><a href="sub_pia.html">피아</a></li>
                   </ol>
                   <div class="sub_img"><p>전설적인 공학 천재들과<br>그들의 유쾌한 반란</p></div>
                 </div>
@@ -133,11 +134,7 @@
               <li><a href="#">하이라이트</a>
                 <div class="sub clearfix">
                   <ol>
-                    <li><a href="#">갤러리</a></li>
-                    <li><a href="#">예고편</a></li>
-                    <li><a href="#">OST</a></li>
-                    <li><a href="#">제작영상</a></li>
-                    <li><a href="#">비하인드</a></li>
+                    <li><a href="#">갤러리</a></li><li><a href="#">예고편</a></li><li><a href="#">OST</a></li><li><a href="#">제작영상</a></li><li><a href="#">비하인드</a></li>
                   </ol>
                   <div class="sub_img"><p>다시 보고 싶은<br>최고의 순간들</p></div>
                 </div>
@@ -161,10 +158,10 @@
           </nav>
       </div>
     </header>
+
     <section>
-      <h2 class="sr-only">차투르 라말링감 페이지</h2>
-      <div class="sub_banner">
-        </div>
+      <h2 class="sr-only">캐릭터 소개 페이지</h2>
+      <div class="sub_banner"></div>
 
       <article class="rancho content wow fadeInUp" data-wow-delay="200ms">
         <h2>차투르 라말링감</h2>
@@ -190,12 +187,10 @@
     </section>
     
     <footer>
-      <div class="info">
         <address>
           본 페이지는 개인 포트폴리오용으로 제작되었습니다.<br>
           &copy; 20xx Sample. All Rights Reserved.        
         </address>
-      </div>
     </footer>
   </div>
 
