@@ -3,204 +3,568 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>영화 세 얼간이 - 하이라이트</title>
   <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.jpg">
   <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/swiper.css">
+  <link rel="stylesheet" href="css/animate.css">
+  <link rel="stylesheet" href="css/style.css">
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
-    :root {
-      --text-primary: #1a1a1a;
-      --text-secondary: #555;
-      --bg-primary: #ffffff;
-      --bg-secondary: #f9f9f9;
-      --brand-color: #ff5e00;
-      --watcha-color: #ff0558;
-    }
-
-    body {
-      font-family: 'Noto Sans KR', sans-serif;
-      line-height: 1.6;
-      color: var(--text-primary);
-      background-color: var(--bg-primary);
-      text-align: center;
-    }
-
-    /* --- Header (Simplified for this page) --- */
+    /* ==========================================================================
+       ★ [헤더 스타일] index.html과 100% 동일 (Black Theme) ★
+       ========================================================================== */
     header {
-      width: 100%;
-      height: 80px;
-      border-bottom: 1px solid #eee;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    header h1 {
-      font-family: 'Anton', sans-serif;
-      font-size: 28px;
-      font-weight: 900;
-    }
-    header a {
-      color: var(--text-primary);
-      text-decoration: none;
+        width: 100%; height: 100px; 
+        background: #000; /* 검은색 배경 */
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        position: relative; /* 서브페이지 배치 */
+        z-index: 1000;
     }
 
-    /* --- Main Content Layout --- */
-    main {
-      padding: 4rem 2rem;
+    .container { width: 1200px; margin: 0 auto; position: relative; height: 100%; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    /* 로고 */
+    h1.logo { 
+        position: absolute; left: 0; top: 50%; transform: translateY(-50%); 
+        font-size: 32px; font-weight: 900; margin: 0;
+    }
+    h1.logo a { 
+        color: #fff; text-decoration: none; font-family: 'Anton', sans-serif; letter-spacing: 1px;
     }
 
-    .highlight-section {
-      max-width: 960px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 2rem;
+    /* 네비게이션 위치 */
+    header nav { position: absolute; right: 0; top: 35px; } 
+    header nav .gnb > li { float: left; margin-left: 40px; position: relative; }
+    
+    /* GNB 링크 스타일 */
+    header nav .gnb > li > a { 
+        font-size: 18px; font-weight: 700; color: #fff; 
+        padding-bottom: 30px; display: block; text-decoration: none;
     }
+    header nav .gnb > li:hover > a { color: #ff5e00; }
 
-    .highlight-section h2 {
-      font-size: 3rem;
-      font-weight: 900;
-    }
-
-    /* --- Video Section --- */
-    .video-container {
-      width: 100%;
-      position: relative;
-      padding-top: 56.25%; /* 16:9 Aspect Ratio */
-      background-color: #000;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    }
-    .video-container video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    /* --- Watcha Button --- */
-    .watcha-btn {
-      display: inline-block;
-      padding: 14px 32px;
-      background-color: var(--watcha-color);
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 50px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 4px 15px rgba(255, 5, 88, 0.3);
-    }
-    .watcha-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(255, 5, 88, 0.4);
+    /* 드롭다운 서브메뉴 */
+    header nav .sub {
+        position: absolute; top: 65px; left: -20px; width: 400px; 
+        background: #fff; padding: 20px;
+        border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
+        display: none; z-index: 100; text-align: left;
     }
     
-    /* --- Description Section --- */
-    .description {
-      max-width: 720px;
-      font-size: 1.1rem;
-      color: var(--text-secondary);
+    /* 끊김 방지용 투명 다리 */
+    header nav .sub::before {
+        content: ''; position: absolute; top: -20px; left: 0; width: 100%; height: 20px;
     }
-    .description h3 {
-      font-size: 1.5rem;
+
+    header nav .gnb > li:hover .sub { display: block; }
+    
+    header nav .sub ol { float: left; width: 50%; }
+    header nav .sub ol li { margin-bottom: 10px; }
+    header nav .sub ol li a { font-size: 15px; color: #666; display: block; padding: 2px 0; }
+    header nav .sub ol li a:hover { color: #ff5e00; font-weight: bold; }
+    
+    header nav .sub .sub_img {
+        float: right; width: 45%; height: 150px; 
+        background: #ffecd2 url('images/sub_bg_01.jpg') no-repeat center/cover;
+        border-radius: 8px; position: relative; overflow: hidden;
+    }
+    header nav .sub .sub_img p {
+        position: absolute; bottom: 15px; left: 15px; color: #fff; 
+        font-weight: bold; font-size: 14px; z-index: 1; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+
+    /* LNB 숨김 */
+    header nav .lnb { display: none; }
+
+    /* 검은색 가로 띠 */
+    .black-band {
+      width: 100%;
+      height: 50px;
+      background-color: black;
+      margin-top: 50px;
+      display: flex; /* Added for centering text */
+      justify-content: center; /* Added for centering text */
+      align-items: center; /* Added for centering text */
+      color: white; /* Added for text color */
+      font-size: 14px; /* Added for text size */
+      font-weight: bold; /* Added for text weight */
+    }
+
+    /* 왓챠 버튼 */
+    .watcha-link-container {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .watcha-btn {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #ff0558; /* Watcha's brand color */
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    .watcha-btn:hover {
+        background-color: #e0044d;
+    }
+
+    /* 운명 찾기 섹션 */
+    .fateful-encounter {
+      max-width: 800px;
+      margin: 50px auto 0;
+      padding: 40px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .fateful-encounter h3 {
+      font-size: 28px;
       font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .fateful-encounter .section-desc {
+      color: #666;
+      margin-bottom: 30px;
+    }
+    .fateful-encounter .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .fateful-encounter label {
+      font-weight: 500;
+      margin-right: 15px;
+    }
+    .fateful-encounter .gender-label {
+      display: inline-block;
+      width: 50px;
+    }
+    .fateful-encounter input[type="text"],
+    .fateful-encounter input[type="tel"] {
+      width: calc(100% - 70px);
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .fateful-encounter button {
+      padding: 12px 30px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .fateful-encounter button:hover {
+      background-color: #0056b3;
+    }
+    #destinyResult {
+      margin-top: 30px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #ff5e00;
+    }
+    .event-entry {
+      margin-top: 40px;
+      padding-top: 30px;
+      border-top: 1px solid #eee;
+    }
+    .event-entry h4 {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+    .form-group-checkbox {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    #phoneEntry button {
+      background-color: #28a745;
+    }
+    #phoneEntry button:hover {
+      background-color: #218838;
     }
 
-    /* --- Scroll Reveal Animation --- */
-    .reveal {
+    /* Modal styles */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6);
+    }
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      padding: 30px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 10px;
+      text-align: center;
+      position: relative;
+      animation: zoomIn 0.3s;
+    }
+    .close-btn {
+      color: #aaa;
+      position: absolute;
+      top: 15px;
+      right: 25px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .close-btn:hover,
+    .close-btn:focus {
+      color: black;
+    }
+    .modal-title {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #ff5e00;
+    }
+    #modalResultText {
+      font-size: 18px;
+    }
+    .modal-footer {
+      margin-top: 30px;
+    }
+    .share-section, .recommend-section {
+      margin-top: 20px;
+    }
+    .share-section h4, .recommend-section h4 {
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+    .share-section button, .recommend-section button {
+      margin: 0 5px;
+      padding: 10px 15px;
+      font-size: 14px;
+    }
+    #copyResultLinkBtn { background-color: #007bff; color: white; }
+    #recommendBtn { background-color: #6c757d; color: white; }
+
+    /* Confetti fanfare effect */
+    .modal-content.fanfare::before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background:
+        repeating-linear-gradient(45deg, #f00, #f00 2px, transparent 2px, transparent 10px),
+        repeating-linear-gradient(-45deg, #ff0, #ff0 2px, transparent 2px, transparent 10px),
+        repeating-linear-gradient(135deg, #0f0, #0f0 2px, transparent 2px, transparent 10px),
+        repeating-linear-gradient(-135deg, #0ff, #0ff 2px, transparent 2px, transparent 10px);
+      background-size: 40px 40px;
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 700ms ease, transform 700ms ease;
+      animation: fanfare-burst 0.8s ease-out;
+      z-index: -1;
     }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
+    @keyframes fanfare-burst {
+      0% { transform: scale(0); opacity: 1; }
+      80% { transform: scale(1.2); opacity: 0.5; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+    @keyframes zoomIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
 
-    /* Accessibility: Respect user's motion preference */
-    @media (prefers-reduced-motion: reduce) {
-      .reveal {
-        transition: none;
-        opacity: 1;
-        transform: none;
-      }
-    }
-
+    /* 기존 스타일(footer 등) 유지 */
   </style>
+
+  <script src="js/plugin/jquery-1.12.3.js"></script>
+  <script src="js/plugin/jquery.easing.min.js"></script>
+  <script src="js/plugin/swiper.min.js"></script>
+  <script src="js/plugin/wow.min.js"></script>
+  <script src="js/function.js"></script>
+  <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 <body>
-
-  <header>
-    <h1><a href="index.html">3 Idiots - Highlight</a></h1>
-  </header>
-
-  <main>
-    <section class="highlight-section">
-      
-      <h2 class="reveal">하이라이트</h2>
-      
-      <div class="video-container reveal" data-delay="100">
-        <video controls autoplay muted loop playsinline>
-          <source src="images/3idiot_preview.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
+  <div id="wrap">
+    
+    <header>
+      <div class="container clearfix">
+          <h1 class="logo"><a href="index.html">3 Idiots</a></h1>
+          <nav>
+            <ul class="gnb clearfix">
+              <li><a href="#">등장인물</a>
+                <div class="sub clearfix">
+                  <ol>
+                    <li><a href="sub_rancho.html">란초</a></li><li><a href="sub_farhan.html">파르한</a></li><li><a href="sub_raju.html">라주</a></li><li><a href="sub_virus.html">비루 교수</a></li><li><a href="sub_chatur.html">차투르</a></li><li><a href="sub_pia.html">피아</a></li>
+                  </ol>
+                  <div class="sub_img"><p>전설적인 공학 천재들과<br>그들의 유쾌한 반란</p></div>
+                </div>
+              </li>
+              
+              <li><a href="sub_recruit.html">줄거리</a></li>
+              
+              <li><a href="sub_highlight.html">하이라이트</a></li>
+              
+              <li><a href="#">후기평</a>
+                <div class="sub clearfix">
+                  <ol>
+                    <li><a href="sub_netizen_ratings.html">네티즌 평점</a></li>
+                    <li><a href="sub_real_reviews.html">실관람객평</a></li>
+                    <li class="last"><a href="sub_critic_reviews.html">평론가평</a></li>
+                  </ol>
+                  <div class="sub_img"><p>여러분의 감동을<br>함께 나누세요.</p></div>
+                </div>
+              </li>
+            </ul>
+            
+            <ul class="lnb clearfix">
+              <li>ENGLISH</li><li>SITEMAP</li>
+            </ul>
+          </nav>
       </div>
+    </header>
+    <hr>
 
-      <div class="reveal" data-delay="200">
-        <a href="https://watcha.com/ko-KR/contents/mOk6rwW" target="_blank" class="watcha-btn">왓챠에서 감상하기</a>
-      </div>
-
-      <div class="description reveal" data-delay="300">
-        <h3>영화의 감동을 다시 한번!</h3>
-        <p>
-          '세 얼간이'의 잊지 못할 순간들을 모아봤습니다. 천재들의 유쾌한 반란과 가슴 따뜻한 우정, 
-          그리고 우리에게 깊은 울림을 주었던 명장면들을 다시 감상해보세요.
+    <section>
+      <h2 class="sr-only">하이라이트 페이지</h2>
+      <div class="sub_banner">
+        <p class="wow fadeIn" data-wow-delay="100ms">
+          
         </p>
       </div>
-      
+
+      <article class="content wow fadeInUp" data-wow-delay="200ms" style="text-align: center;">
+        <h2>하이라이트</h2>
+        
+        <video controls autoplay muted loop style="width:100%; max-width:800px; margin: 20px 0;">
+            <source src="images/3idiot_preview.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <div class="watcha-link-container">
+            <a href="https://watcha.com/ko-KR/contents/mOk6rwW" target="_blank" class="watcha-btn">왓챠에서 감상하기</a>
+        </div>
+
+        <div class="text_content" style="text-align: left; max-width: 800px; margin: 0 auto;">
+          <h3>영화의 감동을 다시 한번!</h3>
+          <p>
+            '세 얼간이'의 잊지 못할 순간들을 모아봤습니다. 천재들의 유쾌한 반란과 가슴 따뜻한 우정, 
+            그리고 우리에게 깊은 울림을 주었던 명장면들을 다시 감상해보세요.
+          </p>
+        </div>
+      </article>
+
+      <section class="fateful-encounter wow fadeInUp" data-wow-delay="300ms">
+        <h3>나와 운명인 등장인물은?</h3>
+        <p class="section-desc">간단한 정보를 입력하고 <세 얼간이> 등장인물 중 당신의 운명의 단짝을 찾아보세요!</p>
+        
+        <form id="destinyForm">
+          <div class="form-group">
+            <label for="name">이름</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          <div class="form-group">
+            <span class="gender-label">성별</span>
+            <label><input type="radio" name="gender" value="male" required> 남성</label>
+            <label><input type="radio" name="gender" value="female"> 여성</label>
+          </div>
+          <div class="form-group">
+            <label for="mbti">MBTI</label>
+            <input type="text" id="mbti" name="mbti" maxlength="4" required>
+          </div>
+          
+          <button type="button" id="findDestinyBtn">결과 확인하기</button>
+        </form>
+        
+        <div class="event-entry">
+          <h4>🎉 스페셜 이벤트 자동 응모</h4>
+          <div class="form-group-checkbox">
+            <input type="checkbox" id="agreePrivacy">
+            <label for="agreePrivacy">개인정보 수집 및 이용에 동의합니다.</label>
+          </div>
+          <div id="phoneEntry" style="display: none;">
+            <div class="form-group">
+              <label for="phone">전화번호</label>
+              <input type="tel" id="phone" name="phone" placeholder="'-' 없이 숫자만 입력">
+            </div>
+            <button type="button" id="submitEvent">응모하기</button>
+          </div>
+        </div>
+      </section>
+
     </section>
-  </main>
+    <div class="black-band">
+      <span>2025.12.15 by JieunJung</span>
+    </div>
+  </div>
 
+  <div id="resultModal" class="modal-overlay">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <div class="modal-body">
+        <h3 class="modal-title">운명의 단짝!</h3>
+        <img id="characterImage" src="" alt="운명의 등장인물" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; margin-bottom: 20px;">
+        <p id="modalResultText"></p>
+      </div>
+      <div class="modal-footer">
+        <div class="share-section">
+          <h4>결과 공유하기</h4>
+          <button id="copyResultLinkBtn">결과 링크 복사</button>
+        </div>
+        <div class="recommend-section">
+          <button id="recommendBtn">이 테스트 추천하기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/initial_function.js"></script>
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      // Intersection Observer for scroll animations
-      const revealElements = document.querySelectorAll(".reveal");
+    document.addEventListener('DOMContentLoaded', function() {
+      // Kakao SDK Init (Not used in this version, but kept for potential future use)
+      try {
+        Kakao.init('d2d25b23443534523542345235423542'); // Placeholder Key
+      } catch(e) {
+        console.error("Could not initialize Kakao SDK. Please check your key.");
+      }
 
-      const observerOptions = {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.1
+      // DOM Elements
+      const findDestinyBtn = document.getElementById('findDestinyBtn');
+      const agreePrivacy = document.getElementById('agreePrivacy');
+      const phoneEntry = document.getElementById('phoneEntry');
+      const submitEventBtn = document.getElementById('submitEvent');
+      const destinyForm = document.getElementById('destinyForm');
+      
+      // Modal elements
+      const resultModal = document.getElementById('resultModal');
+      const modalContent = resultModal.querySelector('.modal-content');
+      const closeModalBtn = resultModal.querySelector('.close-btn');
+      const characterImage = document.getElementById('characterImage');
+      const modalResultText = document.getElementById('modalResultText');
+
+      // New/Updated Buttons
+      const copyResultLinkBtn = document.getElementById('copyResultLinkBtn');
+      const recommendBtn = document.getElementById('recommendBtn');
+
+      let lastFatefulCharacter = '';
+      let userName = '';
+
+      const characters = {
+        '란초': { img: 'images/란초얼굴.jpg' },
+        '파르한': { img: 'images/파르한 얼굴.jpg' },
+        '라주': { img: 'images/라주얼굴.jpg' },
+        '비루 교수': { img: 'images/데비루 사하스프라부.png' },
+        '차투르': { img: 'images/차투르 얼굴.jpg' },
+        '피아': { img: 'images/피아얼굴.jpg' }
       };
+      const characterNames = Object.keys(characters);
 
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const delay = entry.target.getAttribute('data-delay') || 0;
-            
-            setTimeout(() => {
-              entry.target.classList.add("visible");
-            }, delay);
+      // --- Main Functions ---
 
-            // Animate only once
-            observer.unobserve(entry.target);
-          }
+      function showResult(name, character) {
+        if (!characters[character]) return; // Exit if character is invalid
+        
+        lastFatefulCharacter = character;
+        userName = name;
+
+        characterImage.src = characters[character].img;
+        modalResultText.innerHTML = `<strong>${name}</strong>님의 운명의 단짝은... <strong>${character}</strong> 입니다!`;
+        
+        resultModal.style.display = 'block';
+        modalContent.classList.add('fanfare');
+        setTimeout(() => {
+          modalContent.classList.remove('fanfare');
+        }, 800);
+      }
+
+      // --- Event Listeners ---
+
+      findDestinyBtn.addEventListener('click', function() {
+        const nameInput = document.getElementById('name').value;
+        const gender = document.querySelector('input[name="gender"]:checked');
+        const mbti = document.getElementById('mbti').value;
+
+        if (!nameInput || !gender || !mbti) {
+          alert('모든 정보를 입력해주세요.');
+          return;
+        }
+        
+        const randomIndex = Math.floor(Math.random() * characterNames.length);
+        const fatefulCharacter = characterNames[randomIndex];
+        
+        showResult(nameInput, fatefulCharacter);
+      });
+      
+      copyResultLinkBtn.addEventListener('click', () => {
+        const resultUrl = `${window.location.origin}${window.location.pathname}?name=${encodeURIComponent(userName)}&character=${encodeURIComponent(lastFatefulCharacter)}`;
+        navigator.clipboard.writeText(resultUrl).then(() => {
+          alert('결과 링크가 클립보드에 복사되었습니다! 원하는 곳에 붙여넣어 공유해보세요.');
+        }).catch(err => {
+          alert('링크 복사에 실패했습니다.');
         });
-      }, observerOptions);
+      });
 
-      revealElements.forEach(el => {
-        observer.observe(el);
+      recommendBtn.addEventListener('click', () => {
+        const baseUrl = window.location.origin + window.location.pathname;
+        navigator.clipboard.writeText(baseUrl).then(() => {
+          alert('테스트 링크가 클립보드에 복사되었습니다. 친구에게 추천해주세요!');
+        }).catch(err => {
+          alert('링크 복사에 실패했습니다.');
+        });
+      });
+
+      // --- On Page Load ---
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const sharedName = urlParams.get('name');
+      const sharedCharacter = urlParams.get('character');
+
+      if (sharedName && sharedCharacter) {
+        showResult(sharedName, sharedCharacter);
+        // Optionally hide the form if showing a shared result
+        const formSection = document.querySelector('.fateful-encounter');
+        if(formSection) {
+            formSection.style.display = 'none';
+        }
+      }
+
+      // --- Other Event Listeners (Modal, Event Entry) ---
+      
+      closeModalBtn.addEventListener('click', () => resultModal.style.display = 'none');
+      window.addEventListener('click', (event) => {
+        if (event.target == resultModal) {
+          resultModal.style.display = 'none';
+        }
+      });
+
+      agreePrivacy.addEventListener('change', function() {
+        phoneEntry.style.display = this.checked ? 'block' : 'none';
+      });
+
+      submitEventBtn.addEventListener('click', function() {
+        const phone = document.getElementById('phone').value;
+        if (phone.trim() === '') {
+          alert('전화번호를 입력해주세요.');
+          return;
+        }
+        alert('이벤트에 성공적으로 응모되었습니다!');
+        document.getElementById('phone').value = '';
+        agreePrivacy.checked = false;
+        phoneEntry.style.display = 'none';
       });
     });
   </script>
-
 </body>
 </html>
