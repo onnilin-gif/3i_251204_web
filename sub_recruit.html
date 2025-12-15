@@ -11,9 +11,10 @@
 
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
     /* 배경 투명화 */
-    html, body, #wrap, .container, .intro-spacer, header {
+    html, body, #wrap, .container, .intro-spacer {
         background: transparent !important;
         background-color: transparent !important;
     }
@@ -45,60 +46,58 @@
         pointer-events: none; transition: background 0.1s ease-out;
     }
 
-    /* ================= ★ 헤더 스타일 (검은색 배경 고정) ★ ================= */
+    .container { width: 1200px; margin: 0 auto; position: relative; height: 100%; }
+    .clearfix::after { content: ''; display: block; clear: both; }
+
+    /* ==========================================================================
+       ★ [헤더 스타일] index.html과 100% 동일하게 교체 (Black Theme) ★
+       ========================================================================== */
     header {
         width: 100%; height: 100px; 
+        /* 이 페이지는 배경 영상 때문에 fixed가 필요하지만 디자인은 index.html과 동일하게 유지 */
         position: fixed; top: 0; left: 0; z-index: 1000;
-        
-        /* [수정됨] 투명 그라데이션 제거 -> 완전 검은색으로 변경 */
-        background: #000 !important; 
-        border-bottom: 1px solid rgba(255,255,255,0.1); /* 하단 경계선 살림 */
+        background: #000 !important; /* 검은색 배경 고정 */
+        border-bottom: 1px solid rgba(255,255,255,0.1);
     }
-    
-    header.scrolled { background: #000 !important; }
 
-    .container { width: 1200px; margin: 0 auto; position: relative; height: 100%; }
-    
-    h1.logo { position: absolute; left: 50px; top: 50%; transform: translateY(-50%); font-size: 32px; font-weight: 900; }
-    h1.logo a { color: #fff; text-decoration: none; text-shadow: none; }
-    
+    /* 로고 */
+    h1.logo { 
+        position: absolute; left: 50px; top: 50%; transform: translateY(-50%); 
+        font-size: 32px; font-weight: 900; margin: 0;
+    }
+    h1.logo a { 
+        color: #fff; text-decoration: none; font-family: 'Anton', sans-serif; letter-spacing: 1px;
+    }
+
     /* 네비게이션 위치 */
-    header nav { position: absolute; right: 50px; top: 50%; transform: translateY(-50%); height: 100px; }
+    header nav { position: absolute; right: 50px; top: 35px; height: 100%; } /* top 위치 index.html과 맞춤 */
+    header nav .gnb > li { float: left; margin-left: 40px; position: relative; }
     
-    header nav .gnb { height: 100%; }
-    header nav .gnb > li { float: left; margin-left: 40px; position: relative; height: 100%; }
-    
-    /* 메뉴 링크 */
+    /* GNB 링크 스타일 */
     header nav .gnb > li > a { 
-        font-size: 18px; font-weight: 700; color: #fff; display: block; 
-        line-height: 100px; /* 헤더 높이와 맞춤 */
-        text-shadow: none;
+        font-size: 18px; font-weight: 700; color: #fff; 
+        padding-bottom: 30px; display: block; text-decoration: none;
     }
     header nav .gnb > li:hover > a { color: #ff5e00; }
 
-    /* 드롭다운 메뉴 스타일 */
+    /* 드롭다운 서브메뉴 */
     header nav .sub {
-        position: absolute; 
-        top: 100px; /* 헤더 바로 아래 */
-        left: -20px; width: 400px; 
-        background: #fff; /* 배경 흰색 */
-        padding: 20px;
-        border-radius: 0 0 10px 10px; 
-        box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-        display: none; 
-        z-index: 100;
+        position: absolute; top: 65px; left: -20px; width: 400px; 
+        background: #fff; padding: 20px;
+        border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.2); 
+        display: none; z-index: 100; text-align: left;
     }
     
-    /* 마우스 올리면 보이기 */
+    /* 끊김 방지용 투명 다리 */
+    header nav .sub::before {
+        content: ''; position: absolute; top: -20px; left: 0; width: 100%; height: 20px;
+    }
+
     header nav .gnb > li:hover .sub { display: block; }
     
     header nav .sub ol { float: left; width: 50%; }
     header nav .sub ol li { margin-bottom: 10px; }
-    
-    /* 드롭다운 메뉴 글씨색 */
-    header nav .sub ol li a { 
-        font-size: 15px; color: #555; text-shadow: none; line-height: normal; 
-    }
+    header nav .sub ol li a { font-size: 15px; color: #666; display: block; padding: 2px 0; text-shadow: none; }
     header nav .sub ol li a:hover { color: #ff5e00; font-weight: bold; }
     
     header nav .sub .sub_img {
@@ -111,7 +110,9 @@
         font-weight: bold; font-size: 14px; z-index: 1; text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
     }
 
-    header nav .lnb { display: none; } 
+    /* LNB 숨김 */
+    header nav .lnb { display: none; }
+
 
     /* ================= 스크롤 유도 빈 공간 ================= */
     .intro-spacer {
@@ -169,8 +170,6 @@
 
     footer { background: #111; color: #ccc; padding: 50px 0; }
     footer .fnb { width: 1200px; margin: 0 auto; padding-bottom: 30px; border-bottom: 1px solid #333; }
-    .clearfix::after { content: ''; display: block; clear: both; }
-    hr { display: none; }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border: 0; }
   </style>
 
@@ -190,20 +189,12 @@
   <div class="video-overlay" id="bgOverlay"></div>
 
   <div id="wrap">
+    
     <header id="mainHeader">
       <div class="container clearfix">
           <h1 class="logo"><a href="index.html">3 Idiots</a></h1>
           <nav>
             <ul class="gnb clearfix">
-              <li><a href="sub_ceo.html">영화소개</a>
-                <div class="sub clearfix">
-                  <ol>
-                    <li><a href="sub_ceo.html">감독인사말</a></li><li><a href="#">Vision</a></li><li><a href="#">작품배경</a></li><li><a href="#">제작노트</a></li><li><a href="sub_ci.html">로고의미</a></li>
-                  </ol>
-                  <div class="sub_img"><p>알 이즈 웰!<br>성공은 배움 뒤에 따라온다.</p></div>
-                </div>
-              </li>
-
               <li><a href="#">등장인물</a>
                 <div class="sub clearfix">
                   <ol>
@@ -212,31 +203,36 @@
                   <div class="sub_img"><p>전설적인 공학 천재들과<br>그들의 유쾌한 반란</p></div>
                 </div>
               </li>
-
+              
               <li><a href="sub_recruit.html">줄거리</a></li>
-
+              
               <li><a href="#">하이라이트</a>
                 <div class="sub clearfix">
                   <ol>
-                    <li><a href="#">갤러리</a></li><li><a href="#">예고편</a></li>
+                    <li><a href="#">갤러리</a></li><li><a href="#">예고편</a></li><li><a href="#">OST</a></li><li><a href="#">제작영상</a></li><li><a href="#">비하인드</a></li>
                   </ol>
                   <div class="sub_img"><p>다시 보고 싶은<br>최고의 순간들</p></div>
                 </div>
               </li>
-
+              
               <li><a href="#">후기평</a>
                 <div class="sub clearfix">
                   <ol>
-                    <li><a href="#">관람평</a></li><li><a href="#">Q&A</a></li><li class="last"><a href="#">커뮤니티</a></li>
+                    <li><a href="#">네티즌 평점</a></li>
+                    <li><a href="sub_real_reviews.html">실관람객평</a></li>
+                    <li class="last"><a href="sub_critic_reviews.html">평론가평</a></li>
                   </ol>
                   <div class="sub_img"><p>여러분의 감동을<br>함께 나누세요.</p></div>
                 </div>
               </li>
             </ul>
+            
+            <ul class="lnb clearfix">
+              <li>ENGLISH</li><li>SITEMAP</li>
+            </ul>
           </nav>
       </div>
     </header>
-
     <div class="intro-spacer">
         <div class="scroll-hint">
             스크롤을 내려서 줄거리를 확인하세요
